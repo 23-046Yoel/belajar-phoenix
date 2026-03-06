@@ -21,21 +21,32 @@ if System.get_env("PHX_SERVER") do
 end
 
 config :upa_tik_portal, UpaTikPortalWeb.Endpoint,
-  http: [port: String.to_integer(System.get_env("PORT", "4000"))]
+  http: [
+    ip: {0, 0, 0, 0},
+    port: String.to_integer(System.get_env("PORT", "4000"))
+  ]
 
 # Load environment variables from .env files for non-prod environments
 if config_env() in [:dev, :test] do
   import Dotenvy
-  source!([".env", ".env.#{config_env()}"])
+  case source([".env", ".env.#{config_env()}"]) do
+    {:ok, env_vars} ->
+      # Pastikan variabel dari .env masuk ke System environment secara aman
+      for {k, v} <- env_vars, is_binary(v) or is_list(v) or is_number(v) or is_boolean(v) do
+        System.put_env(to_string(k), to_string(v))
+      end
+    _ -> :ok
+  end
 end
 
 # Google OAuth Configuration
 google_client_id = System.get_env("GOOGLE_CLIENT_ID")
 google_client_secret = System.get_env("GOOGLE_CLIENT_SECRET")
 
+# Debugging: Jika masih nil, kita coba ambil alternatif
 if is_nil(google_client_id) or is_nil(google_client_secret) do
   IO.warn("""
-  Google OAuth credentials are missing!
+  Google OAuth credentials are missing! (Current env: #{config_env()})
   Please ensure GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET are set in your .env file.
   """)
 end
@@ -43,6 +54,15 @@ end
 config :ueberauth, Ueberauth.Strategy.Google.OAuth,
   client_id: google_client_id,
   client_secret: google_client_secret
+
+# MinIO / S3 Configuration
+config :waffle,
+  bucket: System.get_env("MINIO_BUCKET", "upa-tik-uploads"),
+  asset_host: System.get_env("MINIO_ENDPOINT", "http://localhost:9100")
+
+config :ex_aws,
+  access_key_id: System.get_env("MINIO_ACCESS_KEY"),
+  secret_access_key: System.get_env("MINIO_SECRET_KEY")
 
 if config_env() == :prod do
   database_url =

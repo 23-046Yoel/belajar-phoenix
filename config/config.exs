@@ -64,8 +64,21 @@ config :upa_tik_portal, UpaTikPortal.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure Waffle for file uploads (KTM photo)
 config :waffle,
-  storage: Waffle.Storage.Local,
-  storage_dir: "priv/static/uploads"
+  storage: Waffle.Storage.S3
+
+# Configure ExAws for MinIO
+config :ex_aws,
+  json_library: Jason,
+  region: "us-east-1",
+  access_key_id: System.get_env("MINIO_ACCESS_KEY") || "admin-akses-anda",
+  secret_access_key: System.get_env("MINIO_SECRET_KEY") || "password-rahasia-anda",
+  s3: [
+    scheme: "http",
+    host: System.get_env("MINIO_HOST", "localhost"),
+    port: String.to_integer(System.get_env("MINIO_PORT", "9100")),
+    region: "us-east-1",
+    virtual_host: false
+  ]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

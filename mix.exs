@@ -68,7 +68,11 @@ defmodule UpaTikPortal.MixProject do
       {:swoosh, "~> 1.17"},
       {:gen_smtp, "~> 1.2"},
       {:waffle, "~> 1.1"},
-      {:waffle_ecto, "~> 0.0.12"}
+      {:waffle_ecto, "~> 0.0.12"},
+      {:ex_aws, "~> 2.5"},
+      {:ex_aws_s3, "~> 2.5"},
+      {:hackney, "~> 1.20"},
+      {:sweet_xml, "~> 0.7"}
     ]
   end
 

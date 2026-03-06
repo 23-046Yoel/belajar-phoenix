@@ -11,7 +11,7 @@ defmodule UpaTikPortalWeb.RequestLive do
 
     socket =
       socket
-      |> assign(page_title: "Ajukan Permintaan – UPA TIK Portal")
+      |> assign(page_title: "Pengajuan Bermasalah – UPA TIK Portal")
       |> assign(current_user: user)
       |> assign(request_type: "aktivasi")
       |> assign(nim: "")
@@ -22,8 +22,7 @@ defmodule UpaTikPortalWeb.RequestLive do
       |> allow_upload(:ktm_photo,
         accept: ~w(.jpg .jpeg .png .webp),
         max_entries: 1,
-        max_file_size: @max_file_size,
-        auto_upload: true
+        max_file_size: @max_file_size
       )
 
     {:ok, socket}
@@ -54,19 +53,20 @@ defmodule UpaTikPortalWeb.RequestLive do
     {:noreply, cancel_upload(socket, :ktm_photo, ref)}
   end
 
+
   def handle_event("submit", _params, socket) do
     user = socket.assigns.current_user
 
-    # Safe upload handling: only consume if there are entries and ALL are done.
-    # consume_uploaded_entries will crash if called while any entry is in progress.
+    # Upload foto ke MinIO jika ada, tapi tidak wajib berhasil
     ktm_url =
-      if Enum.all?(socket.assigns.uploads.ktm_photo.entries, &(&1.done?)) do
+      try do
         case consume_uploaded_entries(socket, :ktm_photo, &save_upload/2) do
-          [path | _] -> path
-          [] -> nil
+          [{:ok, url} | _] -> url
+          [url | _] when is_binary(url) -> url
+          _ -> nil
         end
-      else
-        nil
+      rescue
+        _ -> nil
       end
 
     attrs = %{
@@ -101,11 +101,42 @@ defmodule UpaTikPortalWeb.RequestLive do
   defp save_upload(%{path: tmp_path}, entry) do
     ext = Path.extname(entry.client_name)
     filename = "#{:crypto.strong_rand_bytes(16) |> Base.url_encode64(padding: false)}#{ext}"
-    dest_dir = Path.join([:code.priv_dir(:upa_tik_portal), "static", "uploads"])
-    File.mkdir_p!(dest_dir)
-    dest = Path.join(dest_dir, filename)
-    File.cp!(tmp_path, dest)
-    {:ok, "/uploads/#{filename}"}
+    bucket = Application.get_env(:waffle, :bucket, "upa-tik-uploads")
+
+    content_type = case String.downcase(ext) do
+      ".jpg" -> "image/jpeg"
+      ".jpeg" -> "image/jpeg"
+      ".png" -> "image/png"
+      ".webp" -> "image/webp"
+      _ -> "application/octet-stream"
+    end
+
+    try do
+      file_content = File.read!(tmp_path)
+
+      case ExAws.S3.put_object(bucket, filename, file_content, content_type: content_type)
+           |> ExAws.request() do
+        {:ok, _} ->
+          s3_config = Application.get_env(:ex_aws, :s3, [])
+          host = Keyword.get(s3_config, :host, System.get_env("MINIO_HOST", "127.0.0.1"))
+          port = Keyword.get(s3_config, :port, (System.get_env("MINIO_PORT") || "9000") |> String.to_integer())
+          {:ok, "http://#{host}:#{port}/#{bucket}/#{filename}"}
+
+        {:error, reason} ->
+          # MinIO gagal - simpan ke folder lokal sebagai fallback
+          IO.warn("[MinIO Upload GAGAL] Reason: #{inspect(reason)}")
+          uploads_dir = Path.join(:code.priv_dir(:upa_tik_portal), "static/uploads")
+          File.mkdir_p!(uploads_dir)
+
+          dest = Path.join(uploads_dir, filename)
+          File.cp!(tmp_path, dest)
+          {:ok, "/uploads/#{filename}"}
+      end
+    rescue
+      _ ->
+        # Jika semua gagal, kembalikan nil (request tetap tersimpan tanpa foto)
+        {:ok, nil}
+    end
   end
 
   def render(assigns) do
@@ -126,6 +157,9 @@ defmodule UpaTikPortalWeb.RequestLive do
             <a href="/portal/status" class="text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors">
               Status Pengajuan
             </a>
+            <a href="/portal/keluhan" class="text-sm text-slate-500 hover:text-blue-600 font-medium transition-colors">
+              Lapor Masalah
+            </a>
             <a href="/auth/logout" class="text-sm text-slate-500 hover:text-red-600 transition-colors">Logout</a>
           </div>
         </div>
@@ -133,7 +167,7 @@ defmodule UpaTikPortalWeb.RequestLive do
 
       <div class="max-w-2xl mx-auto px-4 py-10">
         <div class="mb-8">
-          <h1 class="text-2xl font-bold text-slate-900">Form Pengajuan Email Kampus</h1>
+          <h1 class="text-2xl font-bold text-slate-900 uppercase">FORM PENGAJUAN EMAIL KAMPUS BERMASALAH</h1>
           <p class="text-slate-500 mt-1">Isi data dengan benar dan unggah foto KTM Anda untuk verifikasi.</p>
         </div>
 
@@ -315,15 +349,11 @@ defmodule UpaTikPortalWeb.RequestLive do
                 </p>
               </div>
 
-              <!-- Submit -->
+
+              <!-- Submit Button (paling bawah) -->
               <button type="submit"
-                disabled={not Enum.empty?(@uploads.ktm_photo.entries) and not Enum.all?(@uploads.ktm_photo.entries, &(&1.done?))}
-                class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-400 text-white font-bold rounded-xl shadow-lg transition-all duration-200 hover:-translate-y-0.5 shadow-blue-200 active:scale-[0.98]">
-                <%= if not Enum.empty?(@uploads.ktm_photo.entries) and not Enum.all?(@uploads.ktm_photo.entries, &(&1.done?)) do %>
-                  Mengunggah Foto (<%= hd(@uploads.ktm_photo.entries).progress %>%)
-                <% else %>
-                  Kirim Pengajuan Sekarang
-                <% end %>
+                class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg transition-all duration-200 hover:-translate-y-0.5 shadow-blue-200 active:scale-[0.98]">
+                Kirim Pengajuan Sekarang
               </button>
             </form>
           </div>
