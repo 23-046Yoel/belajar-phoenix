@@ -70,7 +70,7 @@ defmodule UpaTikPortal.Requests do
   @doc "Statistik: jumlah per status"
   def stats do
     Repo.all(
-      from r in EmailRequest,
+      from r in EmailRequest, 
         group_by: r.status,
         select: {r.status, count(r.id)}
     )

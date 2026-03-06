@@ -35,8 +35,10 @@ upa_tik_portal-*.tar
 npm-debug.log
 /assets/node_modules/
 
-.env.env 
-.env 
-.env 
-.env 
-.env 
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Uploaded files
+/priv/static/uploads/
