@@ -1,0 +1,1298 @@
+{
+  "version": "1.0.0",
+  "timestamp": 1772084343850,
+  "workspaceRoot": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix",
+  "registries": {
+    "components": {
+      "components": [
+        [
+          "__phoenix_builtins__",
+          [
+            {
+              "name": "link",
+              "moduleName": "Phoenix.Component",
+              "filePath": "c:\\Users\\ardic\\.vscode\\extensions\\onsever.phoenix-pulse-1.3.0\\node_modules\\@phoenix-pulse\\language-server\\resources\\phoenix_component_builtins.ex",
+              "line": 1,
+              "doc": "Phoenix.Component.link/1 – Generates an anchor tag that supports LiveView-aware navigation.",
+              "attributes": [
+                {
+                  "name": "navigate",
+                  "type": "string",
+                  "required": false,
+                  "doc": "Use VerifiedRoutes: `navigate={~p\"/path\"}`"
+                },
+                {
+                  "name": "patch",
+                  "type": "string",
+                  "required": false,
+                  "doc": "Use VerifiedRoutes: `patch={~p\"/path\"}`"
+                },
+                {
+                  "name": "href",
+                  "type": "string",
+                  "required": false,
+                  "doc": "External/legacy target. Prefer `navigate`/`patch` with VerifiedRoutes."
+                },
+                {
+                  "name": "method",
+                  "type": "string",
+                  "required": false
+                },
+                {
+                  "name": "class",
+                  "type": "string",
+                  "required": false
+                },
+                {
+                  "name": "replace",
+                  "type": "boolean",
+                  "required": false
+                }
+              ],
+              "slots": [
+                {
+                  "name": "inner_block",
+                  "required": true,
+                  "attributes": []
+                }
+              ]
+            },
+            {
+              "name": "live_patch",
+              "moduleName": "Phoenix.Component",
+              "filePath": "c:\\Users\\ardic\\.vscode\\extensions\\onsever.phoenix-pulse-1.3.0\\node_modules\\@phoenix-pulse\\language-server\\resources\\phoenix_component_builtins.ex",
+              "line": 1,
+              "doc": "Phoenix.Component.live_patch/1 – Generates a patch navigation link within the same LiveView.",
+              "attributes": [
+                {
+                  "name": "patch",
+                  "type": "string",
+                  "required": true,
+                  "doc": "Use VerifiedRoutes: `patch={~p\"/path\"}`"
+                },
+                {
+                  "name": "class",
+                  "type": "string",
+                  "required": false
+                },
+                {
+                  "name": "replace",
+                  "type": "boolean",
+                  "required": false
+                }
+              ],
+              "slots": [
+                {
+                  "name": "inner_block",
+                  "required": true,
+                  "attributes": []
+                }
+              ]
+            },
+            {
+              "name": "live_redirect",
+              "moduleName": "Phoenix.Component",
+              "filePath": "c:\\Users\\ardic\\.vscode\\extensions\\onsever.phoenix-pulse-1.3.0\\node_modules\\@phoenix-pulse\\language-server\\resources\\phoenix_component_builtins.ex",
+              "line": 1,
+              "doc": "Phoenix.Component.live_redirect/1 – Generates a redirect navigation link to another LiveView or controller.",
+              "attributes": [
+                {
+                  "name": "navigate",
+                  "type": "string",
+                  "required": true,
+                  "doc": "Use VerifiedRoutes: `navigate={~p\"/path\"}`"
+                },
+                {
+                  "name": "class",
+                  "type": "string",
+                  "required": false
+                },
+                {
+                  "name": "replace",
+                  "type": "boolean",
+                  "required": false
+                }
+              ],
+              "slots": [
+                {
+                  "name": "inner_block",
+                  "required": true,
+                  "attributes": []
+                }
+              ]
+            },
+            {
+              "name": "live_component",
+              "moduleName": "Phoenix.Component",
+              "filePath": "c:\\Users\\ardic\\.vscode\\extensions\\onsever.phoenix-pulse-1.3.0\\node_modules\\@phoenix-pulse\\language-server\\resources\\phoenix_component_builtins.ex",
+              "line": 1,
+              "doc": "Phoenix.Component.live_component/1 – Embeds a stateful LiveComponent from HEEx.",
+              "attributes": [
+                {
+                  "name": "module",
+                  "type": "module",
+                  "required": true,
+                  "doc": "LiveComponent module (e.g., `module={MyAppWeb.ModalComponent}`)."
+                },
+                {
+                  "name": "id",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": ":for",
+                  "type": "any",
+                  "required": false
+                },
+                {
+                  "name": ":let",
+                  "type": "any",
+                  "required": false
+                }
+              ],
+              "slots": [
+                {
+                  "name": "inner_block",
+                  "required": false,
+                  "attributes": []
+                }
+              ]
+            },
+            {
+              "name": "form",
+              "moduleName": "Phoenix.Component",
+              "filePath": "c:\\Users\\ardic\\.vscode\\extensions\\onsever.phoenix-pulse-1.3.0\\node_modules\\@phoenix-pulse\\language-server\\resources\\phoenix_component_builtins.ex",
+              "line": 1,
+              "doc": "Phoenix.Component.form/1 – Renders a HEEx form with support for :let assigns and action attributes.",
+              "attributes": [
+                {
+                  "name": "for",
+                  "type": "any",
+                  "required": true
+                },
+                {
+                  "name": "as",
+                  "type": "string",
+                  "required": false
+                },
+                {
+                  "name": "id",
+                  "type": "string",
+                  "required": false
+                },
+                {
+                  "name": "action",
+                  "type": "string",
+                  "required": false
+                },
+                {
+                  "name": "method",
+                  "type": "string",
+                  "required": false
+                },
+                {
+                  "name": "phx-submit",
+                  "type": "string",
+                  "required": false
+                },
+                {
+                  "name": "phx-change",
+                  "type": "string",
+                  "required": false
+                },
+                {
+                  "name": ":let",
+                  "type": "any",
+                  "required": false
+                }
+              ],
+              "slots": [
+                {
+                  "name": "inner_block",
+                  "required": true,
+                  "attributes": []
+                },
+                {
+                  "name": "actions",
+                  "required": false,
+                  "attributes": []
+                }
+              ]
+            },
+            {
+              "name": "inputs_for",
+              "moduleName": "Phoenix.Component",
+              "filePath": "c:\\Users\\ardic\\.vscode\\extensions\\onsever.phoenix-pulse-1.3.0\\node_modules\\@phoenix-pulse\\language-server\\resources\\phoenix_component_builtins.ex",
+              "line": 1,
+              "doc": "Phoenix.Component.inputs_for/1 – Iterates nested inputs for associations or embeds within a parent form.",
+              "attributes": [
+                {
+                  "name": "field",
+                  "type": "any",
+                  "required": true,
+                  "doc": "Form field or association (e.g., `field={f[:addresses]}`)."
+                },
+                {
+                  "name": ":let",
+                  "type": "any",
+                  "required": true,
+                  "doc": "Binding for the nested form (e.g., `:let={address_form}`)."
+                },
+                {
+                  "name": "for",
+                  "type": "any",
+                  "required": false,
+                  "doc": "Explicit changeset/source for the nested inputs."
+                }
+              ],
+              "slots": [
+                {
+                  "name": "inner_block",
+                  "required": true,
+                  "attributes": []
+                }
+              ]
+            }
+          ]
+        ],
+        [
+          "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\layouts.ex",
+          [
+            {
+              "name": "app",
+              "moduleName": "UpaTikPortalWeb.Layouts",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\layouts.ex",
+              "line": 36,
+              "attributes": [
+                {
+                  "name": "flash",
+                  "type": "map",
+                  "rawType": ":map",
+                  "required": true,
+                  "doc": "the map of flash messages"
+                },
+                {
+                  "name": "current_scope",
+                  "type": "map",
+                  "rawType": ":map",
+                  "required": false
+                }
+              ],
+              "slots": [
+                {
+                  "name": "inner_block",
+                  "required": true,
+                  "attributes": []
+                }
+              ]
+            },
+            {
+              "name": "flash_group",
+              "moduleName": "UpaTikPortalWeb.Layouts",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\layouts.ex",
+              "line": 85,
+              "attributes": [
+                {
+                  "name": "flash",
+                  "type": "map",
+                  "rawType": ":map",
+                  "required": true,
+                  "doc": "the map of flash messages"
+                },
+                {
+                  "name": "id",
+                  "type": "string",
+                  "rawType": ":string",
+                  "required": false,
+                  "default": "\"flash-group\"",
+                  "doc": "the optional id of flash container"
+                }
+              ],
+              "slots": []
+            },
+            {
+              "name": "theme_toggle",
+              "moduleName": "UpaTikPortalWeb.Layouts",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\layouts.ex",
+              "line": 123,
+              "attributes": [],
+              "slots": []
+            }
+          ]
+        ],
+        [
+          "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\core_components.ex",
+          [
+            {
+              "name": "flash",
+              "moduleName": "UpaTikPortalWeb.CoreComponents",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\core_components.ex",
+              "line": 49,
+              "attributes": [
+                {
+                  "name": "id",
+                  "type": "string",
+                  "rawType": ":string",
+                  "required": false,
+                  "doc": "the optional id of flash container"
+                },
+                {
+                  "name": "flash",
+                  "type": "map",
+                  "rawType": ":map",
+                  "required": false,
+                  "default": "%{}",
+                  "doc": "the map of flash messages to display"
+                },
+                {
+                  "name": "title",
+                  "type": "string",
+                  "rawType": ":string",
+                  "required": false,
+                  "default": "nil"
+                },
+                {
+                  "name": "kind",
+                  "type": "atom",
+                  "rawType": ":atom",
+                  "required": false,
+                  "values": [
+                    "info",
+                    "error"
+                  ],
+                  "doc": "used for styling and flash lookup"
+                },
+                {
+                  "name": "rest",
+                  "type": "global",
+                  "rawType": ":global",
+                  "required": false,
+                  "doc": "the arbitrary HTML attributes to add to the flash container"
+                }
+              ],
+              "slots": [
+                {
+                  "name": "inner_block",
+                  "required": false,
+                  "attributes": [],
+                  "doc": "the optional inner block that renders the flash message"
+                }
+              ]
+            },
+            {
+              "name": "button",
+              "moduleName": "UpaTikPortalWeb.CoreComponents",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\core_components.ex",
+              "line": 95,
+              "attributes": [
+                {
+                  "name": "rest",
+                  "type": "global",
+                  "rawType": ":global",
+                  "required": false
+                },
+                {
+                  "name": "class",
+                  "type": "any",
+                  "rawType": ":any",
+                  "required": false
+                },
+                {
+                  "name": "variant",
+                  "type": "string",
+                  "rawType": ":string",
+                  "required": false
+                }
+              ],
+              "slots": [
+                {
+                  "name": "inner_block",
+                  "required": true,
+                  "attributes": []
+                }
+              ]
+            },
+            {
+              "name": "input",
+              "moduleName": "UpaTikPortalWeb.CoreComponents",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\core_components.ex",
+              "line": 194,
+              "attributes": [
+                {
+                  "name": "options",
+                  "type": "list",
+                  "rawType": ":list",
+                  "required": false,
+                  "doc": "the options to pass to Phoenix.HTML.Form.options_for_select/2"
+                },
+                {
+                  "name": "multiple",
+                  "type": "boolean",
+                  "rawType": ":boolean",
+                  "required": false,
+                  "default": "false",
+                  "doc": "the multiple flag for select inputs"
+                },
+                {
+                  "name": "class",
+                  "type": "any",
+                  "rawType": ":any",
+                  "required": false,
+                  "default": "nil",
+                  "doc": "the input class to use over defaults"
+                },
+                {
+                  "name": "error_class",
+                  "type": "any",
+                  "rawType": ":any",
+                  "required": false,
+                  "default": "nil",
+                  "doc": "the input error class to use over defaults"
+                },
+                {
+                  "name": "rest",
+                  "type": "global",
+                  "rawType": ":global",
+                  "required": false
+                }
+              ],
+              "slots": []
+            },
+            {
+              "name": "error",
+              "moduleName": "UpaTikPortalWeb.CoreComponents",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\core_components.ex",
+              "line": 298,
+              "attributes": [],
+              "slots": []
+            },
+            {
+              "name": "header",
+              "moduleName": "UpaTikPortalWeb.CoreComponents",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\core_components.ex",
+              "line": 314,
+              "attributes": [],
+              "slots": [
+                {
+                  "name": "inner_block",
+                  "required": true,
+                  "attributes": []
+                },
+                {
+                  "name": "subtitle",
+                  "required": false,
+                  "attributes": []
+                },
+                {
+                  "name": "actions",
+                  "required": false,
+                  "attributes": []
+                }
+              ]
+            },
+            {
+              "name": "table",
+              "moduleName": "UpaTikPortalWeb.CoreComponents",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\core_components.ex",
+              "line": 355,
+              "attributes": [
+                {
+                  "name": "id",
+                  "type": "string",
+                  "rawType": ":string",
+                  "required": true
+                },
+                {
+                  "name": "rows",
+                  "type": "list",
+                  "rawType": ":list",
+                  "required": true
+                },
+                {
+                  "name": "row_id",
+                  "type": "any",
+                  "rawType": ":any",
+                  "required": false,
+                  "default": "nil",
+                  "doc": "the function for generating the row id"
+                },
+                {
+                  "name": "row_click",
+                  "type": "any",
+                  "rawType": ":any",
+                  "required": false,
+                  "default": "nil",
+                  "doc": "the function for handling phx-click on each row"
+                },
+                {
+                  "name": "row_item",
+                  "type": "any",
+                  "rawType": ":any",
+                  "required": false
+                }
+              ],
+              "slots": [
+                {
+                  "name": "col",
+                  "required": true,
+                  "attributes": [
+                    {
+                      "name": "label",
+                      "type": "string",
+                      "rawType": ":string",
+                      "required": false
+                    }
+                  ]
+                },
+                {
+                  "name": "action",
+                  "required": false,
+                  "attributes": [],
+                  "doc": "the slot for showing user actions in the last table column"
+                }
+              ]
+            },
+            {
+              "name": "list",
+              "moduleName": "UpaTikPortalWeb.CoreComponents",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\core_components.ex",
+              "line": 407,
+              "attributes": [],
+              "slots": [
+                {
+                  "name": "item",
+                  "required": true,
+                  "attributes": [
+                    {
+                      "name": "title",
+                      "type": "string",
+                      "rawType": ":string",
+                      "required": true
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "icon",
+              "moduleName": "UpaTikPortalWeb.CoreComponents",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\core_components.ex",
+              "line": 441,
+              "attributes": [
+                {
+                  "name": "name",
+                  "type": "string",
+                  "rawType": ":string",
+                  "required": true
+                },
+                {
+                  "name": "class",
+                  "type": "any",
+                  "rawType": ":any",
+                  "required": false,
+                  "default": "\"size-4\""
+                }
+              ],
+              "slots": []
+            }
+          ]
+        ],
+        [
+          "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\controllers\\error_html.ex",
+          []
+        ],
+        [
+          "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\controllers\\page_html.ex",
+          []
+        ]
+      ],
+      "fileHashes": {
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\layouts.ex": "4b77b215304ebf2e1b01f3f466e9f88e96f77862",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\core_components.ex": "71fc467e47fe8179862410c304e90da9a04d0ec5",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\controllers\\error_html.ex": "fea8a46976dd45e89036b0c5c8f90f680d2f29b6",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\controllers\\page_html.ex": "9c4485c1d44d1642ccbcee290c5b6ce1ec13a8e1"
+      },
+      "workspaceRoot": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix"
+    },
+    "schemas": {
+      "schemas": [
+        [
+          "UpaTikPortal.Requests.EmailRequest",
+          {
+            "moduleName": "UpaTikPortal.Requests.EmailRequest",
+            "tableName": "email_requests",
+            "fields": [
+              {
+                "name": "id",
+                "type": "id"
+              },
+              {
+                "name": "nim",
+                "type": "string"
+              },
+              {
+                "name": "full_name",
+                "type": "string"
+              },
+              {
+                "name": "email_requested",
+                "type": "string"
+              },
+              {
+                "name": "request_type",
+                "type": "string"
+              },
+              {
+                "name": "ktm_photo_url",
+                "type": "string"
+              },
+              {
+                "name": "status",
+                "type": "string"
+              },
+              {
+                "name": "otp_code",
+                "type": "string"
+              },
+              {
+                "name": "otp_sent_at",
+                "type": "utc_datetime"
+              },
+              {
+                "name": "admin_notes",
+                "type": "string"
+              },
+              {
+                "name": "user",
+                "type": "assoc",
+                "elixirType": "UpaTikPortal.Accounts.User"
+              },
+              {
+                "name": "inserted_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "updated_at",
+                "type": "naive_datetime"
+              }
+            ],
+            "associations": {},
+            "associationsDetailed": [],
+            "aliases": {},
+            "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal\\requests\\email_request.ex",
+            "line": 8
+          }
+        ],
+        [
+          "UpaTikPortal.Accounts.User",
+          {
+            "moduleName": "UpaTikPortal.Accounts.User",
+            "tableName": "users",
+            "fields": [
+              {
+                "name": "id",
+                "type": "id"
+              },
+              {
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "name": "email",
+                "type": "string"
+              },
+              {
+                "name": "role",
+                "type": "string"
+              },
+              {
+                "name": "google_uid",
+                "type": "string"
+              },
+              {
+                "name": "email_requests",
+                "type": "list",
+                "elixirType": "UpaTikPortal.Requests.EmailRequest"
+              },
+              {
+                "name": "inserted_at",
+                "type": "naive_datetime"
+              },
+              {
+                "name": "updated_at",
+                "type": "naive_datetime"
+              }
+            ],
+            "associations": {},
+            "associationsDetailed": [],
+            "aliases": {},
+            "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal\\accounts\\user.ex",
+            "line": 8
+          }
+        ]
+      ],
+      "schemasByFile": [
+        [
+          "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal\\requests\\email_request.ex",
+          [
+            {
+              "moduleName": "UpaTikPortal.Requests.EmailRequest",
+              "tableName": "email_requests",
+              "fields": [
+                {
+                  "name": "id",
+                  "type": "id"
+                },
+                {
+                  "name": "nim",
+                  "type": "string"
+                },
+                {
+                  "name": "full_name",
+                  "type": "string"
+                },
+                {
+                  "name": "email_requested",
+                  "type": "string"
+                },
+                {
+                  "name": "request_type",
+                  "type": "string"
+                },
+                {
+                  "name": "ktm_photo_url",
+                  "type": "string"
+                },
+                {
+                  "name": "status",
+                  "type": "string"
+                },
+                {
+                  "name": "otp_code",
+                  "type": "string"
+                },
+                {
+                  "name": "otp_sent_at",
+                  "type": "utc_datetime"
+                },
+                {
+                  "name": "admin_notes",
+                  "type": "string"
+                },
+                {
+                  "name": "user",
+                  "type": "assoc",
+                  "elixirType": "UpaTikPortal.Accounts.User"
+                },
+                {
+                  "name": "inserted_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "updated_at",
+                  "type": "naive_datetime"
+                }
+              ],
+              "associations": {},
+              "associationsDetailed": [],
+              "aliases": {},
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal\\requests\\email_request.ex",
+              "line": 8
+            }
+          ]
+        ],
+        [
+          "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal\\accounts\\user.ex",
+          [
+            {
+              "moduleName": "UpaTikPortal.Accounts.User",
+              "tableName": "users",
+              "fields": [
+                {
+                  "name": "id",
+                  "type": "id"
+                },
+                {
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "name": "email",
+                  "type": "string"
+                },
+                {
+                  "name": "role",
+                  "type": "string"
+                },
+                {
+                  "name": "google_uid",
+                  "type": "string"
+                },
+                {
+                  "name": "email_requests",
+                  "type": "list",
+                  "elixirType": "UpaTikPortal.Requests.EmailRequest"
+                },
+                {
+                  "name": "inserted_at",
+                  "type": "naive_datetime"
+                },
+                {
+                  "name": "updated_at",
+                  "type": "naive_datetime"
+                }
+              ],
+              "associations": {},
+              "associationsDetailed": [],
+              "aliases": {},
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal\\accounts\\user.ex",
+              "line": 8
+            }
+          ]
+        ]
+      ],
+      "fileHashes": {
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal\\requests\\email_request.ex": "95ca7fe8374ff0d2b20b1018119caf67a9f3e25b",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal\\accounts\\user.ex": "910674bae16514aae842c054427861c4d1dcdfb6"
+      },
+      "workspaceRoot": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix"
+    },
+    "events": {
+      "events": [
+        [
+          "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\login_live.ex",
+          []
+        ],
+        [
+          "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\admin\\request_list_live.ex",
+          [
+            {
+              "name": "filter",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\admin\\request_list_live.ex",
+              "moduleName": "UpaTikPortalWeb.Admin.RequestListLive",
+              "line": 18,
+              "params": "%{\"status\" => status}",
+              "kind": "handle_event",
+              "clause": "def handle_event(\"filter\", %{\"status\" => status}, socket) do",
+              "nameKind": "string"
+            },
+            {
+              "name": "search",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\admin\\request_list_live.ex",
+              "moduleName": "UpaTikPortalWeb.Admin.RequestListLive",
+              "line": 22,
+              "params": "%{\"q\" => q}",
+              "kind": "handle_event",
+              "clause": "def handle_event(\"search\", %{\"q\" => q}, socket) do",
+              "nameKind": "string"
+            },
+            {
+              "name": "delete",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\admin\\request_list_live.ex",
+              "moduleName": "UpaTikPortalWeb.Admin.RequestListLive",
+              "line": 26,
+              "params": "%{\"id\" => id}",
+              "kind": "handle_event",
+              "clause": "def handle_event(\"delete\", %{\"id\" => id}, socket) do",
+              "nameKind": "string"
+            }
+          ]
+        ],
+        [
+          "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\admin\\dashboard_live.ex",
+          []
+        ],
+        [
+          "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\admin\\request_detail_live.ex",
+          [
+            {
+              "name": "approve",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\admin\\request_detail_live.ex",
+              "moduleName": "UpaTikPortalWeb.Admin.RequestDetailLive",
+              "line": 20,
+              "params": "_params",
+              "kind": "handle_event",
+              "clause": "def handle_event(\"approve\", _params, socket) do",
+              "nameKind": "string"
+            },
+            {
+              "name": "reject",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\admin\\request_detail_live.ex",
+              "moduleName": "UpaTikPortalWeb.Admin.RequestDetailLive",
+              "line": 33,
+              "params": "_params",
+              "kind": "handle_event",
+              "clause": "def handle_event(\"reject\", _params, socket) do",
+              "nameKind": "string"
+            },
+            {
+              "name": "update-field",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\admin\\request_detail_live.ex",
+              "moduleName": "UpaTikPortalWeb.Admin.RequestDetailLive",
+              "line": 46,
+              "params": "%{\"notes\" => notes",
+              "kind": "handle_event",
+              "clause": "def handle_event(\"update-field\", %{\"notes\" => notes, \"otp\" => otp}, socket) do",
+              "nameKind": "string"
+            },
+            {
+              "name": "update-field",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\admin\\request_detail_live.ex",
+              "moduleName": "UpaTikPortalWeb.Admin.RequestDetailLive",
+              "line": 50,
+              "params": "%{\"notes\" => notes}",
+              "kind": "handle_event",
+              "clause": "def handle_event(\"update-field\", %{\"notes\" => notes}, socket) do",
+              "nameKind": "string"
+            },
+            {
+              "name": "update-field",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\admin\\request_detail_live.ex",
+              "moduleName": "UpaTikPortalWeb.Admin.RequestDetailLive",
+              "line": 54,
+              "params": "%{\"otp\" => otp}",
+              "kind": "handle_event",
+              "clause": "def handle_event(\"update-field\", %{\"otp\" => otp}, socket) do",
+              "nameKind": "string"
+            },
+            {
+              "name": "send-otp",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\admin\\request_detail_live.ex",
+              "moduleName": "UpaTikPortalWeb.Admin.RequestDetailLive",
+              "line": 58,
+              "params": "_params",
+              "kind": "handle_event",
+              "clause": "def handle_event(\"send-otp\", _params, socket) do",
+              "nameKind": "string"
+            },
+            {
+              "name": "save-notes",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\admin\\request_detail_live.ex",
+              "moduleName": "UpaTikPortalWeb.Admin.RequestDetailLive",
+              "line": 83,
+              "params": "_params",
+              "kind": "handle_event",
+              "clause": "def handle_event(\"save-notes\", _params, socket) do",
+              "nameKind": "string"
+            },
+            {
+              "name": "delete",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\admin\\request_detail_live.ex",
+              "moduleName": "UpaTikPortalWeb.Admin.RequestDetailLive",
+              "line": 96,
+              "params": "_params",
+              "kind": "handle_event",
+              "clause": "def handle_event(\"delete\", _params, socket) do",
+              "nameKind": "string"
+            }
+          ]
+        ],
+        [
+          "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\request_live.ex",
+          [
+            {
+              "name": "set_type",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\request_live.ex",
+              "moduleName": "UpaTikPortalWeb.RequestLive",
+              "line": 32,
+              "params": "%{\"type\" => type}",
+              "kind": "handle_event",
+              "clause": "def handle_event(\"set_type\", %{\"type\" => type}, socket) do",
+              "nameKind": "string"
+            },
+            {
+              "name": "update_field",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\request_live.ex",
+              "moduleName": "UpaTikPortalWeb.RequestLive",
+              "line": 36,
+              "params": "%{\"_target\" => [\"ktm_photo\"]}",
+              "kind": "handle_event",
+              "clause": "def handle_event(\"update_field\", %{\"_target\" => [\"ktm_photo\"]}, socket) do",
+              "nameKind": "string"
+            },
+            {
+              "name": "update_field",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\request_live.ex",
+              "moduleName": "UpaTikPortalWeb.RequestLive",
+              "line": 41,
+              "params": "params",
+              "kind": "handle_event",
+              "clause": "def handle_event(\"update_field\", params, socket) do",
+              "nameKind": "string"
+            },
+            {
+              "name": "cancel-upload",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\request_live.ex",
+              "moduleName": "UpaTikPortalWeb.RequestLive",
+              "line": 53,
+              "params": "%{\"ref\" => ref}",
+              "kind": "handle_event",
+              "clause": "def handle_event(\"cancel-upload\", %{\"ref\" => ref}, socket) do",
+              "nameKind": "string"
+            },
+            {
+              "name": "submit",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\request_live.ex",
+              "moduleName": "UpaTikPortalWeb.RequestLive",
+              "line": 57,
+              "params": "_params",
+              "kind": "handle_event",
+              "clause": "def handle_event(\"submit\", _params, socket) do",
+              "nameKind": "string"
+            },
+            {
+              "name": "reset",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\request_live.ex",
+              "moduleName": "UpaTikPortalWeb.RequestLive",
+              "line": 95,
+              "params": "_params",
+              "kind": "handle_event",
+              "clause": "def handle_event(\"reset\", _params, socket) do",
+              "nameKind": "string"
+            }
+          ]
+        ],
+        [
+          "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\request_status_live.ex",
+          []
+        ]
+      ],
+      "fileHashes": {
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\login_live.ex": "9d516ecd3613894db7478885d1cbdbbe11c7e5fe",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\admin\\request_list_live.ex": "c4602911b6ff4833d25a778bbd893fd1384a99bb",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\admin\\dashboard_live.ex": "591a98438ffe975703fa54f3c38acdc33815c932",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\admin\\request_detail_live.ex": "46aff5f72016ebc71a62fda30c7284f23c0d3b54",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\request_live.ex": "bcc43758df7986efff2c226acd65ae074170de28",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\request_status_live.ex": "ea5235c183c6115658ef983bdfdb83b571dbf890"
+      },
+      "workspaceRoot": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix"
+    },
+    "routes": {
+      "routes": [
+        {
+          "verb": "LIVE",
+          "path": "/",
+          "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
+          "line": 32,
+          "liveModule": "LoginLive",
+          "helperBase": "root",
+          "params": [],
+          "isResource": false,
+          "pipeline": "browser"
+        },
+        {
+          "verb": "GET",
+          "path": "/logout",
+          "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
+          "line": 33,
+          "controller": "AuthController",
+          "action": "redirect_to_logout",
+          "helperBase": "logout",
+          "params": [],
+          "isResource": false,
+          "pipeline": "browser"
+        },
+        {
+          "verb": "GET",
+          "path": "/auth/google",
+          "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
+          "line": 40,
+          "controller": "AuthController",
+          "action": "request",
+          "helperBase": "google",
+          "params": [],
+          "isResource": false,
+          "pipeline": "browser",
+          "scopePath": "/auth"
+        },
+        {
+          "verb": "GET",
+          "path": "/auth/google/callback",
+          "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
+          "line": 41,
+          "controller": "AuthController",
+          "action": "callback",
+          "helperBase": "google_callback",
+          "params": [],
+          "isResource": false,
+          "pipeline": "browser",
+          "scopePath": "/auth"
+        },
+        {
+          "verb": "GET",
+          "path": "/auth/logout",
+          "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
+          "line": 42,
+          "controller": "AuthController",
+          "action": "delete",
+          "helperBase": "logout",
+          "params": [],
+          "isResource": false,
+          "pipeline": "browser",
+          "scopePath": "/auth"
+        },
+        {
+          "verb": "LIVE",
+          "path": "/portal/ajukan",
+          "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
+          "line": 49,
+          "liveModule": "RequestLive",
+          "helperBase": "ajukan",
+          "params": [],
+          "isResource": false,
+          "scopePath": "/portal"
+        },
+        {
+          "verb": "LIVE",
+          "path": "/portal/status",
+          "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
+          "line": 50,
+          "liveModule": "RequestStatusLive",
+          "helperBase": "statu",
+          "params": [],
+          "isResource": false,
+          "scopePath": "/portal"
+        },
+        {
+          "verb": "LIVE",
+          "path": "/admin/",
+          "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
+          "line": 57,
+          "liveModule": "DashboardLive",
+          "helperBase": "root",
+          "params": [],
+          "isResource": false,
+          "scopePath": "/admin"
+        },
+        {
+          "verb": "LIVE",
+          "path": "/admin/pengajuan",
+          "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
+          "line": 58,
+          "liveModule": "RequestListLive",
+          "helperBase": "pengajuan",
+          "params": [],
+          "isResource": false,
+          "scopePath": "/admin"
+        },
+        {
+          "verb": "LIVE",
+          "path": "/admin/pengajuan/:id",
+          "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
+          "line": 59,
+          "liveModule": "RequestDetailLive",
+          "helperBase": "pengajuan",
+          "params": [
+            "id"
+          ],
+          "isResource": false,
+          "scopePath": "/admin"
+        }
+      ],
+      "fileHashes": {
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex": "ebc9b730fa5ef3fb9cf57ec34eb4d38277a3d599"
+      },
+      "workspaceRoot": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix"
+    },
+    "controllers": {
+      "rendersByFile": [
+        [
+          "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\controllers\\page_controller.ex",
+          [
+            {
+              "controllerModule": "UpaTikPortalWeb.PageController",
+              "controllerFile": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\controllers\\page_controller.ex",
+              "action": "home",
+              "templateName": "home",
+              "assigns": [],
+              "assignsWithTypes": [],
+              "actionBody": "  def home(conn, _params) do\n    render(conn, :home)\n  end",
+              "line": 5,
+              "templatePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\controllers\\page_html\\home.html.heex"
+            }
+          ]
+        ],
+        [
+          "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\controllers\\auth_controller.ex",
+          []
+        ]
+      ],
+      "templateSummaries": [
+        [
+          "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\controllers\\page_html\\home.html.heex",
+          {
+            "templatePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\controllers\\page_html\\home.html.heex",
+            "assignSources": {},
+            "controllers": [
+              {
+                "controllerModule": "UpaTikPortalWeb.PageController",
+                "controllerFile": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\controllers\\page_controller.ex",
+                "action": "home",
+                "templateName": "home",
+                "assigns": [],
+                "assignsWithTypes": [],
+                "actionBody": "  def home(conn, _params) do\n    render(conn, :home)\n  end",
+                "line": 5,
+                "templatePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\controllers\\page_html\\home.html.heex"
+              }
+            ]
+          }
+        ]
+      ],
+      "fileHashes": {
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\controllers\\page_controller.ex": "2d7425c84314b2d117ec01dad825f0542c9867ef",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\controllers\\auth_controller.ex": "8575110bbc3147eca4981b5d2720ef669684fcb3"
+      },
+      "workspaceRoot": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix"
+    },
+    "templates": {
+      "templatesByModule": [
+        [
+          "UpaTikPortalWeb.PageHTML",
+          [
+            {
+              "moduleName": "UpaTikPortalWeb.PageHTML",
+              "name": "home",
+              "format": "html",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\controllers\\page_html\\home.html.heex"
+            }
+          ]
+        ]
+      ],
+      "templatesByPath": [
+        [
+          "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\controllers\\page_html\\home.html.heex",
+          {
+            "moduleName": "UpaTikPortalWeb.PageHTML",
+            "name": "home",
+            "format": "html",
+            "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\controllers\\page_html\\home.html.heex"
+          }
+        ]
+      ],
+      "moduleByFile": [
+        [
+          "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\controllers\\page_html.ex",
+          "UpaTikPortalWeb.PageHTML"
+        ]
+      ],
+      "fileHashes": {
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\controllers\\page_html.ex": "9c4485c1d44d1642ccbcee290c5b6ce1ec13a8e1"
+      },
+      "workspaceRoot": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix"
+    },
+    "liveview": {
+      "liveViews": [],
+      "fileHashes": {
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\login_live.ex": "9d516ecd3613894db7478885d1cbdbbe11c7e5fe",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\admin\\request_list_live.ex": "c4602911b6ff4833d25a778bbd893fd1384a99bb",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\admin\\dashboard_live.ex": "591a98438ffe975703fa54f3c38acdc33815c932",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\admin\\request_detail_live.ex": "46aff5f72016ebc71a62fda30c7284f23c0d3b54",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\request_live.ex": "bcc43758df7986efff2c226acd65ae074170de28",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\request_status_live.ex": "ea5235c183c6115658ef983bdfdb83b571dbf890"
+      },
+      "workspaceRoot": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix"
+    }
+  },
+  "fileHashes": {}
+}

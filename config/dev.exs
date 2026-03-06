@@ -3,7 +3,7 @@ import Config
 # Configure your database
 config :upa_tik_portal, UpaTikPortal.Repo,
   username: "postgres",
-  password: "postgres", # Cek dashboard Laragon Anda jika password ini salah (biasanya 'postgres' atau kosong '')
+  password: "admin123", # Cek dashboard Laragon Anda jika password ini salah (biasanya 'postgres' atau kosong '')
   hostname: "localhost",
   database: "upa_tik_portal_dev",
   stacktrace: true,
