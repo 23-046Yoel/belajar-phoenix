@@ -3,7 +3,7 @@ defmodule UpaTikPortalWeb.LoginLive do
 
   def mount(_params, session, socket) do
     current_user = get_user_from_session(session)
-
+    IO.inspect(current_user, label: "current_user")
     if current_user do
       {:ok, push_navigate(socket, to: redirect_path(current_user))}
     else
@@ -18,7 +18,7 @@ defmodule UpaTikPortalWeb.LoginLive do
   defp get_user_from_session(_), do: nil
 
   defp redirect_path(%{role: "admin"}), do: ~p"/admin"
-  defp redirect_path(_), do: ~p"/portal/ajukan"
+  defp redirect_path(_), do: ~p"/portal/home"
 
   def render(assigns) do
     ~H"""

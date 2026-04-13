@@ -49,6 +49,9 @@ defmodule UpaTikPortalWeb.Router do
     live "/ajukan", RequestLive, :index
     live "/status", RequestStatusLive, :index
     live "/keluhan", KeluhanLive, :index
+
+    live "/home", Home.Index, :index
+    live "/lowongan", Lowongan.Index, :index
   end
 
   # ─── Admin-only routes ────────────────────────────────────────────────────
@@ -68,4 +71,3 @@ defmodule UpaTikPortalWeb.Router do
     get "/view-image/:key", StorageController, :view_image
   end
 end
-

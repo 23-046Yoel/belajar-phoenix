@@ -81,6 +81,7 @@ defmodule UpaTikPortalWeb do
       import Phoenix.HTML
       # Core UI components
       import UpaTikPortalWeb.CoreComponents
+      import UpaTikPortalWeb.Components.MyComponents
 
       # Common modules used in templates
       alias Phoenix.LiveView.JS
