@@ -1,24 +1,24 @@
-# lib/upa_tik_portal_web/live/admin/lowongan_live/new.ex
-defmodule UpaTikPortalWeb.Admin.LowonganLive.New do
+defmodule UpaTikPortalWeb.Admin.LowonganLive.Edit do
   use UpaTikPortalWeb, :live_view
   alias UpaTikPortal.Recruitment.InternshipOpeningService
-  alias UpaTikPortal.Recruitment.InternshipOpening
+  # alias UpaTikPortal.Recruitment.InternshipOpening
 
   @impl true
-  def mount(_params, _session, socket) do
-    # Siapkan changeset kosong
-    changeset = InternshipOpeningService.change_internship_opening(%InternshipOpening{})
+  def mount(%{"id" => id}, _session, socket) do
+    opening = InternshipOpeningService.get_internship_opening!(id)
+    changeset = InternshipOpeningService.change_internship_opening(opening)
 
     {:ok,
      socket
-     |> assign(:page_title, "Tambah Lowongan Baru")
+     |> assign(:page_title, "Edit Lowongan")
+     |> assign(:opening, opening)
      |> assign_form(changeset)}
   end
 
   @impl true
   def handle_event("validate", %{"internship_opening" => params}, socket) do
     changeset =
-      %InternshipOpening{}
+      socket.assigns.opening
       |> InternshipOpeningService.change_internship_opening(params)
       |> Map.put(:action, :validate)
 
@@ -27,12 +27,12 @@ defmodule UpaTikPortalWeb.Admin.LowonganLive.New do
 
   @impl true
   def handle_event("save", %{"internship_opening" => params}, socket) do
-    case InternshipOpeningService.create_internship_opening(params) do
+    case InternshipOpeningService.update_internship_opening(socket.assigns.opening, params) do
       {:ok, _opening} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Lowongan berhasil diterbitkan!")
-         |> push_navigate(to: ~p"/admin/lowongan")} # Kembali ke daftar
+         |> put_flash(:info, "Lowongan berhasil diperbarui")
+         |> push_navigate(to: ~p"/admin/lowongan")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}

@@ -1,8 +1,11 @@
 defmodule UpaTikPortalWeb.Components.MyComponents do
   use Phoenix.Component
+  use Phoenix.VerifiedRoutes,
+    endpoint: UpaTikPortalWeb.Endpoint,
+    router: UpaTikPortalWeb.Router
+  alias Phoenix.LiveView.JS
 
   slot :inner_block, required: true
-
   def navbar(assigns) do
     ~H"""
     <nav class="border-b border-slate-200 shadow-sm">
@@ -32,6 +35,8 @@ defmodule UpaTikPortalWeb.Components.MyComponents do
     """
   end
 
+  attr :active_tab, :atom, default: :dashboard
+  
   def navbarAdmin(assigns) do
     ~H"""
       <nav class="border-b border-slate-200 shadow-sm">
@@ -47,14 +52,35 @@ defmodule UpaTikPortalWeb.Components.MyComponents do
               <p class="text-xs">Panel Manajemen</p>
             </div>
           </div>
-          <div class="flex gap-4 items-center">
-            <a href="/admin/pengajuan" class="text-sm font-medium600 hover:text-blue-800 transition-colors">Pengajuan</a>
-            <a href="/admin/keluhan" class="text-sm font-medium hover:text-blue-600 transition-colors">Keluhan</a>
-            <a href="/admin/users" class="text-sm font-medium hover:text-blue-600 transition-colors">Pengguna</a>
-            <a href="/auth/logout" class="text-sm hover:text-red-600 transition-colors">Logout</a>
+          <div class="flex gap-6 items-center">
+            <.nav_link navigate={~p"/admin"} active={@active_tab == :dashboard}>Dashboard</.nav_link>
+            <.nav_link navigate={~p"/admin/pengajuan"} active={@active_tab == :pengajuan}>Pengajuan</.nav_link>
+            <.nav_link navigate={~p"/admin/keluhan"} active={@active_tab == :keluhan}>Keluhan</.nav_link>
+            <.nav_link navigate={~p"/admin/users"} active={@active_tab == :users}>Pengguna</.nav_link>
+            <.nav_link navigate={~p"/admin/lowongan"} active={@active_tab == :lowongan}>Lowongan</.nav_link>
+            <.nav_link navigate={~p"/auth/logout"} active={@active_tab == :logout}>Logout</.nav_link>
           </div>
         </div>
       </nav>
+    """
+  end
+
+  attr :navigate, :string, required: true
+  attr :active, :boolean, default: false
+  slot :inner_block, required: true
+
+  def nav_link(assigns) do
+    ~H"""
+      <.link
+        navigate={@navigate}
+        class={[
+          "text-sm font-medium transition-colors px-3 py-2 rounded-md",
+          @active && "bg-blue-50 text-blue-700",
+          !@active && "text-slate-600 hover:text-blue-600 hover:bg-slate-50"
+        ]}
+      >
+        <%= render_slot(@inner_block) %>
+      </.link>
     """
   end
 end

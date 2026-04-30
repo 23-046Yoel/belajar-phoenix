@@ -1,5 +1,5 @@
 <div class="min-h-screen">
-  <.navbarAdmin />
+  <.navbarAdmin active_tab={:lowongan} />
   <div class="max-w-7xl mx-auto sm:flex sm:items-center sm:justify-between my-8">
     <div>
       <h1 class="text-3xl font-bold tracking-tight">Lowongan Magang</h1>
@@ -55,7 +55,7 @@
           </td>
           <td class="relative whitespace-nowrap py-5 pl-3 pr-6 text-right text-sm font-medium">
             <div class="flex justify-end gap-3">
-              <.link patch={~p"/admin/lowongan"} class="hover:text-blue-600 transition-colors" title="Edit">
+              <.link patch={~p"/admin/lowongan/#{item.id}/edit"} class="hover:text-blue-600 transition-colors" title="Edit">
                 <.icon name="hero-pencil-square" class="w-5 h-5" />
               </.link>
               <button 
@@ -80,20 +80,3 @@
     </div>
   </div>
 </div>
-
-<%!-- Modal ini akan muncul otomatis saat @live_action bernilai :new --%>
-<.modal 
-  :if={@live_action in [:new, :edit]} 
-  id="lowongan-modal" 
-  show 
-  on_cancel={push_patch(@socket, to: ~p"/admin/lowongan")}
->
-  <.live_component
-    module={UpaTikPortalWeb.Admin.LowonganLive.FormComponent}
-    id={@opening.id || :new}
-    title={@page_title}
-    action={@live_action}
-    opening={@opening}
-    patch={~p"/admin/lowongan"}
-  />
-</.modal>

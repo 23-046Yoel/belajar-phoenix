@@ -43,7 +43,7 @@ defmodule UpaTikPortalWeb.Admin.RequestListLive do
   def render(assigns) do
     ~H"""
     <div class="min-h-screen bg-slate-50">
-      <nav class="bg-white border-b border-slate-200 shadow-sm">
+      <%!-- <nav class="bg-white border-b border-slate-200 shadow-sm">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div class="flex items-center gap-3">
             <a href="/admin" class="flex items-center gap-2">
@@ -63,7 +63,8 @@ defmodule UpaTikPortalWeb.Admin.RequestListLive do
             <a href="/auth/logout" class="text-sm text-slate-500 hover:text-red-600 transition-colors">Logout</a>
           </div>
         </div>
-      </nav>
+      </nav> --%>
+      <.navbarAdmin active_tab={:pengajuan} />
 
       <div class="max-w-7xl mx-auto px-6 py-8">
         <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
