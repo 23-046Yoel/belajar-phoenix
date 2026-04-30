@@ -50,8 +50,8 @@ defmodule UpaTikPortalWeb.Router do
     live "/status", RequestStatusLive, :index
     live "/keluhan", KeluhanLive, :index
 
-    live "/home", Home.Index, :index
-    live "/lowongan", Lowongan.Index, :index
+    live "/", Home.Index, :index
+    live "/lowongan", LowonganLive.Index, :index
   end
 
   # ─── Admin-only routes ────────────────────────────────────────────────────
@@ -63,6 +63,9 @@ defmodule UpaTikPortalWeb.Router do
     live "/pengajuan/:id", RequestDetailLive, :show
     live "/keluhan", KeluhanListLive, :index
     live "/users", UserListLive, :index
+
+    live "/lowongan", LowonganLive.Index, :index
+    live "/lowongan/new", LowonganLive.New, :new
   end
 
   scope "/storage", UpaTikPortalWeb do

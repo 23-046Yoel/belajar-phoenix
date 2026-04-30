@@ -1,0 +1,99 @@
+<div class="min-h-screen">
+  <.navbarAdmin />
+  <div class="max-w-7xl mx-auto sm:flex sm:items-center sm:justify-between my-8">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight">Lowongan Magang</h1>
+      <p class="mt-2 text-sm">Kelola semua daftar lowongan magang aktif untuk mahasiswa UTM.</p>
+    </div>
+    <div class="mt-4 sm:ml-16 sm:mt-0">
+      <.link 
+        patch={~p"/admin/lowongan/new"} 
+        class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-all"
+      >
+        <.icon name="hero-plus" class="w-4 h-4 mr-2" />
+        Tambah Lowongan
+      </.link>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto overflow-hidden shadow-sm ring-1 ring-slate-200 rounded-xl">
+    <table class="min-w-full divide-y divide-slate-200">
+      <thead>
+        <tr>
+          <th scope="col" class="py-4 pl-6 pr-3 text-left text-xs font-semibold uppercase tracking-wider">Posisi & Perusahaan</th>
+          <th scope="col" class="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wider">Lokasi</th>
+          <th scope="col" class="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wider">Status</th>
+          <th scope="col" class="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wider">Tanggal Posting</th>
+          <th scope="col" class="relative py-4 pl-3 pr-6 text-right text-xs font-semibold uppercase tracking-wider">Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="internship-openings" phx-update="stream" class="divide-y divide-slate-100">
+        <tr :for={{id, item} <- @streams.lowongans} id={id} class="hover:bg-slate-50/50 transition-colors group">
+          <td class="whitespace-nowrap py-5 pl-6 pr-3 text-sm">
+            <div class="flex flex-col">
+              <span class="font-bold text-base group-hover:text-blue-600 transition-colors"><%= item.title %></span>
+              <span><%= item.title %></span>
+            </div>
+          </td>
+          <td class="whitespace-nowrap px-3 py-5 text-sm">
+            <div class="flex items-center">
+              <.icon name="hero-map-pin" class="w-4 h-4 mr-1" />
+              <%= item.title %>
+            </div>
+          </td>
+          <td class="whitespace-nowrap px-3 py-5 text-sm">
+            <span class={[
+              "inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset",
+              item.is_active == "true" && "bg-green-50 text-green-700 ring-green-600/20",
+              item.is_active == "false" && "bg-red-50 text-red-700 ring-red-600/20",
+            ]}>
+              <%= item.is_active == "true" && "Open" || "Closed" %>
+            </span>
+          </td>
+          <td class="whitespace-nowrap px-3 py-5 text-sm">
+            <%= Calendar.strftime(item.inserted_at, "%d %b %Y") %>
+          </td>
+          <td class="relative whitespace-nowrap py-5 pl-3 pr-6 text-right text-sm font-medium">
+            <div class="flex justify-end gap-3">
+              <.link patch={~p"/admin/lowongan"} class="hover:text-blue-600 transition-colors" title="Edit">
+                <.icon name="hero-pencil-square" class="w-5 h-5" />
+              </.link>
+              <button 
+                phx-click="delete" 
+                phx-value-id={item.id} 
+                data-confirm="Hapus lowongan ini?"
+                class="hover:text-red-600 transition-colors"
+                title="Hapus"
+              >
+                <.icon name="hero-trash" class="w-5 h-5" />
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div :if={!@any_lowongan?} class="py-20 text-center">
+      <.icon name="hero-briefcase" class="mx-auto h-12 w-12 text-slate-300" />
+      <h3 class="mt-2 text-sm font-semibold text-slate-900">Belum ada lowongan</h3>
+      <p class="mt-1 text-sm text-slate-500">Mulai dengan membuat lowongan magang pertama Anda.</p>
+    </div>
+  </div>
+</div>
+
+<%!-- Modal ini akan muncul otomatis saat @live_action bernilai :new --%>
+<.modal 
+  :if={@live_action in [:new, :edit]} 
+  id="lowongan-modal" 
+  show 
+  on_cancel={push_patch(@socket, to: ~p"/admin/lowongan")}
+>
+  <.live_component
+    module={UpaTikPortalWeb.Admin.LowonganLive.FormComponent}
+    id={@opening.id || :new}
+    title={@page_title}
+    action={@live_action}
+    opening={@opening}
+    patch={~p"/admin/lowongan"}
+  />
+</.modal>

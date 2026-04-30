@@ -18,7 +18,7 @@ defmodule UpaTikPortalWeb.LoginLive do
   defp get_user_from_session(_), do: nil
 
   defp redirect_path(%{role: "admin"}), do: ~p"/admin"
-  defp redirect_path(_), do: ~p"/portal/home"
+  defp redirect_path(_), do: ~p"/portal/"
 
   def render(assigns) do
     ~H"""

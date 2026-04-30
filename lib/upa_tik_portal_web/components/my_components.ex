@@ -5,27 +5,56 @@ defmodule UpaTikPortalWeb.Components.MyComponents do
 
   def navbar(assigns) do
     ~H"""
-    <nav class="bg-white border-b border-slate-200 shadow-sm">
+    <nav class="border-b border-slate-200 shadow-sm">
       <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <a href="/portal/home" class="flex">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
-            </svg>
+              </svg>
+            </div>
+            <span class="font-bold">UPA TIK Portal</span>
           </div>
-          <span class="font-bold text-slate-800">UPA TIK Portal</span>
-        </div>
+        </a>
         <div class="flex items-center gap-4">
-          <a href="/portal/ajukan" class="text-sm text-slate-500 hover:text-blue-600 transition-colors">Pengajuan</a>
-          <a href="/portal/status" class="text-sm text-slate-500 hover:text-blue-600 transition-colors">Status</a>
-          <a href="/portal/keluhan" class="text-sm text-blue-600 font-semibold">Lapor Masalah</a>
-          <a href="/auth/logout" class="text-sm text-slate-500 hover:text-red-600 transition-colors">Logout</a>
+          <a href="/portal/home" class="text-sm hover:text-blue-600 transition-colors dark:text-white">Beranada</a>
+          <a href="/portal/ajukan" class="text-sm hover:text-blue-600 transition-colors">Pengajuan</a>
+          <a href="/portal/status" class="text-sm hover:text-blue-600 transition-colors">Status</a>
+          <a href="/portal/keluhan" class="text-sm hover:text-blue-600 transition-colors">Lapor Masalah</a>
+          <a href="/auth/logout" class="text-sm hover:text-red-600 transition-colors">Logout</a>
         </div>
       </div>
     </nav>
     <div class="max-w-7xl mx-auto mt-4 px-4">
       <%= render_slot(@inner_block) %>
     </div>
+    """
+  end
+
+  def navbarAdmin(assigns) do
+    ~H"""
+      <nav class="border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-md">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="font-bold text-sm leading-none">UPA TIK Admin</p>
+              <p class="text-xs">Panel Manajemen</p>
+            </div>
+          </div>
+          <div class="flex gap-4 items-center">
+            <a href="/admin/pengajuan" class="text-sm font-medium600 hover:text-blue-800 transition-colors">Pengajuan</a>
+            <a href="/admin/keluhan" class="text-sm font-medium hover:text-blue-600 transition-colors">Keluhan</a>
+            <a href="/admin/users" class="text-sm font-medium hover:text-blue-600 transition-colors">Pengguna</a>
+            <a href="/auth/logout" class="text-sm hover:text-red-600 transition-colors">Logout</a>
+          </div>
+        </div>
+      </nav>
     """
   end
 end

@@ -9,13 +9,13 @@ defmodule UpaTikPortalWeb.Home.Index do
 
   # 2. Reaksi Terhadap URL (Live Action)
   @impl true
-  def handle_params(params, _url, socket) do
+  def handle_params(_params, _url, socket) do
     {:noreply, socket}
   end
 
   # 3. Menangani Interaksi User (Event)
   @impl true
-  def handle_event("delete", %{"id" => id}, socket) do
+  def handle_event("delete", %{"id" => _id}, socket) do
     {:noreply, socket}
   end
 end

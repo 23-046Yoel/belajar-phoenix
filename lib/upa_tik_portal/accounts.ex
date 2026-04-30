@@ -6,14 +6,14 @@ defmodule UpaTikPortal.Accounts do
   alias UpaTikPortal.Repo
   alias UpaTikPortal.Accounts.User
 
-  @admin_emails ["stokkgun7@gmail.com", "yoelflemming0@gmail.com"]
+  @admin_emails ["stokkgun7@gmail.com", "yoelflemming0@gmail.com", "tsukiaka313@gmail.com"]
 
   @doc """
   Mendapatkan atau membuat user dari data Google OAuth.
   Digunakan saat callback dari Ueberauth.
   """
   def get_or_create_user_from_google(%{info: info, uid: uid}) do
-        role = if info.email in @admin_emails, do: "admin", else: "mahasiswa"
+    role = if info.email in @admin_emails, do: "admin", else: "mahasiswa"
 
     case Repo.get_by(User, google_uid: uid) do
       nil ->
