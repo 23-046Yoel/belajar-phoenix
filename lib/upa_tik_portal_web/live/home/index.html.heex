@@ -1,4 +1,4 @@
-<.navbar>
+<.navbar active_tab={:home} >
     <!-- Hero Section -->
     <section class="relative overflow-hidden py-4 rounded-md">
         <div class="container mx-auto px-6 lg:px-12">
@@ -20,11 +20,8 @@
                     </div>
 
                     <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                        <.link navigate={~p"/portal/ajukan"} class="w-full sm:w-auto rounded-xl bg-blue-600 px-8 py-4 text-center text-sm font-semibold text-white shadow-lg hover:bg-blue-500 transition-all hover:-translate-y-1">
+                        <.link navigate={~p"/portal/lowongan"} class="w-full sm:w-auto rounded-xl bg-blue-600 px-8 py-4 text-center text-sm font-semibold text-white shadow-lg hover:bg-blue-500 transition-all hover:-translate-y-1">
                         Ajukan Magang
-                        </.link>
-                        <.link navigate={~p"/portal/ajukan"} class="w-full sm:w-auto rounded-xl bg-white px-8 py-4 text-center text-sm font-semibold text-slate-900 ring-1 ring-inset ring-slate-300 hover:bg-slate-50 transition-all">
-                        Lihat Lowongan
                         </.link>
                     </div>
                 

@@ -51,7 +51,8 @@ defmodule UpaTikPortalWeb.Router do
     live "/keluhan", KeluhanLive, :index
 
     live "/", Home.Index, :index
-    # live "/lowongan", LowonganLive.Index, :index
+    live "/lowongan", Home.Lowongan.Index, :index
+    live "/lowongan/:id", Home.Lowongan.Detail, :show
   end
 
   # ─── Admin-only routes ────────────────────────────────────────────────────

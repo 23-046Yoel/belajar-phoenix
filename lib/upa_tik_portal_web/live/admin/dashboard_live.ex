@@ -22,27 +22,7 @@ defmodule UpaTikPortalWeb.Admin.DashboardLive do
     ~H"""
     <div class="min-h-screen bg-slate-50">
       <%!-- Admin Navbar --%>
-      <nav class="bg-white border-b border-slate-200 shadow-sm">
-        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-md">
-              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
-              </svg>
-            </div>
-            <div>
-              <p class="font-bold text-slate-900 text-sm leading-none">UPA TIK Admin</p>
-              <p class="text-xs text-slate-500">Panel Manajemen</p>
-            </div>
-          </div>
-          <div class="flex gap-4 items-center">
-            <a href="/admin/pengajuan" class="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors">Pengajuan</a>
-            <a href="/admin/keluhan" class="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors">Keluhan</a>
-            <a href="/admin/users" class="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors">Pengguna</a>
-            <a href="/auth/logout" class="text-sm text-slate-500 hover:text-red-600 transition-colors">Logout</a>
-          </div>
-        </div>
-      </nav>
+      <.navbarAdmin active_tab={:dashboard} />
 
       <div class="max-w-7xl mx-auto px-6 py-8">
         <div class="mb-8">
