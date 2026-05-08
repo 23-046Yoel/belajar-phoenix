@@ -1,0 +1,121 @@
+<Layouts.app flash={@flash} current_scope={@current_scope}>
+  <.navbar current_user={@current_user} />
+
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden pt-16 pb-24 bg-gradient-to-b from-blue-50/50 to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
+        <div class="w-full lg:w-1/2 space-y-8 text-center lg:text-left">
+          <div class="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+            Tahun Akademik 2026/2027
+          </div>
+        
+          <div class="space-y-4">
+            <h1 class="text-5xl font-extrabold tracking-tight text-slate-900 sm:text-7xl">
+              UPA TIK <span class="text-blue-600">Portal Magang</span>
+            </h1>
+            <p class="text-xl text-slate-600 leading-relaxed max-w-2xl">
+              Platform integrasi kegiatan magang mahasiswa Universitas Trunojoyo Madura. 
+              Kelola pengajuan, pantau progres, dan temukan peluang karir masa depan Anda di sini.
+            </p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+            <.link navigate={~p"/portal/ajukan"} class="w-full sm:w-auto rounded-2xl bg-blue-600 px-8 py-4 text-center text-lg font-semibold text-white shadow-xl hover:bg-blue-500 transition-all hover:-translate-y-1 active:scale-95">
+              Ajukan Magang
+            </.link>
+            <.link navigate={~p"/"} class="w-full sm:w-auto rounded-2xl bg-white px-8 py-4 text-center text-lg font-semibold text-slate-900 ring-1 ring-inset ring-slate-300 hover:bg-slate-50 transition-all shadow-sm">
+              Lihat Lowongan
+            </.link>
+          </div>
+        
+          <!-- Stats -->
+          <div class="grid grid-cols-3 gap-8 pt-8 border-t border-slate-100">
+            <div>
+              <p class="text-3xl font-bold text-slate-900">500+</p>
+              <p class="text-sm font-medium text-slate-500 uppercase tracking-wider">Mahasiswa</p>
+            </div>
+            <div>
+              <p class="text-3xl font-bold text-slate-900">100+</p>
+              <p class="text-sm font-medium text-slate-500 uppercase tracking-wider">Mitra Industri</p>
+            </div>
+            <div>
+              <p class="text-3xl font-bold text-slate-900">2026</p>
+              <p class="text-sm font-medium text-slate-500 uppercase tracking-wider">Active Year</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Visual Image -->
+        <div class="w-full lg:w-1/2 relative">
+          <div class="absolute -z-10 top-0 right-0 w-80 h-80 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+          <div class="absolute -z-10 bottom-0 left-0 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse delay-700"></div>
+          <div class="relative bg-white p-8 rounded-[2.5rem] shadow-2xl border border-slate-100">
+            <img 
+              class="w-full h-auto drop-shadow-xl hover:scale-105 transition-transform duration-500" 
+              src="https://upload.wikimedia.org/wikipedia/commons/f/f1/UTM_DIKBUDRISTEK.png" 
+              alt="Logo UTM"
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Grid -->
+  <section class="py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-20 space-y-4">
+        <h2 class="text-blue-600 font-semibold tracking-wide uppercase text-sm">Keunggulan</h2>
+        <p class="text-4xl font-bold text-slate-900">Mengapa Menggunakan Portal Ini?</p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-10">
+        <div class="group p-10 rounded-[2rem] bg-slate-50 border border-transparent hover:border-blue-100 hover:bg-white hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300">
+          <div class="w-14 h-14 bg-blue-600 text-white rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform shadow-lg shadow-blue-200">
+            <.icon name="hero-bolt" class="size-7" />
+          </div>
+          <h3 class="font-bold text-2xl text-slate-900 mb-4">Pengajuan Cepat</h3>
+          <p class="text-slate-600 leading-relaxed text-lg">Proses administrasi magang dilakukan sepenuhnya digital tanpa perlu antri panjang.</p>
+        </div>
+        
+        <div class="group p-10 rounded-[2rem] bg-slate-50 border border-transparent hover:border-green-100 hover:bg-white hover:shadow-2xl hover:shadow-green-500/10 transition-all duration-300">
+          <div class="w-14 h-14 bg-green-600 text-white rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform shadow-lg shadow-green-200">
+            <.icon name="hero-cloud-arrow-up" class="size-7" />
+          </div>
+          <h3 class="font-bold text-2xl text-slate-900 mb-4">Terintegrasi</h3>
+          <p class="text-slate-600 leading-relaxed text-lg">Terhubung langsung dengan data akademik universitas untuk validasi data yang akurat.</p>
+        </div>
+        
+        <div class="group p-10 rounded-[2rem] bg-slate-50 border border-transparent hover:border-purple-100 hover:bg-white hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-300">
+          <div class="w-14 h-14 bg-purple-600 text-white rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform shadow-lg shadow-purple-200">
+            <.icon name="hero-presentation-chart-line" class="size-7" />
+          </div>
+          <h3 class="font-bold text-2xl text-slate-900 mb-4">Monitoring Real-time</h3>
+          <p class="text-slate-600 leading-relaxed text-lg">Pantau status persetujuan pembimbing dan prodi kapan saja dan di mana saja.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="pb-32 px-4">
+    <div class="max-w-5xl mx-auto bg-slate-900 rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden shadow-2xl">
+      <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600 rounded-full blur-[100px] opacity-20 -mr-32 -mt-32"></div>
+      <div class="relative z-10 space-y-8">
+        <h2 class="text-4xl md:text-5xl font-bold text-white">Siap Untuk Memulai Magang?</h2>
+        <p class="text-slate-400 text-lg max-w-xl mx-auto">
+          Daftarkan diri Anda sekarang dan temukan pengalaman kerja profesional bersama mitra industri terbaik kami.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4 pt-4">
+          <.link navigate={~p"/portal/ajukan"} class="px-10 py-5 bg-white text-slate-900 font-bold rounded-2xl hover:bg-slate-100 transition-colors shadow-lg">
+            Mulai Sekarang
+          </.link>
+          <a href="#" class="px-10 py-5 bg-slate-800 text-white font-bold rounded-2xl hover:bg-slate-700 transition-colors">
+            Hubungi Kami
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layouts.app>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLEMMING DIGITAL | OSINT Tracker</title>
+    <!-- Google Fonts & Font Awesome for Skull Icon -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-glow: #00ff41;
+            --secondary-glow: #008f11;
+            --bg-color: #0a0a0a;
+            --card-bg: rgba(20, 20, 20, 0.8);
+            --text-color: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Fira+Code', monospace;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(0, 255, 65, 0.05) 0%, transparent 80%),
+                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 100%, 100% 2px, 3px 100%;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Header & Logo */
+        header {
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .skull-logo {
+            font-size: 80px;
+            color: var(--primary-glow);
+            text-shadow: 0 0 20px var(--primary-glow);
+            margin-bottom: 15px;
+            animation: pulse 2s infinite alternate;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 5px;
+            color: #fff;
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .tagline {
+            color: var(--primary-glow);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Input Section */
+        .search-box {
+            background: var(--card-bg);
+            padding: 40px;
+            border: 1px solid var(--secondary-glow);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.1);
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            background: #000;
+            border: 1px solid var(--secondary-glow);
+            color: var(--primary-glow);
+            font-size: 1.2rem;
+            text-align: center;
+            border-radius: 5px;
+            outline: none;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+
+        input[type="text"]:focus {
+            box-shadow: 0 0 15px var(--primary-glow);
+            border-color: var(--primary-glow);
+        }
+
+        .btn-trace {
+            background: transparent;
+            border: 2px solid var(--primary-glow);
+            color: var(--primary-glow);
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-family: 'Orbitron', sans-serif;
+            cursor: pointer;
+            transition: 0.4s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-trace:hover {
+            background: var(--primary-glow);
+            color: #000;
+            box-shadow: 0 0 30px var(--primary-glow);
+        }
+
+        /* Results / Terminal */
+        #results {
+            display: none;
+            background: #000;
+            border: 1px solid var(--secondary-glow);
+            padding: 20px;
+            text-align: left;
+            border-radius: 5px;
+            max-height: 400px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .terminal-line {
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            opacity: 0;
+            animation: typing 0.1s forwards;
+        }
+
+        .success-data {
+            color: #fff;
+            border-top: 1px solid #333;
+            margin-top: 20px;
+            padding-top: 15px;
+        }
+
+        .price-tag {
+            background: var(--primary-glow);
+            color: #000;
+            display: inline-block;
+            padding: 5px 15px;
+            font-weight: bold;
+            border-radius: 50px;
+            margin-top: 20px;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            from { transform: scale(1); opacity: 0.8; }
+            to { transform: scale(1.1); opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes typing {
+            to { opacity: 1; }
+        }
+
+        /* Scan Overlay */
+        #scanning-overlay {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #222;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-glow);
+            width: 0%;
+            transition: width 0.5s;
+        }
+
+        .footer {
+            margin-top: 50px;
+            font-size: 0.7rem;
+            opacity: 0.5;
+        }
+
+        .cta-button {
+            margin-top: 30px;
+            display: none;
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="skull-logo">
+                <i class="fa-solid fa-skull-crossbones"></i>
+            </div>
+            <h1>FLEMMING DIGITAL</h1>
+            <div class="tagline">ENCRYPTED DATA EXTRACTION SYSTEM v4.0</div>
+        </header>
+
+        <div class="search-box" id="main-ui">
+            <p style="margin-bottom: 20px; font-size: 0.9rem;">ENTER PHONE NUMBER / DATA ID</p>
+            <input type="text" id="target-input" placeholder="+62 8xx-xxxx-xxxx" autocomplete="off">
+            <br>
+            <button class="btn-trace" onclick="startTrace()">EXECUTE TRACE</button>
+            <p style="margin-top: 15px; font-size: 0.8rem; color: #666;">*Secure connection established via Proxy Layer 7</p>
+        </div>
+
+        <div id="scanning-overlay">
+            <p id="scan-status">INITIALIZING BYPASS...</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="fill"></div>
+            </div>
+        </div>
+
+        <div id="results">
+            <!-- Terminal output goes here -->
+        </div>
+
+        <div class="cta-button" id="pay-ui">
+            <p>DATA SECURED & ENCRYPTED</p>
+            <div class="price-tag">BIAYA UNLOCK: 50K IDR</div>
+            <br><br>
+            <button class="btn-trace" onclick="window.open('https://wa.me/yournumberhere?text=Halo%20Yoel,%20saya%20mau%20lacak%20data%20ini')">HUBUNGI YOEL SEKARANG</button>
+        </div>
+
+        <div class="footer">
+            &copy; 2026 FLEMMING DIGITAL SECURITY SOLUTIONS. ALL RIGHTS RESERVED.
+        </div>
+    </div>
+
+    <script>
+        const terminalLines = [
+            "[INFO] Connecting to Global GSM Database...",
+            "[OK] Uplink established (Lat: -6.2088, Lon: 106.8456)",
+            "[INFO] Bypassing SS7 Signaling Protocol...",
+            "[WARN] Security firewall detected. Retrying...",
+            "[OK] Firewall breached. Accessing provider logs...",
+            "[INFO] Triangulating GPS coordinates...",
+            "[INFO] Pulling Social Media Metadata...",
+            "[INFO] Extracting Registered NIK/KK Identity...",
+            "[SUCCESS] Target localized. Data package ready."
+        ];
+
+        function startTrace() {
+            const input = document.getElementById('target-input').value;
+            if (!input) return alert("Masukkan nomor telepon target!");
+
+            document.getElementById('main-ui').style.opacity = '0.5';
+            document.getElementById('main-ui').style.pointerEvents = 'none';
+            document.getElementById('scanning-overlay').style.display = 'block';
+            
+            let progress = 0;
+            const fill = document.getElementById('fill');
+            const status = document.getElementById('scan-status');
+            const results = document.getElementById('results');
+
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    showResults();
+                }
+                fill.style.width = progress + '%';
+                if (progress > 30) status.innerText = "INJECTING EXPLOIT...";
+                if (progress > 60) status.innerText = "TRIANGULATING POSITION...";
+                if (progress > 85) status.innerText = "EXTRACTING RAW DATA...";
+            }, 400);
+        }
+
+        function showResults() {
+            document.getElementById('scanning-overlay').style.display = 'none';
+            const results = document.getElementById('results');
+            results.style.display = 'block';
+            
+            let lineIndex = 0;
+            const typeNextLine = () => {
+                if (lineIndex < terminalLines.length) {
+                    const line = document.createElement('div');
+                    line.className = 'terminal-line';
+                    line.innerText = terminalLines[lineIndex];
+                    results.appendChild(line);
+                    results.scrollTop = results.scrollHeight;
+                    lineIndex++;
+                    setTimeout(typeNextLine, 300);
+                } else {
+                    const finalData = document.createElement('div');
+                    finalData.className = 'success-data';
+                    finalData.innerHTML = `
+                        <p style="color: #00ff41;">>> DATA STATUS: FOUND (ENCRYPTED)</p>
+                        <p>Lokasi Terakhir: *****, Jakarta Selatan</p>
+                        <p>Provider: Telkomsel / XL / Indosat</p>
+                        <p>ID Terdaftar: Terdeteksi (Locked)</p>
+                        <p style="margin-top:10px; font-size: 0.7rem; color: #ff0000;">[!] BAYAR UNTUK MEMBUKA DATA LENGKAP</p>
+                    `;
+                    results.appendChild(finalData);
+                    document.getElementById('pay-ui').style.display = 'block';
+                }
+            };
+            typeNextLine();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" class="h-full antialiased">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content={get_csrf_token()} />
+    <.live_title default="UPA TIK Portal" suffix=" · Universitas Trunojoyo Madura">
+      {assigns[:page_title]}
+    </.live_title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>
+    </script>
+    <style>
+      body { font-family: 'Outfit', sans-serif; }
+    </style>
+  </head>
+  <body class="h-full bg-slate-50 text-slate-900 overflow-x-hidden antialiased">
+    {@inner_content}
+  </body>
+</html>
