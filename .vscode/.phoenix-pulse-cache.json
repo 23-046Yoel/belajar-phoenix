@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": 1777949055771,
+  "timestamp": 1778558254983,
   "workspaceRoot": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix",
   "registries": {
     "components": {
@@ -256,105 +256,6 @@
           ]
         ],
         [
-          "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\my_components.ex",
-          [
-            {
-              "name": "navbar",
-              "moduleName": "UpaTikPortalWeb.Components.MyComponents",
-              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\my_components.ex",
-              "line": 12,
-              "attributes": [
-                {
-                  "name": "active_tab",
-                  "type": "atom",
-                  "rawType": ":atom",
-                  "required": false,
-                  "default": ":home"
-                }
-              ],
-              "slots": [
-                {
-                  "name": "inner_block",
-                  "required": true,
-                  "attributes": []
-                }
-              ]
-            },
-            {
-              "name": "mobile_sidebar",
-              "moduleName": "UpaTikPortalWeb.Components.MyComponents",
-              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\my_components.ex",
-              "line": 112,
-              "attributes": [
-                {
-                  "name": "active_tab",
-                  "type": "atom",
-                  "rawType": ":atom",
-                  "required": false,
-                  "default": ":home"
-                }
-              ],
-              "slots": []
-            },
-            {
-              "name": "mobile_nav_link",
-              "moduleName": "UpaTikPortalWeb.Components.MyComponents",
-              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\my_components.ex",
-              "line": 162,
-              "attributes": [
-                {
-                  "name": "navigate",
-                  "type": "any",
-                  "rawType": ":any",
-                  "required": true
-                },
-                {
-                  "name": "active",
-                  "type": "boolean",
-                  "rawType": ":boolean",
-                  "required": false,
-                  "default": "false"
-                },
-                {
-                  "name": "icon",
-                  "type": "string",
-                  "rawType": ":string",
-                  "required": false
-                }
-              ],
-              "slots": []
-            },
-            {
-              "name": "nav_link",
-              "moduleName": "UpaTikPortalWeb.Components.MyComponents",
-              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\my_components.ex",
-              "line": 212,
-              "attributes": [
-                {
-                  "name": "navigate",
-                  "type": "string",
-                  "rawType": ":string",
-                  "required": true
-                },
-                {
-                  "name": "active",
-                  "type": "boolean",
-                  "rawType": ":boolean",
-                  "required": false,
-                  "default": "false"
-                }
-              ],
-              "slots": [
-                {
-                  "name": "inner_block",
-                  "required": true,
-                  "attributes": []
-                }
-              ]
-            }
-          ]
-        ],
-        [
           "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\layouts.ex",
           [
             {
@@ -416,6 +317,111 @@
               "line": 123,
               "attributes": [],
               "slots": []
+            }
+          ]
+        ],
+        [
+          "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\my_components.ex",
+          [
+            {
+              "name": "navbar",
+              "moduleName": "UpaTikPortalWeb.Components.MyComponents",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\my_components.ex",
+              "line": 12,
+              "attributes": [
+                {
+                  "name": "active_tab",
+                  "type": "atom",
+                  "rawType": ":atom",
+                  "required": false,
+                  "default": ":home"
+                }
+              ],
+              "slots": [
+                {
+                  "name": "inner_block",
+                  "required": true,
+                  "attributes": []
+                }
+              ]
+            },
+            {
+              "name": "mobile_sidebar",
+              "moduleName": "UpaTikPortalWeb.Components.MyComponents",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\my_components.ex",
+              "line": 114,
+              "attributes": [
+                {
+                  "name": "active_tab",
+                  "type": "atom",
+                  "rawType": ":atom",
+                  "required": false,
+                  "default": ":home"
+                }
+              ],
+              "slots": []
+            },
+            {
+              "name": "mobile_nav_link",
+              "moduleName": "UpaTikPortalWeb.Components.MyComponents",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\my_components.ex",
+              "line": 165,
+              "attributes": [
+                {
+                  "name": "navigate",
+                  "type": "any",
+                  "rawType": ":any",
+                  "required": true
+                },
+                {
+                  "name": "active",
+                  "type": "boolean",
+                  "rawType": ":boolean",
+                  "required": false,
+                  "default": "false"
+                },
+                {
+                  "name": "icon",
+                  "type": "string",
+                  "rawType": ":string",
+                  "required": false
+                }
+              ],
+              "slots": [
+                {
+                  "name": "inner_block",
+                  "required": true,
+                  "attributes": []
+                }
+              ]
+            },
+            {
+              "name": "nav_link",
+              "moduleName": "UpaTikPortalWeb.Components.MyComponents",
+              "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\my_components.ex",
+              "line": 215,
+              "attributes": [
+                {
+                  "name": "navigate",
+                  "type": "string",
+                  "rawType": ":string",
+                  "required": true
+                },
+                {
+                  "name": "active",
+                  "type": "boolean",
+                  "rawType": ":boolean",
+                  "required": false,
+                  "default": "false"
+                }
+              ],
+              "slots": [
+                {
+                  "name": "inner_block",
+                  "required": true,
+                  "attributes": []
+                }
+              ]
             }
           ]
         ],
@@ -783,8 +789,8 @@
         ]
       ],
       "fileHashes": {
-        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\my_components.ex": "d27f325c133c8aa85e9975ac90a19d224a36dab2",
-        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\layouts.ex": "4b77b215304ebf2e1b01f3f466e9f88e96f77862",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\layouts.ex": "ff598b8c021fb1a7e55a75468d91a6245ec9b48c",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\my_components.ex": "145a0de46c59382d510c2e20254e83dd46d768c1",
         "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\core_components.ex": "52965a34e21cd3385920130e20e5c380dfde17af",
         "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\controllers\\error_html.ex": "fea8a46976dd45e89036b0c5c8f90f680d2f29b6",
         "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\controllers\\page_html.ex": "9c4485c1d44d1642ccbcee290c5b6ce1ec13a8e1"
@@ -1237,10 +1243,6 @@
     "events": {
       "events": [
         [
-          "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\my_components.ex",
-          []
-        ],
-        [
           "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\keluhan_live.ex",
           [
             {
@@ -1623,7 +1625,6 @@
         ]
       ],
       "fileHashes": {
-        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\components\\my_components.ex": "d27f325c133c8aa85e9975ac90a19d224a36dab2",
         "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\keluhan_live.ex": "643e267b8fcf4970ac26e29f440d33611efddbd6",
         "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\login_live.ex": "6d0dbcefed88ff9caa8ca69976b17867314b3b68",
         "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\live\\admin\\request_list_live.ex": "4a6647c59788460ab46cd527de3a2b0046b80f50",
@@ -1753,7 +1754,7 @@
           "verb": "LIVE",
           "path": "/portal/lowongan",
           "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
-          "line": 54,
+          "line": 55,
           "liveModule": "Home.Lowongan.Index",
           "liveAction": "Index",
           "helperBase": "lowongan",
@@ -1765,7 +1766,7 @@
           "verb": "LIVE",
           "path": "/portal/lowongan/:id",
           "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
-          "line": 55,
+          "line": 56,
           "liveModule": "Home.Lowongan.Detail",
           "liveAction": "Detail",
           "helperBase": "lowongan",
@@ -1777,9 +1778,33 @@
         },
         {
           "verb": "LIVE",
+          "path": "/portal/profile",
+          "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
+          "line": 58,
+          "liveModule": "Home.Setting.Profile",
+          "liveAction": "Profile",
+          "helperBase": "profile",
+          "params": [],
+          "isResource": false,
+          "scopePath": "/portal"
+        },
+        {
+          "verb": "LIVE",
+          "path": "/portal/setting",
+          "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
+          "line": 59,
+          "liveModule": "Home.Setting.Index",
+          "liveAction": "Index",
+          "helperBase": "setting",
+          "params": [],
+          "isResource": false,
+          "scopePath": "/portal"
+        },
+        {
+          "verb": "LIVE",
           "path": "/admin/",
           "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
-          "line": 62,
+          "line": 66,
           "liveModule": "DashboardLive",
           "helperBase": "root",
           "params": [],
@@ -1790,7 +1815,7 @@
           "verb": "LIVE",
           "path": "/admin/pengajuan",
           "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
-          "line": 63,
+          "line": 67,
           "liveModule": "RequestListLive",
           "helperBase": "pengajuan",
           "params": [],
@@ -1801,7 +1826,7 @@
           "verb": "LIVE",
           "path": "/admin/pengajuan/:id",
           "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
-          "line": 64,
+          "line": 68,
           "liveModule": "RequestDetailLive",
           "helperBase": "pengajuan",
           "params": [
@@ -1814,7 +1839,7 @@
           "verb": "LIVE",
           "path": "/admin/keluhan",
           "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
-          "line": 65,
+          "line": 69,
           "liveModule": "KeluhanListLive",
           "helperBase": "keluhan",
           "params": [],
@@ -1825,7 +1850,7 @@
           "verb": "LIVE",
           "path": "/admin/users",
           "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
-          "line": 66,
+          "line": 70,
           "liveModule": "UserListLive",
           "helperBase": "user",
           "params": [],
@@ -1836,7 +1861,7 @@
           "verb": "LIVE",
           "path": "/admin/lowongan",
           "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
-          "line": 68,
+          "line": 72,
           "liveModule": "LowonganLive.Index",
           "liveAction": "Index",
           "helperBase": "lowongan",
@@ -1848,7 +1873,7 @@
           "verb": "LIVE",
           "path": "/admin/lowongan/new",
           "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
-          "line": 69,
+          "line": 73,
           "liveModule": "LowonganLive.New",
           "liveAction": "New",
           "helperBase": "lowongan_new",
@@ -1860,7 +1885,7 @@
           "verb": "LIVE",
           "path": "/admin/lowongan/:id/edit",
           "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
-          "line": 70,
+          "line": 74,
           "liveModule": "LowonganLive.Edit",
           "liveAction": "Edit",
           "helperBase": "lowongan_edit",
@@ -1874,7 +1899,7 @@
           "verb": "GET",
           "path": "/storage/view-image/:key",
           "filePath": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex",
-          "line": 76,
+          "line": 80,
           "controller": "StorageController",
           "action": "view_image",
           "helperBase": "view_image",
@@ -1886,7 +1911,7 @@
         }
       ],
       "fileHashes": {
-        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex": "b286e0b1dae69cce46fbf51d266864e0f89f5ab2"
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix\\lib\\upa_tik_portal_web\\router.ex": "820e915f75fe8ea1f6bed4f288601ef1e44298f7"
       },
       "workspaceRoot": "\\\\wsl.localhost\\Ubuntu-22.04\\home\\maulana\\belajar-phoenix"
     },

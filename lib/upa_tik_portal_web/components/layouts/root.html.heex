@@ -13,12 +13,19 @@
     <script>
       (() => {
         const setTheme = (theme) => {
+          const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          localStorage.removeItem("phx:theme");
+          document.documentElement.setAttribute("data-theme-btn", "system");
           if (theme === "system") {
-            localStorage.removeItem("phx:theme");
-            document.documentElement.removeAttribute("data-theme");
+            if (isDarkMode) {
+              document.documentElement.setAttribute("data-theme", "dark");
+            } else {
+              document.documentElement.setAttribute("data-theme", "light");
+            }
           } else {
             localStorage.setItem("phx:theme", theme);
             document.documentElement.setAttribute("data-theme", theme);
+            document.documentElement.setAttribute("data-theme-btn", theme);
           }
         };
         if (!document.documentElement.hasAttribute("data-theme")) {

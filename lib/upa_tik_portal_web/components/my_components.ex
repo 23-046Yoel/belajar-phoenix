@@ -11,7 +11,7 @@ defmodule UpaTikPortalWeb.Components.MyComponents do
 
   def navbar(assigns) do
     ~H"""
-      <nav class="border-b border-slate-200 bg-slate-900 dark:bg-transparent shadow-sm sticky top-0 z-40">
+      <nav class="border-b border-slate-200 bg-transparent dark:bg-slate-900 shadow-sm sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
 
           <!-- Left Section: Hamburger + Logo -->
@@ -44,7 +44,6 @@ defmodule UpaTikPortalWeb.Components.MyComponents do
               <.nav_link navigate={~p"/portal/ajukan"} active={@active_tab == :ajukan}>Pengajuan</.nav_link>
               <.nav_link navigate={~p"/portal/status"} active={@active_tab == :status}>Status</.nav_link>
               <.nav_link navigate={~p"/portal/keluhan"} active={@active_tab == :keluhan}>Lapor Masalah</.nav_link>
-              <.nav_link navigate={~p"/auth/logout"} active={@active_tab == :logout}>Logout</.nav_link>
             </div>
 
             <!-- Profile Dropdown (Tetap muncul di mobile/desktop) -->
@@ -72,7 +71,7 @@ defmodule UpaTikPortalWeb.Components.MyComponents do
               </button>
 
               <!-- Dropdown Menu Code (Sama seperti sebelumnya) -->
-              <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 z-50 overflow-hidden">
+              <div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg z-50 overflow-hidden">
                 <!-- ... isi dropdown ... -->
                 <div class="px-4 py-3 border-b border-slate-100 bg-slate-50/50">
                   <p class="text-xs text-slate-500">Masuk sebagai</p>
@@ -80,8 +79,11 @@ defmodule UpaTikPortalWeb.Components.MyComponents do
                 </div>
 
                 <div class="py-1">
-                  <.link navigate={~p"/portal/"} class="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+                  <.link navigate={~p"/portal/profile"} class="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
                     <.icon name="hero-user" class="w-4 h-4" /> Profil Saya
+                  </.link>
+                  <.link navigate={~p"/portal/setting"} class="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+                    <.icon name="hero-cog-6-tooth" class="w-4 h-4" /> Pengaturan
                   </.link>
                   <.link navigate={~p"/portal/keluhan"} class="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
                     <.icon name="hero-chat-bubble-left-right" class="w-4 h-4" /> Lapor Masalah
@@ -158,6 +160,7 @@ defmodule UpaTikPortalWeb.Components.MyComponents do
   attr :navigate, :any, required: true
   attr :active, :boolean, default: false
   attr :icon, :string
+  slot :inner_block, required: true
 
   defp mobile_nav_link(assigns) do
     ~H"""

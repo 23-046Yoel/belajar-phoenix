@@ -4,19 +4,16 @@ defmodule UpaTikPortal.Emails do
   """
   import Swoosh.Email
 
-  @from_email "noreply@upa-tik.ac.id"
   @from_name "UPA TIK Portal"
 
-  @doc """
-  Email OTP untuk konfirmasi aktivasi/reset email kampus.
-  """
   def otp_email(request) do
+    from_email = System.get_env("SMTP_USER") || "stokkgun7@gmail.com"
     type_label =
       if request.request_type == "aktivasi", do: "Aktivasi Akun", else: "Reset Password"
 
     new()
-    |> to({request.full_name, request.email_requested})
-    |> from({@from_name, @from_email})
+    |> to({request.full_name, request.user.email})
+    |> from({@from_name, from_email})
     |> subject("[UPA TIK] Kode OTP #{type_label} Email Kampus")
     |> html_body(otp_html(request))
     |> text_body(otp_text(request))
@@ -48,7 +45,7 @@ defmodule UpaTikPortal.Emails do
         .footer { background: #f3f4f6; padding: 20px 40px; text-align: center; }
         .footer p { color: #9ca3af; font-size: 12px; margin: 0; }
       </style>
-      
+
     </head>
     <body>
       <div class="container">
@@ -67,8 +64,8 @@ defmodule UpaTikPortal.Emails do
 
           <p><strong>Detail Pengajuan:</strong></p>
           <div class="info-row">
-            <span class="info-label">NPM</span>
-            <span class="info-value">#{request.npm}</span>
+            <span class="info-label">NIM</span>
+            <span class="info-value">#{request.nim}</span>
           </div>
           <div class="info-row">
             <span class="info-label">Email Kampus Diminta</span>
@@ -102,7 +99,7 @@ defmodule UpaTikPortal.Emails do
     Kode OTP Anda: #{request.otp_code}
 
     Detail:
-    - NPM: #{request.npm}
+    - NIM: #{request.nim}
     - Email Kampus: #{request.email_requested}
     - Jenis: #{type_label}
 

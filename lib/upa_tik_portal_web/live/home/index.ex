@@ -3,8 +3,15 @@ defmodule UpaTikPortalWeb.Home.Index do
 
   # 1. Inisialisasi Data
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, socket}
+  def mount(_params, session, socket) do
+    user_id = session["user_id"]
+    current_user = if user_id, do: UpaTikPortal.Accounts.get_user(user_id), else: nil
+
+    {:ok,
+     assign(socket,
+       current_user: current_user,
+       current_scope: %{user: current_user}
+     )}
   end
 
   # 2. Reaksi Terhadap URL (Live Action)

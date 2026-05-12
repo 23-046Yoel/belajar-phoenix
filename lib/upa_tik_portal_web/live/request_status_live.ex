@@ -69,247 +69,205 @@ defmodule UpaTikPortalWeb.RequestStatusLive do
 
   def render(assigns) do
     ~H"""
-    <div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      <!-- Navbar -->
-      <nav class="bg-white border-b border-slate-200 shadow-sm">
-        <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
-              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
-              </svg>
-            </div>
-            <span class="font-bold text-slate-800">UPA TIK Portal</span>
+    <nav class="sticky top-4 z-50 bg-white/80 backdrop-blur-md shadow-sm border border-slate-200/60 transition-all mb-8 rounded-2xl mx-auto max-w-5xl px-4 sm:px-6">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center gap-3">
+          <div class="p-1 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center">
+            <img src={~p"/images/utm_logo.png"} class="h-8 w-auto hover:scale-105 transition-transform drop-shadow-sm" alt="UTM Logo">
           </div>
-          <div class="flex items-center gap-4">
-            <a href="/portal/ajukan" class="text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors">
-              + Ajukan Baru
-            </a>
-            <a href="/auth/logout" class="text-sm text-slate-500 hover:text-red-600 transition-colors">Logout</a>
-          </div>
+          <span class="text-slate-900 font-extrabold text-lg tracking-tight">UPA TIK <span class="text-indigo-600">Portal</span></span>
         </div>
-      </nav>
+        <div class="flex items-center space-x-1 sm:space-x-4">
+          <a href="/portal/ajukan" class="px-4 py-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-slate-50 font-bold text-sm transition-all">Pengajuan</a>
+          <a href="/portal/status" class="px-4 py-2 rounded-xl text-indigo-600 bg-indigo-50 font-bold text-sm transition-all">Status</a>
+          <a href="/portal/keluhan" class="px-4 py-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-slate-50 font-bold text-sm transition-all">Lapor</a>
+          <div class="w-px h-6 bg-slate-200 mx-2 hidden sm:block"></div>
+          <a href="/auth/logout" class="p-2 text-slate-400 hover:text-rose-500 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          </a>
+        </div>
+      </div>
+    </nav>
 
-      <div class="max-w-3xl mx-auto px-4 py-10 space-y-10">
+    <div class="max-w-4xl mx-auto space-y-16 pb-20">
+      <div class="flex flex-col md:flex-row justify-between items-center bg-white p-10 rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-100 gap-6">
+        <div class="text-center md:text-left">
+          <h1 class="text-3xl font-black text-slate-900 tracking-tight uppercase italic">Monitor <span class="text-indigo-600">Layanan</span></h1>
+          <p class="text-slate-500 mt-2 font-medium">Memantau riwayat pengajuan akun untuk <span class="text-indigo-600 font-bold text-lg"><%= @current_user.name %></span></p>
+        </div>
+        <a href="/portal/ajukan" class="px-10 py-4 bg-indigo-600 text-white rounded-[2rem] font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100 flex items-center gap-2 group">
+          <svg class="w-5 h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+          <span>Buat Baru</span>
+        </a>
+      </div>
 
-        <%!-- ===== BAGIAN PENGAJUAN ===== --%>
-        <div>
-          <div class="mb-6">
-            <h1 class="text-2xl font-bold text-slate-900">Status Pengajuan Saya</h1>
-            <p class="text-slate-500 mt-1">Halo, <strong><%= @current_user.name %></strong> — berikut riwayat pengajuan Anda.</p>
-          </div>
+      <section class="space-y-8">
+        <div class="flex items-center gap-4">
+          <div class="h-8 w-2 bg-indigo-600 rounded-full"></div>
+          <h2 class="text-2xl font-black text-slate-900 tracking-tight uppercase">Riwayat Aktivasi & Reset</h2>
+        </div>
 
-          <%= if Enum.empty?(@requests) do %>
-            <div class="bg-white rounded-2xl border border-slate-200 p-12 text-center shadow-sm">
-              <svg class="w-14 h-14 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-              </svg>
-              <p class="text-slate-500 font-medium">Belum ada pengajuan</p>
-              <a href="/portal/ajukan"
-                class="mt-4 inline-block px-5 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
-                Buat Pengajuan Pertama
-              </a>
+        <%= if Enum.empty?(@requests) do %>
+          <div class="bg-white rounded-[2.5rem] p-20 text-center border-2 border-dashed border-slate-100 shadow-inner">
+            <div class="w-20 h-20 bg-slate-50 text-slate-300 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
             </div>
-          <% else %>
-            <div class="space-y-4">
-              <%= for request <- @requests do %>
-                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
-                  <div class="p-5 flex items-start justify-between gap-4">
-                    <div class="flex-1">
-                      <div class="flex items-center gap-2 mb-2">
-                        <span class={[
-                          "inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase",
-                          status_class(request.status)
-                        ]}>
-                          <%= status_label(request.status) %>
-                        </span>
-                        <span class="text-xs text-slate-400">
-                          <%= format_type(request.request_type) %>
-                        </span>
-                      </div>
-                      <p class="font-semibold text-slate-900"><%= request.full_name %></p>
-                      <p class="text-sm text-slate-500 mt-0.5">NIM: <%= request.nim %></p>
-                      <p class="text-sm text-slate-500">Email: <span class="font-mono"><%= request.email_requested %></span></p>
+            <p class="text-slate-400 font-bold uppercase tracking-[0.2em] text-sm">Belum ada pengajuan</p>
+          </div>
+        <% else %>
+          <div class="grid grid-cols-1 gap-6">
+            <%= for request <- @requests do %>
+              <div class="group bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/40 p-10 hover:shadow-indigo-100 transition-all relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-50/50 rounded-bl-[100%] translate-x-16 -translate-y-16 group-hover:scale-150 transition-transform duration-700"></div>
 
-                      <%= if request.status == "disetujui" && request.otp_code do %>
-                        <div class="mt-4 bg-emerald-50 border-2 border-emerald-200 rounded-xl p-5 flex items-center shadow-md relative overflow-hidden">
-                          <div class="absolute right-0 top-0 opacity-10">
-                            <svg class="w-32 h-32 -mr-16 -mt-16 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M12 14l9-5-9-5-9 5 9 5z"/>
-                            </svg>
-                          </div>
-                          <div class="w-12 h-12 bg-emerald-600 rounded-full flex items-center justify-center mr-5 shadow-lg relative z-10">
-                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
-                            </svg>
-                          </div>
-                          <div class="relative z-10">
-                            <p class="text-[11px] font-black text-emerald-800 uppercase tracking-widest">KODE OTP AKTIVASI ANDA:</p>
-                            <p class="font-mono font-black text-black text-4xl tracking-[0.25em] mt-1 drop-shadow-sm" style="color: #000000 !important;">
-                              <%= request.otp_code %>
-                            </p>
-                          </div>
-                        </div>
-                      <% end %>
-
-                      <%= if request.admin_notes && request.admin_notes != "" do %>
-                        <div class="mt-5 bg-white border-l-4 border-blue-500 rounded-lg p-5 shadow-sm border-t border-r border-b border-slate-200">
-                          <div class="flex items-center gap-2 mb-2">
-                            <span class="p-1 bg-blue-100 rounded text-blue-600">
-                              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
-                              </svg>
-                            </span>
-                            <p class="text-xs font-black text-slate-900 uppercase tracking-widest">Catatan Admin UPA TIK:</p>
-                          </div>
-                          <p class="text-[15px] font-semibold text-black leading-relaxed" style="color: #000000 !important;">
-                            <%= request.admin_notes %>
-                          </p>
-                        </div>
-                      <% end %>
+                <div class="flex flex-col md:flex-row justify-between gap-8 relative z-10">
+                  <div class="space-y-5 flex-1">
+                    <div class="flex flex-wrap items-center gap-3">
+                      <span class={"px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-sm #{status_class(request.status)}"}>
+                        <%= status_label(request.status) %>
+                      </span>
+                      <span class="text-[10px] font-black text-indigo-600 uppercase tracking-widest bg-indigo-50 px-4 py-1.5 rounded-xl">
+                        <%= format_type(request.request_type) %>
+                      </span>
                     </div>
 
-                    <div class="text-right text-xs text-slate-400 shrink-0">
-                      <%= Calendar.strftime(request.inserted_at, "%d %b %Y") %>
+                    <div class="space-y-1">
+                      <h3 class="text-2xl font-black text-slate-900 tracking-tight"><%= request.full_name %></h3>
+                      <p class="text-indigo-600 font-bold font-mono text-sm tracking-tight bg-slate-50 inline-block px-3 py-1 rounded-lg border border-slate-100"><%= request.email_requested %></p>
+                    </div>
+
+                    <%= if request.status == "disetujui" && request.otp_code do %>
+                      <div class="mt-6 p-6 bg-indigo-50 border border-indigo-100 rounded-3xl shadow-inner relative overflow-hidden">
+                        <div class="absolute -right-4 -bottom-4 text-indigo-100 opacity-30 rotate-12">
+                          <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        </div>
+                        <p class="text-[10px] text-indigo-600 font-black uppercase tracking-[0.2em] mb-2">Pemberitahuan</p>
+                        <p class="text-lg font-black text-slate-900 tracking-tight">Kredensial Terkirim!</p>
+                        <p class="text-[10px] text-slate-400 mt-2 font-bold uppercase italic">*Silakan cek kotak masuk Gmail Anda untuk melihat kode akses.</p>
+                      </div>
+                    <% end %>
+
+                    <%= if request.admin_notes do %>
+                      <div class="mt-6 p-6 bg-slate-50 rounded-3xl border border-slate-100 relative">
+                        <div class="absolute -left-2 top-6 w-1 h-8 bg-amber-400 rounded-full"></div>
+                        <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em] mb-2">Catatan dari Admin</p>
+                        <p class="text-slate-700 font-medium leading-relaxed italic">"<%= request.admin_notes %>"</p>
+                      </div>
+                    <% end %>
+                  </div>
+
+                  <div class="md:text-right flex md:flex-col justify-between items-center md:items-end">
+                    <div class="space-y-1">
+                      <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Waktu Pengajuan</p>
+                      <p class="text-sm font-bold text-slate-900"><%= Calendar.strftime(request.inserted_at, "%d %b %Y") %></p>
+                      <p class="text-[10px] text-slate-400 font-medium"><%= Calendar.strftime(request.inserted_at, "%H:%M WIB") %></p>
+                    </div>
+                    <div class="md:mt-auto hidden group-hover:block animate-in fade-in slide-in-from-right-2">
+                       <div class="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-200">
+                          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                       </div>
                     </div>
                   </div>
                 </div>
-              <% end %>
-            </div>
-          <% end %>
-        </div>
-
-        <%!-- ===== DIVIDER ===== --%>
-        <div class="relative">
-          <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-200"></div></div>
-          <div class="relative flex justify-center">
-            <span class="bg-gradient-to-br from-slate-50 to-blue-50 px-4 text-sm font-semibold text-slate-400 uppercase tracking-widest">Pengajuan Email Kampus Bermasalah</span>
-          </div>
-        </div>
-
-        <%!-- ===== BAGIAN KELUHAN ===== --%>
-        <div class="space-y-6">
-          <div>
-            <h2 class="text-xl font-bold text-slate-900">Pengajuan Email Kampus Bermasalah</h2>
-            <p class="text-slate-500 text-sm mt-1">Sampaikan masalah Anda secara langsung ke dashboard admin UPA TIK.</p>
-          </div>
-
-          <%!-- Form Keluhan --%>
-          <%= if @keluhan_submitted do %>
-            <div class="bg-green-50 border border-green-200 rounded-2xl p-7 text-center">
-              <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                </svg>
               </div>
-              <h3 class="text-base font-bold text-green-800 mb-1">Keluhan Terkirim!</h3>
-              <p class="text-green-600 text-sm mb-4">Tim UPA TIK akan segera menindaklanjuti keluhan Anda.</p>
-              <button phx-click="new_keluhan"
-                class="px-5 py-2 bg-green-600 text-white rounded-xl text-sm font-medium hover:bg-green-700 transition-colors">
-                Kirim Keluhan Lain
-              </button>
-            </div>
-          <% else %>
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200">
-              <div class="bg-gradient-to-r from-orange-500 to-rose-500 px-6 py-4 rounded-t-2xl">
-                <h3 class="text-white font-semibold uppercase">FORM PENGAJUAN EMAIL KAMPUS BERMASALAH</h3>
-                <p class="text-orange-100 text-xs mt-0.5">Berikan detail masalah Anda dengan jelas</p>
-              </div>
-              <form phx-submit="submit_keluhan" phx-change="update_keluhan" class="p-6 space-y-4">
-                <div>
-                  <label for="keluhan_subject" class="block text-sm font-semibold text-slate-700 mb-1">
-                    Judul Keluhan
-                  </label>
-                  <input
-                    id="keluhan_subject"
-                    type="text"
-                    name="keluhan_subject"
-                    value={@keluhan_subject}
-                    placeholder="Contoh: Tidak bisa login ke email kampus"
-                    phx-debounce="300"
-                    class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition-all placeholder:text-slate-400 text-slate-900"
-                    required
-                  />
-                  <%= if @keluhan_errors[:subject] do %>
-                    <p class="mt-1 text-xs text-red-600"><%= hd(@keluhan_errors[:subject]) %></p>
-                  <% end %>
-                </div>
-
-                <div>
-                  <label for="keluhan_description" class="block text-sm font-semibold text-slate-700 mb-1">
-                    Isi Keluhan
-                  </label>
-                  <textarea
-                    id="keluhan_description"
-                    name="keluhan_description"
-                    rows="4"
-                    placeholder="Jelaskan keluhan Anda secara detail..."
-                    phx-debounce="300"
-                    class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none transition-all placeholder:text-slate-400 text-slate-900 resize-none"
-                    required
-                  ><%= @keluhan_description %></textarea>
-                  <%= if @keluhan_errors[:description] do %>
-                    <p class="mt-1 text-xs text-red-600"><%= hd(@keluhan_errors[:description]) %></p>
-                  <% end %>
-                </div>
-
-                <button type="submit"
-                  class="w-full py-3 bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white font-bold rounded-xl shadow-md transition-all duration-200">
-                  Kirim Pengajuan Sekarang
-                </button>
-              </form>
-            </div>
-          <% end %>
-
-          <%!-- Riwayat Keluhan --%>
-          <div class="bg-white rounded-2xl shadow-sm border border-slate-200">
-            <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-              <h3 class="font-semibold text-slate-800">Riwayat Pengajuan Bermasalah Saya</h3>
-              <span class="text-xs text-slate-400"><%= length(@keluhans) %> pengajuan</span>
-            </div>
-            <%= if Enum.empty?(@keluhans) do %>
-              <div class="px-6 py-10 text-center text-slate-400">
-                <svg class="w-10 h-10 mx-auto mb-2 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
-                </svg>
-                <p class="text-sm">Belum ada keluhan yang dikirim.</p>
-              </div>
-            <% else %>
-              <ul class="divide-y divide-slate-100">
-                <%= for keluhan <- @keluhans do %>
-                  <% {badge_class, badge_text} = keluhan_badge(keluhan.status) %>
-                  <li class="px-6 py-4">
-                    <div class="flex items-start justify-between gap-3">
-                      <div class="flex-1 min-w-0">
-                        <p class="text-sm font-semibold text-slate-800 truncate"><%= keluhan.subject %></p>
-                        <p class="text-xs text-slate-500 mt-0.5 line-clamp-2"><%= keluhan.description %></p>
-                        <%= if keluhan.admin_notes do %>
-                          <p class="text-xs text-indigo-600 mt-1 italic">📝 Catatan admin: <%= keluhan.admin_notes %></p>
-                        <% end %>
-                      </div>
-                      <span class={"text-xs font-semibold px-2.5 py-1 rounded-full shrink-0 #{badge_class}"}>
-                        <%= badge_text %>
-                      </span>
-                    </div>
-                    <p class="text-xs text-slate-400 mt-1.5">
-                      <%= Calendar.strftime(keluhan.inserted_at, "%d %b %Y, %H:%M") %>
-                    </p>
-                  </li>
-                <% end %>
-              </ul>
             <% end %>
           </div>
+        <% end %>
+      </section>
+
+      <div class="h-px bg-slate-100"></div>
+
+      <section class="space-y-8">
+        <div class="flex items-center gap-4">
+          <div class="h-8 w-2 bg-rose-500 rounded-full"></div>
+          <h2 class="text-2xl font-black text-slate-900 tracking-tight uppercase italic">Pusat <span class="text-rose-500">Bantuan</span></h2>
         </div>
 
-      </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <div class="lg:col-span-12">
+            <div class="bg-white p-10 rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-100">
+              <div class="flex flex-col md:flex-row gap-10">
+                <div class="md:w-1/3 space-y-6">
+                  <h3 class="text-2xl font-black text-slate-900 tracking-tight">Butuh Bantuan?</h3>
+                  <p class="text-slate-500 font-medium leading-relaxed">Jika ada kendala akses atau data tidak sesuai, silakan kirim laporan atau cek status keluhan Anda di sini.</p>
+
+                  <%= if @keluhan_submitted do %>
+                    <div class="bg-emerald-50 p-8 rounded-3xl border border-emerald-100 text-center animate-in zoom-in duration-300">
+                      <div class="w-12 h-12 bg-emerald-500 text-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-emerald-200">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                      </div>
+                      <p class="text-emerald-700 font-black uppercase tracking-widest text-sm">Laporan Berhasil!</p>
+                      <button phx-click="new_keluhan" class="text-xs text-emerald-600 font-bold underline mt-4 hover:text-emerald-800 transition-colors uppercase italic tracking-widest">Kirim Laporan Lain</button>
+                    </div>
+                  <% else %>
+                    <form phx-submit="submit_keluhan" phx-change="update_keluhan" class="space-y-4">
+                      <div class="space-y-2">
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Subjek</label>
+                        <input type="text" name="keluhan_subject" value={@keluhan_subject} placeholder="Contoh: Login Bermasalah" required
+                          class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-rose-50 focus:border-rose-500 outline-none transition-all font-bold text-slate-900 placeholder:text-slate-300 shadow-inner"/>
+                      </div>
+                      <div class="space-y-2">
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Detail Kendala</label>
+                        <textarea name="keluhan_description" rows="4" placeholder="Jelaskan secara detail..." required
+                          class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-rose-50 focus:border-rose-500 outline-none transition-all font-bold text-slate-900 placeholder:text-slate-300 shadow-inner resize-none"><%= @keluhan_description %></textarea>
+                      </div>
+                      <button type="submit" class="w-full py-5 bg-rose-500 text-white font-black rounded-2xl hover:bg-rose-600 transition-all shadow-lg shadow-rose-100 flex items-center justify-center gap-2 group uppercase tracking-widest text-sm">
+                        <span>Kirim Laporan</span>
+                        <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                      </button>
+                    </form>
+                  <% end %>
+                </div>
+
+                <div class="md:w-2/3 space-y-6">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-black text-slate-900 tracking-tight uppercase italic">Keluhan <span class="text-rose-500">Anda</span></h3>
+                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest"><%= Enum.count(@keluhans) %> Laporan</span>
+                  </div>
+
+                  <div class="space-y-4 overflow-y-auto max-h-[500px] pr-2 custom-scrollbar">
+                    <%= if Enum.empty?(@keluhans) do %>
+                      <div class="p-16 text-center bg-slate-50 rounded-3xl border-2 border-dashed border-slate-100">
+                        <p class="text-slate-300 font-black uppercase tracking-[0.2em] text-[10px]">Belum ada data keluhan</p>
+                      </div>
+                    <% else %>
+                      <%= for keluhan <- @keluhans do %>
+                        <% {badge_class, badge_text} = keluhan_badge(keluhan.status) %>
+                        <div class="group bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all relative overflow-hidden">
+                          <div class="flex justify-between items-start mb-4">
+                            <span class={"text-[9px] font-black px-4 py-1.5 rounded-xl uppercase tracking-widest shadow-sm #{badge_class}"}>
+                              <%= badge_text %>
+                            </span>
+                            <span class="text-[10px] font-bold text-slate-400 bg-slate-50 px-3 py-1 rounded-lg border border-slate-100"><%= Calendar.strftime(keluhan.inserted_at, "%d %b %Y") %></span>
+                          </div>
+                          <h4 class="font-black text-slate-900 text-lg tracking-tight group-hover:text-rose-500 transition-colors uppercase"><%= keluhan.subject %></h4>
+                          <p class="text-slate-500 text-sm mt-2 font-medium leading-relaxed"><%= keluhan.description %></p>
+
+                          <%= if keluhan.admin_notes do %>
+                            <div class="mt-4 p-5 bg-rose-50/50 rounded-2xl border border-rose-100 text-xs text-rose-800 font-medium italic relative">
+                              <div class="absolute -left-1 top-4 w-1 h-6 bg-rose-400 rounded-full"></div>
+                              <span class="font-black uppercase tracking-widest text-[8px] text-rose-400 block mb-1">Tanggapan Admin:</span>
+                              "<%= keluhan.admin_notes %>"
+                            </div>
+                          <% end %>
+                        </div>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
     """
   end
 
-  defp status_class("pending"), do: "bg-amber-100 text-amber-800"
-  defp status_class("disetujui"), do: "bg-green-100 text-green-800"
-  defp status_class("ditolak"), do: "bg-red-100 text-red-800"
-  defp status_class(_), do: "bg-slate-100 text-slate-800"
+  defp status_class("pending"), do: "bg-amber-50 text-amber-600 border border-amber-100"
+  defp status_class("disetujui"), do: "bg-emerald-50 text-emerald-600 border border-emerald-100"
+  defp status_class("ditolak"), do: "bg-rose-50 text-rose-600 border border-rose-100"
+  defp status_class(_), do: "bg-slate-50 text-slate-400 border border-slate-100"
 
   defp status_label("pending"), do: "⏳ Menunggu"
   defp status_label("disetujui"), do: "✅ Disetujui"
@@ -320,8 +278,8 @@ defmodule UpaTikPortalWeb.RequestStatusLive do
   defp format_type("reset"), do: "Reset Password"
   defp format_type(t), do: t
 
-  defp keluhan_badge("baru"), do: {"bg-blue-100 text-blue-700", "🆕 Baru"}
-  defp keluhan_badge("diproses"), do: {"bg-amber-100 text-amber-700", "⏳ Diproses"}
-  defp keluhan_badge("selesai"), do: {"bg-green-100 text-green-700", "✅ Selesai"}
+  defp keluhan_badge("baru"), do: {"bg-indigo-50 text-indigo-600 border border-indigo-100", "🆕 Baru"}
+  defp keluhan_badge("diproses"), do: {"bg-amber-50 text-amber-600 border border-amber-100", "⏳ Diproses"}
+  defp keluhan_badge("selesai"), do: {"bg-emerald-50 text-emerald-600 border border-emerald-100", "✅ Selesai"}
   defp keluhan_badge(_), do: {"bg-slate-100 text-slate-700", "?"}
 end

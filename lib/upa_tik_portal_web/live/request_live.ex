@@ -141,224 +141,179 @@ defmodule UpaTikPortalWeb.RequestLive do
 
   def render(assigns) do
     ~H"""
-    <div class="min-h-screen bg-slate-50" data-theme="light">
-      <!-- Navbar -->
-      <nav class="bg-white border-b border-slate-200 shadow-sm">
-        <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
-              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
-              </svg>
-            </div>
-            <span class="font-bold text-slate-800">UPA TIK Portal</span>
+    <nav class="sticky top-4 z-50 bg-white/80 backdrop-blur-md shadow-sm border border-slate-200/60 transition-all mb-8 rounded-2xl mx-auto max-w-5xl px-4 sm:px-6">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center gap-3">
+          <div class="p-1 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center">
+            <img src={~p"/images/utm_logo.png"} class="h-8 w-auto hover:scale-105 transition-transform drop-shadow-sm" alt="UTM Logo">
           </div>
-          <div class="flex items-center gap-4">
-            <a href="/portal/status" class="text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors">
-              Status Pengajuan
-            </a>
-            <a href="/portal/keluhan" class="text-sm text-slate-500 hover:text-blue-600 font-medium transition-colors">
-              Lapor Masalah
-            </a>
-            <a href="/auth/logout" class="text-sm text-slate-500 hover:text-red-600 transition-colors">Logout</a>
-          </div>
+          <span class="text-slate-900 font-extrabold text-lg tracking-tight">UPA TIK <span class="text-indigo-600">Portal</span></span>
         </div>
-      </nav>
-
-      <div class="max-w-2xl mx-auto px-4 py-10">
-        <div class="mb-8">
-          <h1 class="text-2xl font-bold text-slate-900 uppercase">FORM PENGAJUAN EMAIL KAMPUS BERMASALAH</h1>
-          <p class="text-slate-500 mt-1">Isi data dengan benar dan unggah foto KTM Anda untuk verifikasi.</p>
+        <div class="flex items-center space-x-1 sm:space-x-4">
+          <a href="/portal/ajukan" class="px-4 py-2 rounded-xl text-indigo-600 bg-indigo-50 font-bold text-sm transition-all">Pengajuan</a>
+          <a href="/portal/status" class="px-4 py-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-slate-50 font-bold text-sm transition-all">Status</a>
+          <a href="/portal/keluhan" class="px-4 py-2 rounded-xl text-slate-500 hover:text-indigo-600 hover:bg-slate-50 font-bold text-sm transition-all">Lapor</a>
+          <div class="w-px h-6 bg-slate-200 mx-2 hidden sm:block"></div>
+          <a href="/auth/logout" class="p-2 text-slate-400 hover:text-rose-500 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          </a>
         </div>
-
-        <!-- Success State -->
-        <%= if @submitted do %>
-          <div class="bg-green-50 border border-green-200 rounded-2xl p-8 text-center shadow-lg">
-            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-              </svg>
-            </div>
-            <h2 class="text-xl font-bold text-green-800 mb-2">Pengajuan Terkirim!</h2>
-            <p class="text-green-700 mb-6">Admin UPA TIK akan memproses pengajuan Anda dalam 1–3 hari kerja.</p>
-            <div class="flex gap-3 justify-center">
-              <a href="/portal/status"
-                class="px-5 py-2.5 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors shadow-md">
-                Lihat Status
-              </a>
-              <button phx-click="reset"
-                class="px-5 py-2.5 bg-white border border-green-300 text-green-700 rounded-lg font-medium hover:bg-green-50 transition-colors">
-                Ajukan Lagi
-              </button>
-            </div>
-          </div>
-        <% else %>
-          <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
-            <div class="bg-blue-600 px-6 py-4">
-              <h2 class="text-white font-semibold">Data Pengajuan</h2>
-              <p class="text-blue-100 text-xs mt-0.5">Semua kolom wajib diisi</p>
-            </div>
-
-            <form id="request-form" phx-submit="submit" phx-change="update_field" class="p-6 space-y-5">
-              <!-- Jenis Pengajuan -->
-              <div>
-                <label class="block text-sm font-semibold text-slate-700 mb-2">Jenis Pengajuan</label>
-                <div class="grid grid-cols-2 gap-3">
-                  <label class={[
-                    "flex items-center gap-2 p-3 border-2 rounded-xl cursor-pointer transition-all",
-                    if(@request_type == "aktivasi", do: "border-blue-500 bg-blue-50", else: "border-slate-100 hover:border-blue-300")
-                  ]}>
-                    <input type="radio" name="request_type" value="aktivasi"
-                      checked={@request_type == "aktivasi"}
-                      phx-click="set_type" phx-value-type="aktivasi"
-                      class="accent-blue-600"/>
-                    <div>
-                      <p class="font-medium text-sm text-slate-800">Aktivasi</p>
-                      <p class="text-xs text-slate-500 font-normal">Akun baru</p>
-                    </div>
-                  </label>
-                  <label class={[
-                    "flex items-center gap-2 p-3 border-2 rounded-xl cursor-pointer transition-all",
-                    if(@request_type == "reset", do: "border-blue-500 bg-blue-50", else: "border-slate-100 hover:border-blue-300")
-                  ]}>
-                    <input type="radio" name="request_type" value="reset"
-                      checked={@request_type == "reset"}
-                      phx-click="set_type" phx-value-type="reset"
-                      class="accent-blue-600"/>
-                    <div>
-                      <p class="font-medium text-sm text-slate-800">Reset Password</p>
-                      <p class="text-xs text-slate-500 font-normal">Lupa password</p>
-                    </div>
-                  </label>
-                </div>
-              </div>
-
-              <!-- NIM -->
-              <div>
-                <label for="nim" class="block text-sm font-semibold text-slate-700 mb-1">
-                  NIM (Nomor Induk Mahasiswa)
-                </label>
-                <input
-                  id="nim"
-                  type="text"
-                  name="nim"
-                  value={@nim}
-                  placeholder="Contoh: 2021001234"
-                  phx-debounce="300"
-                  class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all placeholder:text-slate-400"
-                  style="color: #000000 !important; background-color: #ffffff !important; -webkit-text-fill-color: #000000 !important; font-weight: 600;"
-                  required
-                />
-                <%= if @errors[:nim] do %>
-                  <p class="mt-1 text-xs text-red-600"><%= hd(@errors[:nim]) %></p>
-                <% end %>
-              </div>
-
-              <!-- Nama Lengkap -->
-              <div>
-                <label for="full_name" class="block text-sm font-semibold text-slate-700 mb-1">
-                  Nama Lengkap
-                </label>
-                <input
-                  id="full_name"
-                  type="text"
-                  name="full_name"
-                  value={@full_name}
-                  placeholder="Sesuai KTM"
-                  phx-debounce="300"
-                  class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all placeholder:text-slate-400"
-                  style="color: #000000 !important; background-color: #ffffff !important; -webkit-text-fill-color: #000000 !important; font-weight: 600;"
-                  required
-                />
-                <%= if @errors[:full_name] do %>
-                  <p class="mt-1 text-xs text-red-600"><%= hd(@errors[:full_name]) %></p>
-                <% end %>
-              </div>
-
-              <!-- Email -->
-              <div>
-                <label for="email_requested" class="block text-sm font-semibold text-slate-700 mb-1">
-                  Email Kampus yang Diminta
-                </label>
-                <input
-                  id="email_requested"
-                  type="email"
-                  name="email_requested"
-                  value={@email_requested}
-                  placeholder="nim@mahasiswa.kampus.ac.id"
-                  phx-debounce="300"
-                  class="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all placeholder:text-slate-400"
-                  style="color: #000000 !important; background-color: #ffffff !important; -webkit-text-fill-color: #000000 !important; font-weight: 600;"
-                  required
-                />
-                <%= if @errors[:email_requested] do %>
-                  <p class="mt-1 text-xs text-red-600"><%= hd(@errors[:email_requested]) %></p>
-                <% end %>
-              </div>
-
-              <!-- Upload KTM -->
-              <div>
-                <label class="block text-sm font-semibold text-slate-700 mb-2">
-                  Foto KTM (Kartu Tanda Mahasiswa)
-                </label>
-                <div class="border-2 border-dashed rounded-xl p-5 text-center transition-colors border-slate-300 hover:border-blue-400 bg-slate-50/50"
-                  phx-drop-target={@uploads.ktm_photo.ref}>
-
-                  <%= for entry <- @uploads.ktm_photo.entries do %>
-                    <div class="flex flex-col items-center p-3 bg-white rounded-lg border border-slate-200">
-                      <.live_img_preview entry={entry} class="w-32 h-20 object-cover rounded-lg shadow-sm mb-3" />
-                      <div class="w-full px-2">
-                        <div class="flex items-center justify-between mb-1">
-                          <p class="text-xs font-medium text-slate-700 truncate max-w-[150px]"><%= entry.client_name %></p>
-                          <button type="button" phx-click="cancel-upload" phx-value-ref={entry.ref}
-                            class="text-red-500 hover:text-red-700 p-1">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                            </svg>
-                          </button>
-                        </div>
-                        <div class="w-full bg-slate-100 rounded-full h-1">
-                          <div class="bg-blue-600 h-1 rounded-full transition-all" style={"width: #{entry.progress}%"}></div>
-                        </div>
-                      </div>
-                    </div>
-                    <%= for err <- upload_errors(@uploads.ktm_photo, entry) do %>
-                      <p class="text-red-500 text-xs font-semibold mt-2"><%= upload_error_to_string(err) %></p>
-                    <% end %>
-                  <% end %>
-
-                  <!-- Always keep input in DOM for upload continuity -->
-                  <.live_file_input upload={@uploads.ktm_photo} class="sr-only"/>
-
-                  <%= if Enum.empty?(@uploads.ktm_photo.entries) do %>
-                    <label class="cursor-pointer block" for={@uploads.ktm_photo.ref}>
-                      <svg class="w-10 h-10 text-slate-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                      </svg>
-                      <p class="text-sm text-slate-700 font-bold">Pilih atau Seret Foto KTM</p>
-                      <p class="text-xs text-slate-500 mt-1">Maks 5MB (JPG, PNG, WEBP)</p>
-                    </label>
-                  <% end %>
-                </div>
-              </div>
-
-              <!-- Info Box -->
-              <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
-                <p class="text-xs text-amber-800 leading-relaxed font-medium">
-                  <strong>⚠️ Perhatian:</strong> Pastikan foto KTM jelas dan dapat dibaca. Pengajuan dengan foto tidak jelas akan ditolak.
-                </p>
-              </div>
-
-
-              <!-- Submit Button (paling bawah) -->
-              <button type="submit"
-                class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg transition-all duration-200 hover:-translate-y-0.5 shadow-blue-200 active:scale-[0.98]">
-                Kirim Pengajuan Sekarang
-              </button>
-            </form>
-          </div>
-        <% end %>
       </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto space-y-12 pb-20">
+      <div class="text-center space-y-3">
+        <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight sm:text-5xl uppercase italic">
+          Pengajuan <span class="text-indigo-600">Aktivasi</span>
+        </h1>
+        <p class="text-slate-500 text-lg font-medium max-w-2xl mx-auto">Lengkapi data di bawah ini untuk pemrosesan akun email kampus Anda secara profesional.</p>
+      </div>
+
+      <%= if @submitted do %>
+        <div class="bg-white border border-slate-100 rounded-[2.5rem] p-16 text-center shadow-2xl shadow-indigo-100/50 animate-in fade-in zoom-in duration-500">
+          <div class="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
+            <svg class="w-12 h-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+            </svg>
+          </div>
+          <h2 class="text-3xl font-black text-slate-900 mb-3 tracking-tight">Berhasil Terkirim!</h2>
+          <p class="text-slate-500 mb-10 text-lg font-medium">Data Anda telah masuk ke sistem antrean kami. Mohon tunggu proses verifikasi.</p>
+          <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="/portal/status" class="px-10 py-4 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200 flex items-center justify-center gap-2">
+              <span>Pantau Status</span>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </a>
+            <button phx-click="reset" class="px-10 py-4 bg-slate-50 text-slate-600 rounded-2xl font-bold hover:bg-slate-100 transition-all border border-slate-200">
+              Buat Pengajuan Baru
+            </button>
+          </div>
+        </div>
+      <% else %>
+        <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
+          <form id="request-form" phx-submit="submit" phx-change="update_field" class="p-8 sm:p-14 space-y-12">
+            <div class="space-y-6">
+              <div class="flex items-center gap-3">
+                <span class="w-8 h-8 bg-indigo-600 text-white rounded-lg flex items-center justify-center font-bold text-sm">01</span>
+                <label class="text-lg font-black text-slate-900 tracking-tight uppercase">Tipe Layanan</label>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <button type="button" phx-click="set_type" phx-value-type="aktivasi"
+                  class={["relative group p-6 rounded-3xl border-2 text-left transition-all duration-300",
+                    if(@request_type == "aktivasi", do: "border-indigo-600 bg-indigo-50/50 shadow-lg shadow-indigo-100", else: "border-slate-100 hover:border-indigo-200 hover:bg-slate-50")]}>
+                  <div class={["w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-colors", if(@request_type == "aktivasi", do: "bg-indigo-600 text-white", else: "bg-slate-100 text-slate-400 group-hover:bg-indigo-100 group-hover:text-indigo-600")]}>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  </div>
+                  <p class="font-black text-slate-900 text-lg tracking-tight">Aktivasi Baru</p>
+                  <p class="text-sm text-slate-500 mt-1 font-medium leading-relaxed">Belum pernah memiliki akun email institusi @mahasiswa.trunojoyo.ac.id</p>
+                </button>
+                <button type="button" phx-click="set_type" phx-value-type="reset"
+                  class={["relative group p-6 rounded-3xl border-2 text-left transition-all duration-300",
+                    if(@request_type == "reset", do: "border-indigo-600 bg-indigo-50/50 shadow-lg shadow-indigo-100", else: "border-slate-100 hover:border-indigo-200 hover:bg-slate-50")]}>
+                  <div class={["w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-colors", if(@request_type == "reset", do: "bg-indigo-600 text-white", else: "bg-slate-100 text-slate-400 group-hover:bg-indigo-100 group-hover:text-indigo-600")]}>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>
+                  </div>
+                  <p class="font-black text-slate-900 text-lg tracking-tight">Reset Password</p>
+                  <p class="text-sm text-slate-500 mt-1 font-medium leading-relaxed">Lupa password atau terkendala login ke akun email kampus yang sudah ada.</p>
+                </button>
+              </div>
+            </div>
+
+            <div class="space-y-8 pt-10 border-t border-slate-100">
+              <div class="flex items-center gap-3">
+                <span class="w-8 h-8 bg-indigo-600 text-white rounded-lg flex items-center justify-center font-bold text-sm">02</span>
+                <label class="text-lg font-black text-slate-900 tracking-tight uppercase">Data Identitas</label>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-2">
+                  <label class="block text-xs font-black text-slate-400 uppercase tracking-widest ml-1">NIM Mahasiswa</label>
+                  <input type="text" name="nim" value={@nim} placeholder="Contoh: 210411100001" required
+                    class="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-indigo-50 focus:border-indigo-600 focus:bg-white outline-none transition-all font-bold text-slate-900 placeholder:text-slate-300"/>
+                  <%= if @errors[:nim] do %><p class="text-rose-500 text-xs font-bold mt-1 px-1">⚠️ <%= hd(@errors[:nim]) %></p><% end %>
+                </div>
+
+                <div class="space-y-2">
+                  <label class="block text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Nama Lengkap</label>
+                  <input type="text" name="full_name" value={@full_name} placeholder="Sesuai Kartu Tanda Mahasiswa" required
+                    class="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-indigo-50 focus:border-indigo-600 focus:bg-white outline-none transition-all font-bold text-slate-900 placeholder:text-slate-300"/>
+                  <%= if @errors[:full_name] do %><p class="text-rose-500 text-xs font-bold mt-1 px-1">⚠️ <%= hd(@errors[:full_name]) %></p><% end %>
+                </div>
+
+                <div class="md:col-span-2 space-y-2">
+                  <label class="block text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Email Institusi yang Diinginkan</label>
+                  <div class="relative">
+                    <input type="email" name="email_requested" value={@email_requested} placeholder="namaanda@mahasiswa.trunojoyo.ac.id" required
+                      class="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-indigo-50 focus:border-indigo-600 focus:bg-white outline-none transition-all font-bold text-slate-900 placeholder:text-slate-300 pl-14"/>
+                    <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400">
+                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.206"/></svg>
+                    </div>
+                  </div>
+                  <%= if @errors[:email_requested] do %><p class="text-rose-500 text-xs font-bold mt-1 px-1">⚠️ <%= hd(@errors[:email_requested]) %></p><% end %>
+                  <p class="text-[10px] text-slate-400 font-medium px-1">Gunakan format <span class="text-indigo-600">nim@mahasiswa.trunojoyo.ac.id</span> untuk kemudahan sistem.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-8 pt-10 border-t border-slate-100">
+              <div class="flex items-center gap-3">
+                <span class="w-8 h-8 bg-indigo-600 text-white rounded-lg flex items-center justify-center font-bold text-sm">03</span>
+                <label class="text-lg font-black text-slate-900 tracking-tight uppercase">Verifikasi Berkas</label>
+              </div>
+              <div class="border-4 border-dashed border-slate-100 rounded-[2rem] p-10 text-center hover:border-indigo-200 hover:bg-slate-50 transition-all group relative"
+                phx-drop-target={@uploads.ktm_photo.ref}>
+
+                <%= for entry <- @uploads.ktm_photo.entries do %>
+                  <div class="flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-300">
+                    <div class="relative group/img">
+                      <.live_img_preview entry={entry} class="w-72 h-44 object-cover rounded-3xl shadow-2xl mb-6 ring-4 ring-white" />
+                      <button type="button" phx-click="cancel-upload" phx-value-ref={entry.ref}
+                        class="absolute -top-3 -right-3 p-2 bg-rose-500 text-white rounded-xl shadow-lg hover:scale-110 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                      </button>
+                    </div>
+                    <div class="w-full max-w-xs bg-slate-100 rounded-full h-3 mb-2 overflow-hidden shadow-inner">
+                      <div class="bg-indigo-600 h-full transition-all duration-300 shadow-[0_0_10px_rgba(79,70,229,0.5)]" style={"width: #{entry.progress}%"}></div>
+                    </div>
+                    <p class="text-xs font-black text-indigo-600 uppercase tracking-tighter"><%= entry.progress %>% Completed</p>
+                  </div>
+                <% end %>
+
+                <.live_file_input upload={@uploads.ktm_photo} class="sr-only"/>
+
+                <%= if Enum.empty?(@uploads.ktm_photo.entries) do %>
+                  <label class="cursor-pointer block" for={@uploads.ktm_photo.ref}>
+                    <div class="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-sm">
+                       <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    </div>
+                    <p class="text-xl font-black text-slate-800 tracking-tight">Cari File Foto KTM</p>
+                    <p class="text-slate-400 font-medium mt-1">atau tarik dan lepas berkas di sini</p>
+                    <div class="mt-6 flex justify-center gap-2">
+                      <span class="px-3 py-1 bg-slate-100 text-slate-500 rounded-lg text-[10px] font-black uppercase tracking-widest">JPG</span>
+                      <span class="px-3 py-1 bg-slate-100 text-slate-500 rounded-lg text-[10px] font-black uppercase tracking-widest">PNG</span>
+                      <span class="px-3 py-1 bg-slate-100 text-slate-500 rounded-lg text-[10px] font-black uppercase tracking-widest">WEBP</span>
+                    </div>
+                  </label>
+                <% end %>
+
+                <%= for err <- upload_errors(@uploads.ktm_photo) do %>
+                  <div class="mt-6 p-4 bg-rose-50 border border-rose-100 rounded-2xl text-rose-600 text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                    <%= upload_error_to_string(err) %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="pt-6">
+              <button type="submit"
+                class="w-full py-6 bg-indigo-600 text-white font-black text-lg rounded-[2rem] shadow-2xl shadow-indigo-200 hover:bg-indigo-700 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 group">
+                <span>Kirim Pengajuan Sekarang</span>
+                <svg class="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+              </button>
+              <p class="text-center text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] mt-6">Data yang dikirim akan dijaga kerahasiaannya oleh UPA TIK UTM</p>
+            </div>
+          </form>
+        </div>
+      <% end %>
     </div>
     """
   end

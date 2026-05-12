@@ -97,3 +97,38 @@ config :ex_aws, :s3,
   scheme: "http://",
   host: System.get_env("MINIO_HOST", "127.0.0.1"),
   port: (System.get_env("MINIO_PORT") || "9000") |> String.to_integer()
+
+# Config Mailer (Gmail SMTP)
+# Memuat .env secara manual tanpa library tambahan agar tidak error saat kompilasi
+if File.exists?(".env") do
+  IO.puts(">>> [System] Memuat konfigurasi dari .env...")
+  File.read!(".env")
+  |> String.split("\n", trim: true)
+  |> Enum.each(fn line ->
+    case String.split(line, "=", parts: 2) do
+      [key, value] ->
+        k = String.trim(key)
+        v = String.trim(value)
+        System.put_env(k, v)
+      _ -> :ok
+    end
+  end)
+  IO.puts(">>> [System] .env berhasil dimuat.")
+else
+  IO.puts(">>> [System] WARNING: File .env tidak ditemukan!")
+end
+
+config :upa_tik_portal, UpaTikPortal.Mailer,
+  adapter: Swoosh.Adapters.SMTP,
+  relay: System.get_env("SMTP_HOST", "smtp.gmail.com"),
+  username: System.get_env("SMTP_USER"),
+  password: System.get_env("SMTP_PASSWORD"),
+  port: String.to_integer(System.get_env("SMTP_PORT", "465")),
+  ssl: System.get_env("SMTP_PORT", "465") == "465",
+  tls: :if_available,
+  auth: :always,
+  retries: 2,
+  no_mx_lookups: true,
+  # PAKSA GLOBAL VERIFY NONE
+  tls_options: [verify: :verify_none],
+  ssl_options: [verify: :verify_none]

@@ -54,4 +54,22 @@ defmodule UpaTikPortal.Accounts do
     |> User.changeset(%{role: role})
     |> Repo.update()
   end
+
+  def update_user(%User{} = user, attrs) do
+    user
+    |> User.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc "Menampilkan daftar user yang terdaftar ke terminal secara rapi"
+  def print_all_users do
+    users = list_users()
+    IO.puts("\n=== DAFTAR USER TERDAFTAR ===")
+    Enum.each(users, fn user ->
+      status = if user.role == "admin", do: "⭐️ ADMIN", else: "👤 USER"
+      IO.puts("#{status} | #{user.email} | #{user.name}")
+    end)
+    IO.puts("=============================\n")
+    :ok
+  end
 end

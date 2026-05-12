@@ -1,7 +1,6 @@
 defmodule UpaTikPortal.Recruitment.InternshipOpeningService do
   import Ecto.Query, warn: false
   alias UpaTikPortal.Repo
-
   alias UpaTikPortal.Recruitment.InternshipOpening
 
   def list_internship_openings (opts \\ []) do
