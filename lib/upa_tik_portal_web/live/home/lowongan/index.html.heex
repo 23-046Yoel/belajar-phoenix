@@ -1,13 +1,13 @@
-<.navbar active_tab={:lowongan} >
+<.navbar active_tab={:lowongan} current_user={@user}>
+  <Layouts.flash_group flash={@flash} />
   <div class="py-10">
     <!-- Hero Section -->
     <header class="text-center mb-12">
-      <h1 class="text-4xl font-extrabold tracking-tight">
-        Temukan Peluang <span class="text-blue-600">Magang Terbaik</span>
-      </h1>
-      <p class="mt-4 text-lg max-w-2xl mx-auto">
-        Akses berbagai lowongan magang eksklusif untuk mahasiswa dan tingkatkan portofolio profesionalmu sekarang.
-      </p>
+      <.heading_page
+        heading_text_primary="Temukan Peluang"
+        heading_text_secondary="Magang Terbaik"
+        sub_heading_text="Akses berbagai lowongan magang eksklusif untuk mahasiswa dan tingkatkan portofolio profesionalmu sekarang."
+      />
     </header>
 
     <!-- Search & Filter Bar -->

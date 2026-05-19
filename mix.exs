@@ -64,7 +64,7 @@ defmodule UpaTikPortal.MixProject do
       {:bandit, "~> 1.5"},
       {:ueberauth, "~> 0.10"},
       {:ueberauth_google, "~> 0.8"},
-      {:dotenvy, "~> 0.8"},
+      {:dotenvy, "~> 1.0.0"},
       {:swoosh, "~> 1.17"},
       {:gen_smtp, "~> 1.2"},
       {:waffle, "~> 1.1"},

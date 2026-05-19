@@ -1,14 +1,14 @@
 import Config
 
 # Configure your database
-config :upa_tik_portal, UpaTikPortal.Repo,
-  username: System.get_env("DB_USERNAME", "postgres"),
-  password: System.get_env("DB_PASSWORD", "admin123"),
-  hostname: System.get_env("DB_HOSTNAME", "localhost"),
-  database: System.get_env("DB_DATABASE", "upa_tik_portal_dev"),
-  stacktrace: true,
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+# config :upa_tik_portal, UpaTikPortal.Repo,
+#   username: System.get_env("DB_USERNAME", "postgres"),
+#   password: System.get_env("DB_PASSWORD", "admin123"),
+#   hostname: System.get_env("DB_HOSTNAME", "localhost"),
+#   database: System.get_env("DB_DATABASE", "upa_tik_portal_dev"),
+#   stacktrace: true,
+#   show_sensitive_data_on_connection_error: true,
+#   pool_size: 10
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

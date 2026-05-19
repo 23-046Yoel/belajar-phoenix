@@ -21,9 +21,10 @@
       <thead>
         <tr>
           <th scope="col" class="py-4 pl-6 pr-3 text-left text-xs font-semibold uppercase tracking-wider">Posisi & Perusahaan</th>
-          <th scope="col" class="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wider">Lokasi</th>
+          <th scope="col" class="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wider">Divisi</th>
           <th scope="col" class="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wider">Status</th>
           <th scope="col" class="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wider">Tanggal Posting</th>
+          <th scope="col" class="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wider">Kuota</th>
           <th scope="col" class="relative py-4 pl-3 pr-6 text-right text-xs font-semibold uppercase tracking-wider">Aksi</th>
         </tr>
       </thead>
@@ -38,7 +39,7 @@
           <td class="whitespace-nowrap px-3 py-5 text-sm">
             <div class="flex items-center">
               <.icon name="hero-map-pin" class="w-4 h-4 mr-1" />
-              <%= item.title %>
+              <%= item.department %>
             </div>
           </td>
           <td class="whitespace-nowrap px-3 py-5 text-sm">
@@ -52,6 +53,9 @@
           </td>
           <td class="whitespace-nowrap px-3 py-5 text-sm">
             <%= Calendar.strftime(item.inserted_at, "%d %b %Y") %>
+          </td>
+          <td class="whitespace-nowrap px-3 py-5 text-sm">
+            <%= item.quota %> Kuota
           </td>
           <td class="relative whitespace-nowrap py-5 pl-3 pr-6 text-right text-sm font-medium">
             <div class="flex justify-end gap-3">

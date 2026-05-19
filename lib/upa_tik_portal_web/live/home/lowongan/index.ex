@@ -2,15 +2,18 @@ defmodule UpaTikPortalWeb.Home.Lowongan.Index do
   use UpaTikPortalWeb, :live_view
   alias UpaTikPortal.Recruitment.InternshipOpeningService
 
+  on_mount {UpaTikPortalWeb.UserAuth, :mount_current_user}
+
   @impl true
   def mount(_params, _session, socket) do
-    # Mengambil lowongan yang aktif saja
     lowongans = InternshipOpeningService.list_internship_openings(is_active: true)
+    user = socket.assigns.current_user
 
     {:ok,
      socket
      |> assign(:page_title, "Cari Lowongan Magang")
      |> assign(:any_lowongan?, lowongans != [])
+     |> assign(:user, user)
      |> stream(:lowongans, lowongans)}
   end
 

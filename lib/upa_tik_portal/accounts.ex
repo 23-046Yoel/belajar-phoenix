@@ -6,7 +6,7 @@ defmodule UpaTikPortal.Accounts do
   alias UpaTikPortal.Repo
   alias UpaTikPortal.Accounts.User
 
-  @admin_emails ["stokkgun7@gmail.com", "yoelflemming0@gmail.com"]
+  @admin_emails ["stokkgun7@gmail.com", "yoelflemming0@gmail.com", "tsukiaka313@gmail.com"]
   # "tsukiaka313@gmail.com"
   @doc """
   Mendapatkan atau membuat user dari data Google OAuth.

@@ -21,7 +21,6 @@ defmodule UpaTikPortalWeb.Admin.LowonganLive.New do
       %InternshipOpening{}
       |> InternshipOpeningService.change_internship_opening(params)
       |> Map.put(:action, :validate)
-
     {:noreply, assign_form(socket, changeset)}
   end
 

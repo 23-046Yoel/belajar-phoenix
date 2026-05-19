@@ -7,11 +7,15 @@ defmodule UpaTikPortalWeb.Components.MyComponents do
   import UpaTikPortalWeb.CoreComponents
 
   attr :active_tab, :atom, default: :home
+  attr :current_user, :any, default: nil
+  # attr :flash, :map, default: %{}
   slot :inner_block, required: true
 
   def navbar(assigns) do
     ~H"""
-      <nav class="border-b border-slate-200 bg-transparent dark:bg-slate-900 shadow-sm sticky top-0 z-40">
+      <%!-- <pre><%= inspect(assigns[:user], pretty: true) %></pre> --%>
+      <nav class="border-b border-slate-200 bg-white dark:bg-slate-900 shadow-sm sticky top-0 z-40">
+        <%!-- <.flash_group flash={@flash} /> --%>
         <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
 
           <!-- Left Section: Hamburger + Logo -->
@@ -26,10 +30,11 @@ defmodule UpaTikPortalWeb.Components.MyComponents do
             </button>
 
             <.link navigate={~p"/portal/"} class="flex items-center gap-2 group">
-              <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center transition-transform group-hover:scale-110">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center transition-transform group-hover:scale-110">
+                <%!-- <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
-                </svg>
+                </svg> --%>
+                <img src="/images/utm_logo.png" class="h-8 w-auto hover:scale-105 transition-transform drop-shadow-sm" alt="UTM Logo">
               </div>
               <span class="font-bold">UPA TIK Portal</span>
             </.link>
@@ -39,6 +44,7 @@ defmodule UpaTikPortalWeb.Components.MyComponents do
           <div class="flex items-center gap-6">
             <!-- Desktop Navigation (Hidden on Mobile) -->
             <div class="hidden md:flex items-center gap-2 border-r border-slate-200 pr-6">
+              <%!-- <.nav_link navigate={~p"/portal/"} active={@active_tab == :home}>Beranada</.nav_link> --%>
               <.nav_link navigate={~p"/portal/"} active={@active_tab == :home}>Beranada</.nav_link>
               <.nav_link navigate={~p"/portal/lowongan"} active={@active_tab == :lowongan}>Lowongan</.nav_link>
               <.nav_link navigate={~p"/portal/ajukan"} active={@active_tab == :ajukan}>Pengajuan</.nav_link>
@@ -56,13 +62,17 @@ defmodule UpaTikPortalWeb.Components.MyComponents do
                 phx-click-away={JS.hide(to: "#profile-dropdown")}
               >
                 <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center text-white text-xs font-bold shadow-sm transition-transform group-hover:scale-105">
-                  M
+                  <%= if @current_user do %>
+                    <%= String.at(@current_user.name, 0) %>
+                  <% else %>
+                    G
+                  <% end %>
                 </div>
 
                 <!-- Gunakan group-hover: untuk memicu perubahan saat button di-hover -->
-                <span class="hidden sm:block text-sm font-medium transition-colors group-hover:text-blue-600">
-                  Maulana
-                </span>
+                <%!-- <span class="hidden sm:block text-sm font-medium transition-colors group-hover:text-blue-600">
+                  <%= @current_user && @current_user.name %>
+                </span> --%>
 
                 <.icon
                   name="hero-chevron-down"
@@ -75,7 +85,10 @@ defmodule UpaTikPortalWeb.Components.MyComponents do
                 <!-- ... isi dropdown ... -->
                 <div class="px-4 py-3 border-b border-slate-100 bg-slate-50/50">
                   <p class="text-xs text-slate-500">Masuk sebagai</p>
-                  <p class="text-sm font-semibold text-slate-900 truncate">Maulana</p>
+                  <p class="text-sm font-semibold text-slate-900 truncate">
+                    <%!-- <%= inspect(@current_user, pretty: true) %> --%>
+                    <%= @current_user && @current_user.name %>
+                  </p>
                 </div>
 
                 <div class="py-1">
@@ -128,8 +141,9 @@ defmodule UpaTikPortalWeb.Components.MyComponents do
         >
           <div class="p-6 border-b border-slate-100 flex items-center justify-between">
             <div class="flex items-center gap-2">
-              <div class="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center">
-                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/></svg>
+              <div class="w-7 h-7 rounded-lg flex items-center justify-center">
+                <%!-- <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/></svg> --%>
+                <img src="/images/utm_logo.png" class="h-8 w-auto hover:scale-105 transition-transform drop-shadow-sm" alt="UTM Logo">
               </div>
               <span class="font-bold text-slate-900">Menu Portal</span>
             </div>
@@ -185,10 +199,11 @@ defmodule UpaTikPortalWeb.Components.MyComponents do
       <nav class="border-b border-slate-200 shadow-sm bg-transparent dark:bg-slate-900">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-md">
-              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="w-9 h-9 rounded-xl flex items-center justify-center shadow-md">
+              <%!-- <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
-              </svg>
+              </svg> --%>
+              <img src="/images/utm_logo.png" class="h-8 w-auto hover:scale-105 transition-transform drop-shadow-sm" alt="UTM Logo">
             </div>
             <div>
               <p class="font-bold text-sm leading-none">UPA TIK Admin</p>
@@ -208,6 +223,21 @@ defmodule UpaTikPortalWeb.Components.MyComponents do
     """
   end
 
+  attr :heading_text_primary, :string, required: true
+  attr :heading_text_secondary, :string, required: true
+  attr :sub_heading_text, :string, required: true
+
+  def heading_page(assigns) do
+    ~H"""
+      <div class="text-center space-y-3">
+        <h1 class="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight sm:text-5xl uppercase italic">
+          {@heading_text_primary} <span class="text-blue-600">{@heading_text_secondary}</span>
+        </h1>
+        <p class="text-slate-500 dark:text-white text-lg font-medium max-w-2xl mx-auto">{@sub_heading_text}</p>
+      </div>
+    """
+  end
+
   attr :navigate, :string, required: true
   attr :active, :boolean, default: false
   slot :inner_block, required: true
@@ -218,8 +248,8 @@ defmodule UpaTikPortalWeb.Components.MyComponents do
         navigate={@navigate}
         class={[
           "text-sm font-medium transition-colors px-3 py-2 rounded-md",
-          @active && "bg-blue-50 text-blue-700",
-          !@active && "hover:text-blue-600 hover:bg-slate-50"
+          @active && "bg-blue-100 text-blue-700",
+          !@active && "hover:text-blue-600 hover:bg-slate-100"
         ]}
       >
         <%= render_slot(@inner_block) %>

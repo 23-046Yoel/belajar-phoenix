@@ -2,16 +2,19 @@ defmodule UpaTikPortalWeb.Home.Lowongan.Detail do
   use UpaTikPortalWeb, :live_view
   alias UpaTikPortal.Recruitment.InternshipOpeningService
 
+  on_mount {UpaTikPortalWeb.UserAuth, :mount_current_user}
+
   @impl true
   def mount(%{"id" => id}, _session, socket) do
-    # Ambil data lowongan berdasarkan ID
     opening = InternshipOpeningService.get_internship_opening!(id)
+    user = socket.assigns.current_user
 
     {:ok,
      socket
      |> assign(:page_title, opening.title)
      |> assign(:opening, opening)
-     |> assign(:has_applied, false)} # Nanti ini dihubungkan dengan data user yang login
+     |> assign(:user, user)
+     |> assign(:has_applied, false)}
   end
 
   @impl true

@@ -8,7 +8,6 @@ defmodule UpaTikPortalWeb.Home.Setting.Profile do
   @impl true
   def mount(_params, _session, socket) do
     user = socket.assigns.current_user
-
     # Inisialisasi form dengan data user
     # Jika menggunakan Ecto: changeset = User.changeset(user, %{})
 

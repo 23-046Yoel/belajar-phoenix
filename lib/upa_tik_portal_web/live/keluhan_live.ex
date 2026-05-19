@@ -17,7 +17,6 @@ defmodule UpaTikPortalWeb.KeluhanLive do
       |> assign(description: "")
       |> assign(errors: %{})
       |> assign(submitted: false)
-
     {:ok, socket}
   end
 
@@ -62,7 +61,7 @@ defmodule UpaTikPortalWeb.KeluhanLive do
 
   def render(assigns) do
     ~H"""
-    <nav class="sticky top-4 z-50 bg-white/80 backdrop-blur-md shadow-sm border border-slate-200/60 transition-all mb-8 rounded-2xl mx-auto max-w-5xl px-4 sm:px-6">
+    <%!-- <nav class="sticky top-4 z-50 bg-white/80 backdrop-blur-md shadow-sm border border-slate-200/60 transition-all mb-8 rounded-2xl mx-auto max-w-5xl px-4 sm:px-6">
       <div class="flex justify-between h-16">
         <div class="flex items-center gap-3">
           <div class="p-1 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center">
@@ -80,14 +79,15 @@ defmodule UpaTikPortalWeb.KeluhanLive do
           </a>
         </div>
       </div>
-    </nav>
+    </nav> --%>
+    <.navbar active_tab={:keluhan} current_user={@current_user}>
 
     <div class="max-w-4xl mx-auto space-y-12 pb-20">
       <div class="text-center space-y-3">
-        <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight sm:text-5xl uppercase italic">
+        <h1 class="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight sm:text-5xl uppercase italic">
           Lapor <span class="text-rose-500">Kendala</span>
         </h1>
-        <p class="text-slate-500 text-lg font-medium max-w-2xl mx-auto">Sampaikan masalah teknis Anda secara detail agar tim kami dapat membantu dengan cepat.</p>
+        <p class="text-slate-500 dark:text-white text-lg font-medium max-w-2xl mx-auto">Sampaikan masalah teknis Anda secara detail agar tim kami dapat membantu dengan cepat.</p>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
@@ -178,6 +178,7 @@ defmodule UpaTikPortalWeb.KeluhanLive do
         </div>
       </div>
     </div>
+    </.navbar>
     """
   end
 

@@ -15,14 +15,14 @@ defmodule UpaTikPortal.Repo.Migrations.CreateInternshipParticipations do
       add :end_date, :date
 
       # Relasi
-      add :users_id, references(:users, on_delete: :nothing, type: :binary_id)
+      add :user_id, references(:users, on_delete: :nothing, type: :binary_id)
       add :opening_id, references(:internship_openings, on_delete: :nothing, type: :binary_id)
       add :mentor_id, references(:users, on_delete: :nothing, type: :binary_id)
 
       timestamps(type: :utc_datetime)
     end
 
-    create index(:internship_participations, [:users_id])
+    create index(:internship_participations, [:user_id])
     create index(:internship_participations, [:opening_id])
     create index(:internship_participations, [:mentor_id])
   end

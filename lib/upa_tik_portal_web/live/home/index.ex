@@ -1,17 +1,17 @@
 defmodule UpaTikPortalWeb.Home.Index do
   use UpaTikPortalWeb, :live_view
 
+  on_mount {UpaTikPortalWeb.UserAuth, :mount_current_user}
+
   # 1. Inisialisasi Data
   @impl true
-  def mount(_params, session, socket) do
-    user_id = session["user_id"]
-    current_user = if user_id, do: UpaTikPortal.Accounts.get_user(user_id), else: nil
+  def mount(_params, _session, socket) do
+    user = socket.assigns.current_user
 
     {:ok,
-     assign(socket,
-       current_user: current_user,
-       current_scope: %{user: current_user}
-     )}
+     socket
+     |> assign(:page_title, "Profil Saya")
+     |> assign(user: user)}
   end
 
   # 2. Reaksi Terhadap URL (Live Action)

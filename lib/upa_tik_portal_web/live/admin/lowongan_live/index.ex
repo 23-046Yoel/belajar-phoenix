@@ -7,7 +7,9 @@ defmodule UpaTikPortalWeb.Admin.LowonganLive.Index do
   @impl true
   def mount(_params, _session, socket) do
     lowongans = InternshipOpeningService.list_internship_openings()
-    IO.inspect(lowongans, label: "Anj")
+    # for opening <- lowongans do
+    #   IO.inspect(opening, label: "Lowongan")
+    # end
     {:ok,
       socket
       |> assign(:any_lowongan?, lowongans != [])
@@ -23,6 +25,7 @@ defmodule UpaTikPortalWeb.Admin.LowonganLive.Index do
   def apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Lowongan")
+    |> put_flash(:info, "Fitur edit masih dalam pengembangan. Silakan buat lowongan baru untuk saat ini.")
     |> assign(:opening, InternshipOpeningService.get_internship_opening!(id))
   end
 
@@ -40,7 +43,6 @@ defmodule UpaTikPortalWeb.Admin.LowonganLive.Index do
 
   @impl true
   def handle_info({FormComponent, {:saved, opening}}, socket) do
-    # Update stream agar data baru langsung muncul di tabel tanpa refresh
     {:noreply, stream_insert(socket, :lowongans, opening, at: 0)}
   end
 end
