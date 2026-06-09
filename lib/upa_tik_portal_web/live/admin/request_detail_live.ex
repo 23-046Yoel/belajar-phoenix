@@ -99,53 +99,18 @@ defmodule UpaTikPortalWeb.Admin.RequestDetailLive do
             </div>
           </section>
 
-          <section class="space-y-6">
-             <p class="text-[9px] font-black text-slate-300 uppercase tracking-[0.3em]">Lampiran Berkas Verifikasi</p>
-             
-             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- KTM Column -->
-                <div class="space-y-3">
-                  <div class="flex justify-between items-center px-1">
-                    <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">KTM (Kartu Tanda Mahasiswa)</span>
-                    <%= if @request.ktm_photo_url do %>
-                      <a href={@request.ktm_photo_url} target="_blank" class="text-[9px] font-black text-indigo-600 uppercase tracking-widest hover:underline">
-                        Buka Penuh →
-                      </a>
-                    <% end %>
-                  </div>
-                  <div class="p-4 bg-slate-100 rounded-[2.5rem] border-2 border-dashed border-slate-200 shadow-inner group/img">
-                     <div class="aspect-video bg-white rounded-[1.5rem] overflow-hidden shadow-2xl relative">
-                       <%= if @request.ktm_photo_url do %>
-                         <img src={@request.ktm_photo_url} class="w-full h-full object-contain group-hover/img:scale-105 transition-transform duration-700" alt="KTM Image">
-                       <% else %>
-                         <div class="w-full h-full flex items-center justify-center text-slate-300 font-bold text-xs uppercase tracking-widest">Tidak Ada Foto KTM</div>
-                       <% end %>
-                       <div class="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent pointer-events-none"></div>
-                     </div>
-                  </div>
-                </div>
-
-                <!-- KHS Column -->
-                <div class="space-y-3">
-                  <div class="flex justify-between items-center px-1">
-                    <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">KHS (Kartu Hasil Studi)</span>
-                    <%= if @request.khs_photo_url do %>
-                      <a href={@request.khs_photo_url} target="_blank" class="text-[9px] font-black text-indigo-600 uppercase tracking-widest hover:underline">
-                        Buka Penuh →
-                      </a>
-                    <% end %>
-                  </div>
-                  <div class="p-4 bg-slate-100 rounded-[2.5rem] border-2 border-dashed border-slate-200 shadow-inner group/img">
-                     <div class="aspect-video bg-white rounded-[1.5rem] overflow-hidden shadow-2xl relative">
-                       <%= if @request.khs_photo_url do %>
-                         <img src={@request.khs_photo_url} class="w-full h-full object-contain group-hover/img:scale-105 transition-transform duration-700" alt="KHS Image">
-                       <% else %>
-                         <div class="w-full h-full flex items-center justify-center text-slate-300 font-bold text-xs uppercase tracking-widest">Tidak Ada Foto KHS</div>
-                       <% end %>
-                       <div class="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent pointer-events-none"></div>
-                     </div>
-                  </div>
-                </div>
+          <section class="space-y-6 pt-6 border-t border-slate-100">
+             <p class="text-[9px] font-black text-slate-300 uppercase tracking-[0.3em]">Informasi Kontak Pemberitahuan</p>
+             <div class="p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 relative overflow-hidden group/notification">
+               <div class="absolute top-0 right-0 w-16 h-16 bg-emerald-500/10 rounded-full translate-x-6 -translate-y-6 blur-xl"></div>
+               <p class="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] mb-2">Akun Gmail Aktif Mahasiswa</p>
+               <p class="text-xl font-black text-slate-900 font-mono tracking-tight break-all flex items-center gap-2">
+                 <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                 <%= @request.notification_email %>
+               </p>
+               <p class="text-[10px] text-slate-400 font-medium mt-2 leading-relaxed">
+                 Kirimkan notifikasi kredensial ke email di atas jika akun kampus sudah siap/aktif.
+               </p>
              </div>
           </section>
 

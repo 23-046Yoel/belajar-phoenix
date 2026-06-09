@@ -12,7 +12,7 @@ defmodule UpaTikPortal.Emails do
       if request.request_type == "aktivasi", do: "Aktivasi Akun", else: "Reset Password"
 
     new()
-    |> to({request.full_name, request.user.email})
+    |> to({request.full_name, request.notification_email})
     |> from({@from_name, from_email})
     |> subject("[UPA TIK] Kode OTP #{type_label} Email Kampus")
     |> html_body(otp_html(request))
