@@ -52,9 +52,9 @@ defmodule UpaTikPortalWeb.Router do
     live "/keluhan", KeluhanLive, :index
 
     live "/", Home.Index, :index
-    live "/lowongan", Home.Lowongan.Index, :index
-    live "/lowongan/:id", Home.Lowongan.Detail, :show
-    live "/lowongan/:id/ajukan", Home.Lowongan.Ajukan, :index
+    # live "/lowongan", Home.Lowongan.Index, :index
+    # live "/lowongan/:id", Home.Lowongan.Detail, :show
+    # live "/lowongan/:id/ajukan", Home.Lowongan.Ajukan, :index
 
     live "/profile", Home.Setting.Profile, :index
     live "/setting", Home.Setting.Index, :index
@@ -70,9 +70,9 @@ defmodule UpaTikPortalWeb.Router do
     live "/keluhan", KeluhanListLive, :index
     live "/users", UserListLive, :index
 
-    live "/lowongan", LowonganLive.Index, :index
-    live "/lowongan/new", LowonganLive.New, :new
-    live "/lowongan/:id/edit", LowonganLive.Edit, :edit
+    # live "/lowongan", LowonganLive.Index, :index
+    # live "/lowongan/new", LowonganLive.New, :new
+    # live "/lowongan/:id/edit", LowonganLive.Edit, :edit
   end
 
   scope "/storage", UpaTikPortalWeb do

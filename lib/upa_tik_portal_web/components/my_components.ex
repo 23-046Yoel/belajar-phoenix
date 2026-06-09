@@ -44,9 +44,7 @@ defmodule UpaTikPortalWeb.Components.MyComponents do
           <div class="flex items-center gap-6">
             <!-- Desktop Navigation (Hidden on Mobile) -->
             <div class="hidden md:flex items-center gap-2 border-r border-slate-200 pr-6">
-              <%!-- <.nav_link navigate={~p"/portal/"} active={@active_tab == :home}>Beranada</.nav_link> --%>
-              <.nav_link navigate={~p"/portal/"} active={@active_tab == :home}>Beranada</.nav_link>
-              <.nav_link navigate={~p"/portal/lowongan"} active={@active_tab == :lowongan}>Lowongan</.nav_link>
+              <.nav_link navigate={~p"/portal/"} active={@active_tab == :home}>Beranda</.nav_link>
               <.nav_link navigate={~p"/portal/ajukan"} active={@active_tab == :ajukan}>Pengajuan</.nav_link>
               <.nav_link navigate={~p"/portal/status"} active={@active_tab == :status}>Status</.nav_link>
               <.nav_link navigate={~p"/portal/keluhan"} active={@active_tab == :keluhan}>Lapor Masalah</.nav_link>
@@ -154,7 +152,6 @@ defmodule UpaTikPortalWeb.Components.MyComponents do
 
           <nav class="flex-1 px-4 py-6 space-y-2">
             <.mobile_nav_link navigate={~p"/portal/"} active={@active_tab == :home} icon="hero-home">Beranda</.mobile_nav_link>
-            <.mobile_nav_link navigate={~p"/portal/lowongan"} active={@active_tab == :lowongan} icon="hero-briefcase">Lowongan</.mobile_nav_link>
             <.mobile_nav_link navigate={~p"/portal/ajukan"} active={@active_tab == :ajukan} icon="hero-document-plus">Pengajuan</.mobile_nav_link>
             <.mobile_nav_link navigate={~p"/portal/status"} active={@active_tab == :status} icon="hero-clock">Status</.mobile_nav_link>
             <hr class="border-slate-100 my-4" />
@@ -215,7 +212,6 @@ defmodule UpaTikPortalWeb.Components.MyComponents do
             <.nav_link navigate={~p"/admin/pengajuan"} active={@active_tab == :pengajuan}>Pengajuan</.nav_link>
             <.nav_link navigate={~p"/admin/keluhan"} active={@active_tab == :keluhan}>Keluhan</.nav_link>
             <.nav_link navigate={~p"/admin/users"} active={@active_tab == :users}>Pengguna</.nav_link>
-            <.nav_link navigate={~p"/admin/lowongan"} active={@active_tab == :lowongan}>Lowongan</.nav_link>
             <.nav_link navigate={~p"/auth/logout"} active={@active_tab == :logout}>Logout</.nav_link>
           </div>
         </div>
