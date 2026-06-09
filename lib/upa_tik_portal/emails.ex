@@ -52,16 +52,14 @@ defmodule UpaTikPortal.Emails do
         .header p { color: #bfdbfe; margin: 4px 0 0; font-size: 13px; }
         .body { padding: 36px 40px; }
         .body p { color: #374151; line-height: 1.7; margin: 0 0 16px; }
-        .otp-box { background: #eff6ff; border: 2px dashed #3b82f6; border-radius: 10px; text-align: center; padding: 28px; margin: 24px 0; }
-        .otp-code { font-size: 24px; font-weight: 800; color: #1d4ed8; font-family: 'Segoe UI', sans-serif; line-height: 1.5; }
-        .otp-note { font-size: 12px; color: #6b7280; margin-top: 8px; }
+        .otp-box { background: #f0f7ff; border: 1px solid #bfdbfe; border-radius: 12px; text-align: left; padding: 24px; margin: 24px 0; }
+        .otp-code { font-size: 15px; font-weight: 600; color: #1e40af; font-family: 'Segoe UI', sans-serif; line-height: 1.6; }
         .info-row { background: #f9fafb; border-radius: 8px; padding: 14px 18px; margin: 8px 0; display: flex; justify-content: space-between; }
         .info-label { color: #6b7280; font-size: 13px; }
         .info-value { color: #111827; font-size: 13px; font-weight: 600; }
         .footer { background: #f3f4f6; padding: 20px 40px; text-align: center; }
         .footer p { color: #9ca3af; font-size: 12px; margin: 0; }
       </style>
-
     </head>
     <body>
       <div class="container">
@@ -71,12 +69,10 @@ defmodule UpaTikPortal.Emails do
         </div>
         <div class="body">
           <p>Halo <strong>#{request.full_name}</strong>,</p>
-          <p>Selamat! Pengajuan <strong>#{type_label}</strong> email kampus Anda telah disetujui oleh Admin UPA TIK dan akun Anda kini telah aktif.</p>
-          <p>Berikut kredensial / password akun Anda:</p>
-
+          <p>Selamat! Pengajuan <strong>#{type_label}</strong> email kampus Anda telah disetujui oleh Admin UPA TIK.</p>
+          
           <div class="otp-box">
             <div class="otp-code">#{request.otp_code}</div>
-            <div class="otp-note">Gunakan password/kredensial di atas untuk masuk ke akun email kampus Anda.</div>
           </div>
 
           #{telegram_section}

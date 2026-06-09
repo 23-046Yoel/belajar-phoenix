@@ -6,13 +6,20 @@ defmodule UpaTikPortalWeb.Admin.RequestDetailLive do
   def mount(%{"id" => id}, _session, socket) do
     request = Requests.get_request!(id)
 
+    default_msg =
+      if request.request_type == "aktivasi" do
+        "Akun Gmail kampus Anda telah aktif. Silakan lakukan aktivasi Autentikasi 2 Faktor (2FA) demi keamanan akun Anda. Ikuti petunjuk aktivasi selengkapnya melalui grup Telegram dengan memindai QR Code yang tertera di bawah ini."
+      else
+        "Password akun Gmail kampus Anda telah direset. Silakan login kembali dan lakukan aktivasi Autentikasi 2 Faktor (2FA) demi keamanan akun Anda. Ikuti petunjuk selengkapnya melalui grup Telegram dengan memindai QR Code yang tertera di bawah ini."
+      end
+
     socket =
       socket
       |> assign(
         page_title: "Detail Pengajuan – Admin UPA TIK",
         request: request,
         notes: request.admin_notes || "",
-        manual_otp: "12345",
+        manual_otp: default_msg,
         sending_otp: false,
         otp_sent: false
       )
@@ -189,17 +196,15 @@ defmodule UpaTikPortalWeb.Admin.RequestDetailLive do
 
                 <.form for={%{}} phx-submit="send-otp" phx-change="update-field" class="space-y-6" id="send-credentials-form">
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Input Password Manual -->
+                    <!-- Pesan Pemberitahuan Kredensial -->
                     <div class="space-y-2">
-                      <label class="block text-xs font-black text-indigo-900 uppercase tracking-widest ml-1">Input Password Manual (Saran: 12345)</label>
-                      <div class="relative">
-                        <input type="text"
-                          name="manual_otp"
-                          value={@manual_otp}
-                          placeholder="Contoh: 12345"
-                          class="w-full pl-12 pr-6 py-4 bg-white border border-indigo-100 rounded-2xl text-sm font-bold text-indigo-900 placeholder:text-indigo-200 focus:ring-4 focus:ring-indigo-100 outline-none transition-all" />
-                        <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>
-                      </div>
+                      <label class="block text-xs font-black text-indigo-900 uppercase tracking-widest ml-1">Pesan Pemberitahuan Kredensial / Status</label>
+                      <textarea
+                        name="manual_otp"
+                        rows="3"
+                        placeholder="Contoh: Akun Gmail Anda sudah aktif..."
+                        class="w-full px-6 py-4 bg-white border border-indigo-100 rounded-2xl text-sm font-bold text-indigo-900 placeholder:text-indigo-200 focus:ring-4 focus:ring-indigo-100 outline-none transition-all resize-none font-sans"
+                      ><%= @manual_otp %></textarea>
                     </div>
 
                     <!-- Upload QR Code Telegram -->
@@ -331,8 +336,15 @@ defmodule UpaTikPortalWeb.Admin.RequestDetailLive do
           _ -> request.telegram_qr_url
         end
 
-      # Use manual_otp if provided, else default to "12345"
-      otp = if manual_otp != "" and not is_nil(manual_otp), do: manual_otp, else: "12345"
+      # Use manual_otp if provided, else default to dynamic message
+      default_msg =
+        if request.request_type == "aktivasi" do
+          "Akun Gmail kampus Anda telah aktif. Silakan lakukan aktivasi Autentikasi 2 Faktor (2FA) demi keamanan akun Anda. Ikuti petunjuk aktivasi selengkapnya melalui grup Telegram dengan memindai QR Code yang tertera di bawah ini."
+        else
+          "Password akun Gmail kampus Anda telah direset. Silakan login kembali dan lakukan aktivasi Autentikasi 2 Faktor (2FA) demi keamanan akun Anda. Ikuti petunjuk selengkapnya melalui grup Telegram dengan memindai QR Code yang tertera di bawah ini."
+        end
+
+      otp = if manual_otp != "" and not is_nil(manual_otp), do: manual_otp, else: default_msg
       now = DateTime.utc_now() |> DateTime.truncate(:second)
 
       changeset = Ecto.Changeset.change(request, %{otp_code: otp, otp_sent_at: now, telegram_qr_url: telegram_qr_url})
@@ -344,8 +356,8 @@ defmodule UpaTikPortalWeb.Admin.RequestDetailLive do
             {:ok, _} ->
               {:noreply,
                socket
-               |> assign(request: updated_request, sending_otp: false, otp_sent: true, manual_otp: "12345")
-               |> put_flash(:info, "SUKSES: Kredensial #{otp} Berhasil Dikirim!")}
+               |> assign(request: updated_request, sending_otp: false, otp_sent: true, manual_otp: default_msg)
+               |> put_flash(:info, "SUKSES: Kredensial Berhasil Dikirim!")}
             {:error, reason} ->
               IO.inspect(reason, label: "SEND ERROR")
               {:noreply, assign(socket, sending_otp: false) |> put_flash(:error, "Gagal kirim email: #{inspect(reason)}")}
