@@ -99,17 +99,52 @@ defmodule UpaTikPortalWeb.Admin.RequestDetailLive do
             </div>
           </section>
 
-          <section>
-             <div class="flex justify-between items-end mb-6">
-               <p class="text-[9px] font-black text-slate-300 uppercase tracking-[0.3em]">Lampiran Berkas (KTM/KRS)</p>
-               <a href={@request.ktm_photo_url || "#"} target="_blank" class="text-[9px] font-black text-indigo-600 uppercase tracking-widest hover:underline overflow-hidden">
-                 Buka Ukuran Penuh →
-               </a>
-             </div>
-             <div class="p-4 bg-slate-100 rounded-[3rem] border-2 border-dashed border-slate-200 shadow-inner group/img">
-                <div class="aspect-video bg-white rounded-[2rem] overflow-hidden shadow-2xl relative">
-                  <img src={@request.ktm_photo_url || ""} class="w-full h-full object-contain group-hover/img:scale-105 transition-transform duration-700" alt="KTM Image">
-                  <div class="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent pointer-events-none"></div>
+          <section class="space-y-6">
+             <p class="text-[9px] font-black text-slate-300 uppercase tracking-[0.3em]">Lampiran Berkas Verifikasi</p>
+             
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- KTM Column -->
+                <div class="space-y-3">
+                  <div class="flex justify-between items-center px-1">
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">KTM (Kartu Tanda Mahasiswa)</span>
+                    <%= if @request.ktm_photo_url do %>
+                      <a href={@request.ktm_photo_url} target="_blank" class="text-[9px] font-black text-indigo-600 uppercase tracking-widest hover:underline">
+                        Buka Penuh →
+                      </a>
+                    <% end %>
+                  </div>
+                  <div class="p-4 bg-slate-100 rounded-[2.5rem] border-2 border-dashed border-slate-200 shadow-inner group/img">
+                     <div class="aspect-video bg-white rounded-[1.5rem] overflow-hidden shadow-2xl relative">
+                       <%= if @request.ktm_photo_url do %>
+                         <img src={@request.ktm_photo_url} class="w-full h-full object-contain group-hover/img:scale-105 transition-transform duration-700" alt="KTM Image">
+                       <% else %>
+                         <div class="w-full h-full flex items-center justify-center text-slate-300 font-bold text-xs uppercase tracking-widest">Tidak Ada Foto KTM</div>
+                       <% end %>
+                       <div class="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent pointer-events-none"></div>
+                     </div>
+                  </div>
+                </div>
+
+                <!-- KHS Column -->
+                <div class="space-y-3">
+                  <div class="flex justify-between items-center px-1">
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">KHS (Kartu Hasil Studi)</span>
+                    <%= if @request.khs_photo_url do %>
+                      <a href={@request.khs_photo_url} target="_blank" class="text-[9px] font-black text-indigo-600 uppercase tracking-widest hover:underline">
+                        Buka Penuh →
+                      </a>
+                    <% end %>
+                  </div>
+                  <div class="p-4 bg-slate-100 rounded-[2.5rem] border-2 border-dashed border-slate-200 shadow-inner group/img">
+                     <div class="aspect-video bg-white rounded-[1.5rem] overflow-hidden shadow-2xl relative">
+                       <%= if @request.khs_photo_url do %>
+                         <img src={@request.khs_photo_url} class="w-full h-full object-contain group-hover/img:scale-105 transition-transform duration-700" alt="KHS Image">
+                       <% else %>
+                         <div class="w-full h-full flex items-center justify-center text-slate-300 font-bold text-xs uppercase tracking-widest">Tidak Ada Foto KHS</div>
+                       <% end %>
+                       <div class="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent pointer-events-none"></div>
+                     </div>
+                  </div>
                 </div>
              </div>
           </section>

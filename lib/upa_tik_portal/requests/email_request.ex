@@ -11,6 +11,7 @@ defmodule UpaTikPortal.Requests.EmailRequest do
     field :email_requested, :string
     field :request_type, :string, default: "aktivasi"
     field :ktm_photo_url, :string
+    field :khs_photo_url, :string
     field :status, :string, default: "pending"
     field :otp_code, :string
     field :otp_sent_at, :utc_datetime
@@ -30,6 +31,7 @@ defmodule UpaTikPortal.Requests.EmailRequest do
       :email_requested,
       :request_type,
       :ktm_photo_url,
+      :khs_photo_url,
       :user_id
     ])
     |> validate_required([:nim, :full_name, :email_requested, :request_type, :user_id])

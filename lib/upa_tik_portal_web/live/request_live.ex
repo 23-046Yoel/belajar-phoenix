@@ -24,6 +24,11 @@ defmodule UpaTikPortalWeb.RequestLive do
         max_entries: 1,
         max_file_size: @max_file_size
       )
+      |> allow_upload(:khs_photo,
+        accept: ~w(.jpg .jpeg .png .webp),
+        max_entries: 1,
+        max_file_size: @max_file_size
+      )
 
     {:ok, socket}
   end
@@ -33,6 +38,11 @@ defmodule UpaTikPortalWeb.RequestLive do
   end
 
   def handle_event("update_field", %{"_target" => ["ktm_photo"]}, socket) do
+    # Ignore file changes in this handler; LiveView handles @uploads automatically.
+    {:noreply, socket}
+  end
+
+  def handle_event("update_field", %{"_target" => ["khs_photo"]}, socket) do
     # Ignore file changes in this handler; LiveView handles @uploads automatically.
     {:noreply, socket}
   end
@@ -49,46 +59,75 @@ defmodule UpaTikPortalWeb.RequestLive do
     end
   end
 
-  def handle_event("cancel-upload", %{"ref" => ref}, socket) do
+  def handle_event("cancel-upload", %{"ref" => ref, "type" => "ktm"}, socket) do
     {:noreply, cancel_upload(socket, :ktm_photo, ref)}
+  end
+
+  def handle_event("cancel-upload", %{"ref" => ref, "type" => "khs"}, socket) do
+    {:noreply, cancel_upload(socket, :khs_photo, ref)}
   end
 
 
   def handle_event("submit", _params, socket) do
     user = socket.assigns.current_user
+    is_reset? = socket.assigns.request_type == "reset"
+    ktm_uploaded? = not Enum.empty?(socket.assigns.uploads.ktm_photo.entries)
+    khs_uploaded? = not Enum.empty?(socket.assigns.uploads.khs_photo.entries)
 
-    # Upload foto ke MinIO jika ada, tapi tidak wajib berhasil
-    ktm_url =
-      try do
-        case consume_uploaded_entries(socket, :ktm_photo, &save_upload/2) do
-          [{:ok, url} | _] -> url
-          [url | _] when is_binary(url) -> url
-          _ -> nil
-        end
-      rescue
-        _ -> nil
-      end
-
-    attrs = %{
-      "request_type" => socket.assigns.request_type,
-      "nim" => socket.assigns.nim,
-      "full_name" => socket.assigns.full_name,
-      "email_requested" => socket.assigns.email_requested,
-      "ktm_photo_url" => ktm_url
-    }
-
-    case Requests.create_request(user.id, attrs) do
-      {:ok, _request} ->
-        {:noreply,
-         socket
-         |> assign(submitted: true)
-         |> put_flash(:info, "Pengajuan berhasil dikirim!")}
-
-      {:error, changeset} ->
-        errors =
-          Ecto.Changeset.traverse_errors(changeset, fn {msg, _opts} -> msg end)
-
+    cond do
+      not ktm_uploaded? ->
+        errors = %{ktm_photo: ["Foto KTM wajib diunggah"]}
         {:noreply, assign(socket, errors: errors)}
+
+      is_reset? and not khs_uploaded? ->
+        errors = %{khs_photo: ["Foto KHS wajib diunggah untuk pengajuan reset password"]}
+        {:noreply, assign(socket, errors: errors)}
+
+      true ->
+        ktm_url =
+          try do
+            case consume_uploaded_entries(socket, :ktm_photo, &save_upload/2) do
+              [{:ok, url} | _] -> url
+              [url | _] when is_binary(url) -> url
+              _ -> nil
+            end
+          rescue
+            _ -> nil
+          end
+
+        khs_url =
+          try do
+            case consume_uploaded_entries(socket, :khs_photo, &save_upload/2) do
+              [{:ok, url} | _] -> url
+              [url | _] when is_binary(url) -> url
+              _ -> nil
+            end
+          rescue
+            _ -> nil
+          end
+
+        attrs = %{
+          "request_type" => socket.assigns.request_type,
+          "nim" => socket.assigns.nim,
+          "full_name" => socket.assigns.full_name,
+          "email_requested" => socket.assigns.email_requested,
+          "ktm_photo_url" => ktm_url,
+          "khs_photo_url" => khs_url
+        }
+
+        case Requests.create_request(user.id, attrs) do
+          {:ok, _request} ->
+            {:noreply,
+             socket
+             |> assign(submitted: true)
+             |> put_flash(:info, "Pengajuan berhasil dikirim!")}
+
+          {:error, changeset} ->
+            errors =
+              Ecto.Changeset.traverse_errors(changeset, fn {msg, _opts} -> msg end)
+
+            {:noreply, assign(socket, errors: errors)}
+        end
     end
   end
 
@@ -101,7 +140,6 @@ defmodule UpaTikPortalWeb.RequestLive do
   defp save_upload(%{path: tmp_path}, entry) do
     ext = Path.extname(entry.client_name)
     filename = "#{:crypto.strong_rand_bytes(16) |> Base.url_encode64(padding: false)}#{ext}"
-    bucket = Application.get_env(:waffle, :bucket, "upa-tik-uploads")
 
     content_type = case String.downcase(ext) do
       ".jpg" -> "image/jpeg"
@@ -111,32 +149,44 @@ defmodule UpaTikPortalWeb.RequestLive do
       _ -> "application/octet-stream"
     end
 
-    try do
-      file_content = File.read!(tmp_path)
+    # Cek apakah MinIO dikonfigurasi (ada access key di env)
+    minio_configured? =
+      System.get_env("MINIO_ACCESS_KEY") != nil or
+      System.get_env("AWS_ACCESS_KEY_ID") != nil
 
-      case ExAws.S3.put_object(bucket, filename, file_content, content_type: content_type)
-           |> ExAws.request() do
-        {:ok, _} ->
-          s3_config = Application.get_env(:ex_aws, :s3, [])
-          host = Keyword.get(s3_config, :host, System.get_env("MINIO_HOST", "127.0.0.1"))
-          port = Keyword.get(s3_config, :port, (System.get_env("MINIO_PORT") || "9000") |> String.to_integer())
-          {:ok, "http://#{host}:#{port}/#{bucket}/#{filename}"}
+    if minio_configured? do
+      # Coba upload ke MinIO/S3
+      try do
+        bucket = Application.get_env(:waffle, :bucket, "upa-tik-uploads")
+        file_content = File.read!(tmp_path)
 
-        {:error, reason} ->
-          # MinIO gagal - simpan ke folder lokal sebagai fallback
-          IO.warn("[MinIO Upload GAGAL] Reason: #{inspect(reason)}")
-          uploads_dir = Path.join(:code.priv_dir(:upa_tik_portal), "static/uploads")
-          File.mkdir_p!(uploads_dir)
+        case ExAws.S3.put_object(bucket, filename, file_content, content_type: content_type)
+             |> ExAws.request() do
+          {:ok, _} ->
+            s3_config = Application.get_env(:ex_aws, :s3, [])
+            host = Keyword.get(s3_config, :host, System.get_env("MINIO_HOST", "127.0.0.1"))
+            port = Keyword.get(s3_config, :port, (System.get_env("MINIO_PORT") || "9000") |> String.to_integer())
+            {:ok, "http://#{host}:#{port}/#{bucket}/#{filename}"}
 
-          dest = Path.join(uploads_dir, filename)
-          File.cp!(tmp_path, dest)
-          {:ok, "/uploads/#{filename}"}
+          {:error, reason} ->
+            IO.warn("[MinIO Upload GAGAL] Reason: #{inspect(reason)}")
+            save_local(tmp_path, filename)
+        end
+      rescue
+        _ -> save_local(tmp_path, filename)
       end
-    rescue
-      _ ->
-        # Jika semua gagal, kembalikan nil (request tetap tersimpan tanpa foto)
-        {:ok, nil}
+    else
+      # MinIO tidak dikonfigurasi, langsung simpan lokal (tanpa retry / delay)
+      save_local(tmp_path, filename)
     end
+  end
+
+  defp save_local(tmp_path, filename) do
+    uploads_dir = Path.join(:code.priv_dir(:upa_tik_portal), "static/uploads")
+    File.mkdir_p!(uploads_dir)
+    dest = Path.join(uploads_dir, filename)
+    File.cp!(tmp_path, dest)
+    {:ok, "/uploads/#{filename}"}
   end
 
   def render(assigns) do
@@ -259,48 +309,103 @@ defmodule UpaTikPortalWeb.RequestLive do
                 <span class="w-8 h-8 bg-indigo-600 text-white rounded-lg flex items-center justify-center font-bold text-sm">03</span>
                 <label class="text-lg font-black text-slate-900 tracking-tight uppercase">Verifikasi Berkas</label>
               </div>
-              <div class="border-4 border-dashed border-slate-100 rounded-[2rem] p-10 text-center hover:border-indigo-200 hover:bg-slate-50 transition-all group relative"
-                phx-drop-target={@uploads.ktm_photo.ref}>
 
-                <%= for entry <- @uploads.ktm_photo.entries do %>
-                  <div class="flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-300">
-                    <div class="relative group/img">
-                      <.live_img_preview entry={entry} class="w-72 h-44 object-cover rounded-3xl shadow-2xl mb-6 ring-4 ring-white" />
-                      <button type="button" phx-click="cancel-upload" phx-value-ref={entry.ref}
-                        class="absolute -top-3 -right-3 p-2 bg-rose-500 text-white rounded-xl shadow-lg hover:scale-110 transition-transform">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
-                      </button>
-                    </div>
-                    <div class="w-full max-w-xs bg-slate-100 rounded-full h-3 mb-2 overflow-hidden shadow-inner">
-                      <div class="bg-indigo-600 h-full transition-all duration-300 shadow-[0_0_10px_rgba(79,70,229,0.5)]" style={"width: #{entry.progress}%"}></div>
-                    </div>
-                    <p class="text-xs font-black text-indigo-600 uppercase tracking-tighter"><%= entry.progress %>% Completed</p>
-                  </div>
-                <% end %>
-
-                <.live_file_input upload={@uploads.ktm_photo} class="sr-only"/>
-
-                <%= if Enum.empty?(@uploads.ktm_photo.entries) do %>
-                  <label class="cursor-pointer block" for={@uploads.ktm_photo.ref}>
-                    <div class="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-sm">
-                       <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                    </div>
-                    <p class="text-xl font-black text-slate-800 tracking-tight">Cari File Foto KTM</p>
-                    <p class="text-slate-400 font-medium mt-1">atau tarik dan lepas berkas di sini</p>
-                    <div class="mt-6 flex justify-center gap-2">
-                      <span class="px-3 py-1 bg-slate-100 text-slate-500 rounded-lg text-[10px] font-black uppercase tracking-widest">JPG</span>
-                      <span class="px-3 py-1 bg-slate-100 text-slate-500 rounded-lg text-[10px] font-black uppercase tracking-widest">PNG</span>
-                      <span class="px-3 py-1 bg-slate-100 text-slate-500 rounded-lg text-[10px] font-black uppercase tracking-widest">WEBP</span>
-                    </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- UPLOAD KTM -->
+                <div class="space-y-3">
+                  <label class="block text-xs font-black text-slate-400 uppercase tracking-widest ml-1">
+                    Kartu Tanda Mahasiswa (KTM) <span class="text-rose-500">*</span>
                   </label>
-                <% end %>
+                  <div class="border-4 border-dashed border-slate-100 rounded-[2rem] p-8 text-center hover:border-indigo-200 hover:bg-slate-50 transition-all group relative"
+                    phx-drop-target={@uploads.ktm_photo.ref}>
 
-                <%= for err <- upload_errors(@uploads.ktm_photo) do %>
-                  <div class="mt-6 p-4 bg-rose-50 border border-rose-100 rounded-2xl text-rose-600 text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-                    <%= upload_error_to_string(err) %>
+                    <%= for entry <- @uploads.ktm_photo.entries do %>
+                      <div class="flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-300">
+                        <div class="relative group/img">
+                          <.live_img_preview entry={entry} class="w-full max-w-[240px] h-36 object-cover rounded-3xl shadow-2xl mb-4 ring-4 ring-white" />
+                          <button type="button" phx-click="cancel-upload" phx-value-ref={entry.ref} phx-value-type="ktm"
+                            class="absolute -top-3 -right-3 p-2 bg-rose-500 text-white rounded-xl shadow-lg hover:scale-110 transition-transform">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                          </button>
+                        </div>
+                        <div class="w-full max-w-xs bg-slate-100 rounded-full h-3 mb-2 overflow-hidden shadow-inner">
+                          <div class="bg-indigo-600 h-full transition-all duration-300 shadow-[0_0_10px_rgba(79,70,229,0.5)]" style={"width: #{entry.progress}%"}></div>
+                        </div>
+                        <p class="text-xs font-black text-indigo-600 uppercase tracking-tighter"><%= entry.progress %>% Completed</p>
+                      </div>
+                    <% end %>
+
+                    <.live_file_input upload={@uploads.ktm_photo} class="sr-only"/>
+
+                    <%= if Enum.empty?(@uploads.ktm_photo.entries) do %>
+                      <label class="cursor-pointer block" for={@uploads.ktm_photo.ref}>
+                        <div class="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform shadow-sm">
+                           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        </div>
+                        <p class="text-base font-black text-slate-800 tracking-tight">Cari Foto KTM</p>
+                        <p class="text-xs text-slate-400 font-medium mt-1">atau tarik dan lepas berkas di sini</p>
+                      </label>
+                    <% end %>
+
+                    <%= for err <- upload_errors(@uploads.ktm_photo) do %>
+                      <div class="mt-4 p-3 bg-rose-50 border border-rose-100 rounded-xl text-rose-600 text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                        <%= upload_error_to_string(err) %>
+                      </div>
+                    <% end %>
                   </div>
-                <% end %>
+                  <%= if @errors[:ktm_photo] do %>
+                    <p class="text-rose-500 text-xs font-bold mt-1 px-1">⚠️ <%= hd(@errors[:ktm_photo]) %></p>
+                  <% end %>
+                </div>
+
+                <!-- UPLOAD KHS -->
+                <div class="space-y-3">
+                  <label class="block text-xs font-black text-slate-400 uppercase tracking-widest ml-1">
+                    Kartu Hasil Studi (KHS) <%= if @request_type == "reset", do: raw("<span class=\"text-rose-500\">*</span>"), else: "" %>
+                  </label>
+                  <div class="border-4 border-dashed border-slate-100 rounded-[2rem] p-8 text-center hover:border-indigo-200 hover:bg-slate-50 transition-all group relative"
+                    phx-drop-target={@uploads.khs_photo.ref}>
+
+                    <%= for entry <- @uploads.khs_photo.entries do %>
+                      <div class="flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-300">
+                        <div class="relative group/img">
+                          <.live_img_preview entry={entry} class="w-full max-w-[240px] h-36 object-cover rounded-3xl shadow-2xl mb-4 ring-4 ring-white" />
+                          <button type="button" phx-click="cancel-upload" phx-value-ref={entry.ref} phx-value-type="khs"
+                            class="absolute -top-3 -right-3 p-2 bg-rose-500 text-white rounded-xl shadow-lg hover:scale-110 transition-transform">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                          </button>
+                        </div>
+                        <div class="w-full max-w-xs bg-slate-100 rounded-full h-3 mb-2 overflow-hidden shadow-inner">
+                          <div class="bg-indigo-600 h-full transition-all duration-300 shadow-[0_0_10px_rgba(79,70,229,0.5)]" style={"width: #{entry.progress}%"}></div>
+                        </div>
+                        <p class="text-xs font-black text-indigo-600 uppercase tracking-tighter"><%= entry.progress %>% Completed</p>
+                      </div>
+                    <% end %>
+
+                    <.live_file_input upload={@uploads.khs_photo} class="sr-only"/>
+
+                    <%= if Enum.empty?(@uploads.khs_photo.entries) do %>
+                      <label class="cursor-pointer block" for={@uploads.khs_photo.ref}>
+                        <div class="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform shadow-sm">
+                           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        </div>
+                        <p class="text-base font-black text-slate-800 tracking-tight">Cari Foto KHS</p>
+                        <p class="text-xs text-slate-400 font-medium mt-1">atau tarik dan lepas berkas di sini</p>
+                      </label>
+                    <% end %>
+
+                    <%= for err <- upload_errors(@uploads.khs_photo) do %>
+                      <div class="mt-4 p-3 bg-rose-50 border border-rose-100 rounded-xl text-rose-600 text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                        <%= upload_error_to_string(err) %>
+                      </div>
+                    <% end %>
+                  </div>
+                  <%= if @errors[:khs_photo] do %>
+                    <p class="text-rose-500 text-xs font-bold mt-1 px-1">⚠️ <%= hd(@errors[:khs_photo]) %></p>
+                  <% end %>
+                </div>
               </div>
             </div>
 
