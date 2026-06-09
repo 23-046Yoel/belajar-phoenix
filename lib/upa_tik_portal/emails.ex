@@ -23,6 +23,22 @@ defmodule UpaTikPortal.Emails do
     type_label =
       if request.request_type == "aktivasi", do: "Aktivasi Akun", else: "Reset Password"
 
+    telegram_section =
+      if request.telegram_qr_url do
+        host = System.get_env("APP_HOST") || "http://127.0.0.1:4000"
+        url = if String.starts_with?(request.telegram_qr_url, "/uploads/"), do: "#{host}#{request.telegram_qr_url}", else: request.telegram_qr_url
+
+        """
+        <div class="telegram-section" style="background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: 12px; padding: 24px; text-align: center; margin: 24px 0;">
+          <h4 class="telegram-title" style="color: #166534; font-weight: 800; font-size: 15px; margin: 0 0 12px; text-transform: uppercase;">📢 Join Grup Telegram Layanan</h4>
+          <p style="font-size: 12px; color: #166534; margin: 0 0 12px;">Pindai QR Code di bawah ini untuk bergabung dengan grup Telegram resmi mahasiswa untuk info dan koordinasi lebih lanjut:</p>
+          <img class="telegram-qr" src="#{url}" alt="Telegram QR Code" style="width: 150px; height: 150px; margin: 12px auto; display: block; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+        </div>
+        """
+      else
+        ""
+      end
+
     """
     <!DOCTYPE html>
     <html>
@@ -55,20 +71,23 @@ defmodule UpaTikPortal.Emails do
         </div>
         <div class="body">
           <p>Halo <strong>#{request.full_name}</strong>,</p>
-          <p>Kami menerima pengajuan <strong>#{type_label}</strong> email kampus Anda. Berikut kode OTP (One-Time Password) untuk memverifikasi identitas Anda:</p>
+          <p>Selamat! Pengajuan <strong>#{type_label}</strong> email kampus Anda telah disetujui oleh Admin UPA TIK.</p>
+          <p>Berikut kredensial/kode OTP verifikasi Anda:</p>
 
           <div class="otp-box">
             <div class="otp-code">#{request.otp_code}</div>
-            <div class="otp-note">Kode berlaku selama <strong>10 menit</strong>. Jangan bagikan kode ini kepada siapapun.</div>
+            <div class="otp-note">Silakan gunakan kode di atas untuk memverifikasi akun Anda.</div>
           </div>
 
-          <p><strong>Detail Pengajuan:</strong></p>
+          #{telegram_section}
+
+          <p><strong>Detail Akun:</strong></p>
           <div class="info-row">
             <span class="info-label">NIM</span>
             <span class="info-value">#{request.nim}</span>
           </div>
           <div class="info-row">
-            <span class="info-label">Email Kampus Diminta</span>
+            <span class="info-label">Email Kampus Baru</span>
             <span class="info-value">#{request.email_requested}</span>
           </div>
           <div class="info-row">
@@ -76,7 +95,7 @@ defmodule UpaTikPortal.Emails do
             <span class="info-value">#{type_label}</span>
           </div>
 
-          <p style="margin-top:24px;">Jika Anda tidak merasa melakukan pengajuan ini, abaikan email ini.</p>
+          <p style="margin-top:24px;">Selamat menggunakan layanan email kampus Anda. Jika ada kendala lain, silakan ajukan laporan di portal.</p>
         </div>
         <div class="footer">
           <p>Email ini dikirim otomatis oleh sistem UPA TIK Portal. Tidak perlu membalas email ini.</p>

@@ -6,15 +6,23 @@ defmodule UpaTikPortalWeb.Admin.RequestDetailLive do
   def mount(%{"id" => id}, _session, socket) do
     request = Requests.get_request!(id)
 
-    {:ok,
-     assign(socket,
-       page_title: "Detail Pengajuan – Admin UPA TIK",
-       request: request,
-       notes: request.admin_notes || "",
-       manual_otp: "",
-       sending_otp: false,
-       otp_sent: false
-     )}
+    socket =
+      socket
+      |> assign(
+        page_title: "Detail Pengajuan – Admin UPA TIK",
+        request: request,
+        notes: request.admin_notes || "",
+        manual_otp: "",
+        sending_otp: false,
+        otp_sent: false
+      )
+      |> allow_upload(:telegram_qr,
+        accept: ~w(.jpg .jpeg .png .webp),
+        max_entries: 1,
+        max_file_size: 5_000_000
+      )
+
+    {:ok, socket}
   end
 
   def render(assigns) do
@@ -114,6 +122,45 @@ defmodule UpaTikPortalWeb.Admin.RequestDetailLive do
              </div>
           </section>
 
+          <section class="space-y-6 pt-6 border-t border-slate-100">
+            <p class="text-[9px] font-black text-slate-300 uppercase tracking-[0.3em]">Berkas Pendukung Terunggah</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <!-- Foto KTM -->
+              <div class="p-6 bg-slate-50 border border-slate-100 rounded-[2rem] space-y-4">
+                <p class="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em]">Foto Kartu Tanda Mahasiswa (KTM)</p>
+                <%= if @request.ktm_photo_url do %>
+                  <div class="relative group/ktm overflow-hidden rounded-2xl border border-slate-200 bg-white">
+                    <img src={@request.ktm_photo_url} alt="KTM Mahasiswa" class="w-full h-48 object-contain transition-transform duration-300 group-hover/ktm:scale-105" />
+                    <div class="absolute inset-0 bg-slate-900/60 opacity-0 group-hover/ktm:opacity-100 transition-opacity flex items-center justify-center">
+                      <a href={@request.ktm_photo_url} target="_blank" class="px-4 py-2 bg-white text-slate-900 font-bold rounded-xl text-xs hover:bg-indigo-50 transition-colors">Lihat Ukuran Penuh</a>
+                    </div>
+                  </div>
+                <% else %>
+                  <div class="py-12 text-center text-slate-400 text-sm border-2 border-dashed border-slate-200 rounded-2xl">
+                    ⚠️ Foto KTM Tidak Tersedia
+                  </div>
+                <% end %>
+              </div>
+
+              <!-- Foto KHS -->
+              <div class="p-6 bg-slate-50 border border-slate-100 rounded-[2rem] space-y-4">
+                <p class="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em]">Foto Kartu Hasil Studi (KHS)</p>
+                <%= if @request.khs_photo_url do %>
+                  <div class="relative group/khs overflow-hidden rounded-2xl border border-slate-200 bg-white">
+                    <img src={@request.khs_photo_url} alt="KHS Mahasiswa" class="w-full h-48 object-contain transition-transform duration-300 group-hover/khs:scale-105" />
+                    <div class="absolute inset-0 bg-slate-900/60 opacity-0 group-hover/khs:opacity-100 transition-opacity flex items-center justify-center">
+                      <a href={@request.khs_photo_url} target="_blank" class="px-4 py-2 bg-white text-slate-900 font-bold rounded-xl text-xs hover:bg-indigo-50 transition-colors">Lihat Ukuran Penuh</a>
+                    </div>
+                  </div>
+                <% else %>
+                  <div class="py-12 text-center text-slate-400 text-sm border-2 border-dashed border-slate-200 rounded-2xl">
+                    ⚠️ Foto KHS Tidak Tersedia
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </section>
+
           <%= if @request.status == "pending" do %>
             <section class="pt-8 border-t border-slate-100 flex flex-col sm:flex-row gap-4">
               <button phx-click="approve" class="flex-1 py-6 bg-slate-900 text-white font-black rounded-3xl shadow-2xl shadow-slate-200 hover:bg-emerald-600 hover:shadow-emerald-100 transition-all duration-300 flex items-center justify-center gap-3 uppercase text-xs tracking-[0.2em] group/approve">
@@ -135,25 +182,53 @@ defmodule UpaTikPortalWeb.Admin.RequestDetailLive do
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                   </div>
                   <div>
-                    <h4 class="text-sm font-black text-indigo-900 uppercase tracking-widest italic">Panel Kontrol OTP</h4>
-                    <p class="text-xs font-medium text-indigo-400">Kirim ke: <span class="font-bold text-indigo-600 underline"><%= @request.user.email %></span></p>
+                    <h4 class="text-sm font-black text-indigo-900 uppercase tracking-widest italic">Panel Kirim Kredensial ke Gmail</h4>
+                    <p class="text-xs font-medium text-indigo-400">Kirim ke: <span class="font-bold text-indigo-600 underline"><%= @request.notification_email %></span></p>
                   </div>
                 </div>
 
-                <.form for={%{}} phx-submit="send-otp" class="flex flex-col md:flex-row gap-4">
-                  <div class="flex-1 relative">
-                    <input type="text"
-                      name="manual_otp"
-                      value={@manual_otp}
-                      placeholder="Input Password Manual (Saran: 12345)"
-                      class="w-full pl-12 pr-6 py-4 bg-white border border-indigo-100 rounded-2xl text-sm font-bold text-indigo-900 placeholder:text-indigo-200 focus:ring-4 focus:ring-indigo-100 outline-none transition-all" />
-                    <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>
+                <.form for={%{}} phx-submit="send-otp" phx-change="update-field" class="space-y-6" id="send-credentials-form">
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Input Password Manual -->
+                    <div class="space-y-2">
+                      <label class="block text-xs font-black text-indigo-900 uppercase tracking-widest ml-1">Input Password Manual (Saran: 12345)</label>
+                      <div class="relative">
+                        <input type="text"
+                          name="manual_otp"
+                          value={@manual_otp}
+                          placeholder="Contoh: 12345"
+                          class="w-full pl-12 pr-6 py-4 bg-white border border-indigo-100 rounded-2xl text-sm font-bold text-indigo-900 placeholder:text-indigo-200 focus:ring-4 focus:ring-indigo-100 outline-none transition-all" />
+                        <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>
+                      </div>
+                    </div>
+
+                    <!-- Upload QR Code Telegram -->
+                    <div class="space-y-2">
+                      <label class="block text-xs font-black text-indigo-900 uppercase tracking-widest ml-1">Upload Gambar QR Code Telegram</label>
+                      <div class="border border-dashed border-indigo-200 rounded-2xl p-4 bg-white hover:bg-indigo-50/30 transition-all text-center relative" phx-drop-target={@uploads.telegram_qr.ref}>
+                        <.live_file_input upload={@uploads.telegram_qr} class="sr-only" />
+                        
+                        <%= for entry <- @uploads.telegram_qr.entries do %>
+                          <div class="flex items-center justify-between gap-2 text-xs">
+                            <span class="font-bold text-indigo-900 truncate max-w-[150px]"><%= entry.client_name %></span>
+                            <div class="flex items-center gap-2">
+                              <span class="text-[10px] text-indigo-500 font-bold"><%= entry.progress %>%</span>
+                              <button type="button" phx-click="cancel-upload" phx-value-ref={entry.ref} class="text-rose-500 hover:text-rose-700 font-black">✕</button>
+                            </div>
+                          </div>
+                        <% end %>
+
+                        <%= if Enum.empty?(@uploads.telegram_qr.entries) do %>
+                          <label for={@uploads.telegram_qr.ref} class="cursor-pointer block text-xs text-indigo-400 font-semibold py-1">
+                            📷 Klik untuk pilih/tarik QR Code
+                          </label>
+                        <% end %>
+                      </div>
+                    </div>
                   </div>
-                  <button type="submit" class="px-8 py-4 bg-slate-900 text-white font-black rounded-2xl hover:bg-indigo-600 transition-all shadow-xl shadow-indigo-100 uppercase text-[10px] tracking-widest disabled:opacity-50" disabled={@sending_otp}>
+
+                  <button type="submit" class="w-full py-4 bg-slate-900 text-white font-black rounded-2xl hover:bg-indigo-600 transition-all shadow-xl shadow-indigo-100 uppercase text-xs tracking-widest disabled:opacity-50" disabled={@sending_otp}>
                     <%= if @sending_otp, do: "Mengirim...", else: "Kirim Kredensial" %>
-                  </button>
-                  <button type="button" phx-click="debug-email" phx-disable-with="Sedang Test..." class="px-6 py-4 bg-yellow-400 text-black rounded-2xl font-black hover:bg-yellow-500 transition-all shadow-lg flex items-center gap-2 text-[10px] uppercase tracking-widest">
-                    <span>⚠️ TEST KONEKSI</span>
                   </button>
                 </.form>
                 <%= if @otp_sent do %>
@@ -220,20 +295,22 @@ defmodule UpaTikPortalWeb.Admin.RequestDetailLive do
     end
   end
 
-  def handle_event("update-field", %{"notes" => notes, "otp" => otp}, socket) do
-    {:noreply, assign(socket, notes: notes, manual_otp: otp)}
+  def handle_event("cancel-upload", %{"ref" => ref}, socket) do
+    {:noreply, cancel_upload(socket, :telegram_qr, ref)}
   end
 
-  def handle_event("update-field", %{"notes" => notes}, socket) do
-    {:noreply, assign(socket, notes: notes)}
-  end
+  def handle_event("update-field", params, socket) do
+    field_name = List.first(params["_target"] || [])
 
-  def handle_event("update-field", %{"otp" => otp}, socket) do
-    {:noreply, assign(socket, manual_otp: otp)}
+    case field_name do
+      "notes" -> {:noreply, assign(socket, notes: params["notes"])}
+      "manual_otp" -> {:noreply, assign(socket, manual_otp: params["manual_otp"])}
+      "telegram_qr" -> {:noreply, socket}
+      _ -> {:noreply, socket}
+    end
   end
 
   def handle_event("send-otp", params, socket) do
-    # Ambil manual_otp dari params (form) atau gunakan dari socket (fallback)
     manual_otp = Map.get(params, "manual_otp", socket.assigns.manual_otp)
     request = socket.assigns.request
 
@@ -242,11 +319,25 @@ defmodule UpaTikPortalWeb.Admin.RequestDetailLive do
     else
       socket = assign(socket, sending_otp: true, manual_otp: manual_otp)
 
-      # Gunakan manual_otp jika diisi, jika tidak baru generate random
+      # Consume uploaded Telegram QR code if any
+      telegram_qr_url =
+        try do
+          case consume_uploaded_entries(socket, :telegram_qr, &save_upload/2) do
+            [{:ok, url} | _] -> url
+            [url | _] when is_binary(url) -> url
+            _ -> request.telegram_qr_url
+          end
+        rescue
+          _ -> request.telegram_qr_url
+        end
+
+      # Use manual_otp if provided, else generate random OTP
       otp = if manual_otp != "" and not is_nil(manual_otp), do: manual_otp, else: (:crypto.strong_rand_bytes(3) |> Base.encode16() |> String.slice(0, 6))
       now = DateTime.utc_now() |> DateTime.truncate(:second)
 
-      case UpaTikPortal.Repo.update(UpaTikPortal.Requests.EmailRequest.otp_changeset(request, %{otp_code: otp, otp_sent_at: now})) do
+      changeset = Ecto.Changeset.change(request, %{otp_code: otp, otp_sent_at: now, telegram_qr_url: telegram_qr_url})
+
+      case UpaTikPortal.Repo.update(changeset) do
         {:ok, updated_request} ->
           email = UpaTikPortal.Emails.otp_email(updated_request)
           case deliver_now(email) do
@@ -265,20 +356,53 @@ defmodule UpaTikPortalWeb.Admin.RequestDetailLive do
     end
   end
 
-  def handle_event("debug-email", _params, socket) do
-    request = socket.assigns.request
-    IO.puts(">>> [INTERNAL DEBUG] MEMULAI PENGIRIMAN...")
+  defp save_upload(%{path: tmp_path}, entry) do
+    ext = Path.extname(entry.client_name)
+    filename = "#{:crypto.strong_rand_bytes(16) |> Base.url_encode64(padding: false)}#{ext}"
 
-    socket = put_flash(socket, :info, "MENGHUBUNGI GOOGLE DENGAN MESIN INTERNAL...")
-
-    email = UpaTikPortal.Emails.otp_email(request)
-    case deliver_now(email) do
-      {:ok, _} ->
-        {:noreply, put_flash(socket, :info, "SUKSES: Koneksi Berhasil!")}
-
-      {:error, reason} ->
-        {:noreply, put_flash(socket, :error, "GAGAL: #{inspect(reason)}")}
+    content_type = case String.downcase(ext) do
+      ".jpg" -> "image/jpeg"
+      ".jpeg" -> "image/jpeg"
+      ".png" -> "image/png"
+      ".webp" -> "image/webp"
+      _ -> "application/octet-stream"
     end
+
+    minio_configured? =
+      System.get_env("MINIO_ACCESS_KEY") != nil or
+      System.get_env("AWS_ACCESS_KEY_ID") != nil
+
+    if minio_configured? do
+      try do
+        bucket = Application.get_env(:waffle, :bucket, "upa-tik-uploads")
+        file_content = File.read!(tmp_path)
+
+        case ExAws.S3.put_object(bucket, filename, file_content, content_type: content_type)
+             |> ExAws.request() do
+          {:ok, _} ->
+            s3_config = Application.get_env(:ex_aws, :s3, [])
+            host = Keyword.get(s3_config, :host, System.get_env("MINIO_HOST", "127.0.0.1"))
+            port = Keyword.get(s3_config, :port, (System.get_env("MINIO_PORT") || "9000") |> String.to_integer())
+            {:ok, "http://#{host}:#{port}/#{bucket}/#{filename}"}
+
+          {:error, reason} ->
+            IO.warn("[MinIO Upload GAGAL] Reason: #{inspect(reason)}")
+            save_local(tmp_path, filename)
+        end
+      rescue
+        _ -> save_local(tmp_path, filename)
+      end
+    else
+      save_local(tmp_path, filename)
+    end
+  end
+
+  defp save_local(tmp_path, filename) do
+    uploads_dir = Path.join(:code.priv_dir(:upa_tik_portal), "static/uploads")
+    File.mkdir_p!(uploads_dir)
+    dest = Path.join(uploads_dir, filename)
+    File.cp!(tmp_path, dest)
+    {:ok, "/uploads/#{filename}"}
   end
 
   # MESIN PENGIRIM INTERNAL - PORT 587 FIX

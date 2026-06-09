@@ -17,6 +17,7 @@ defmodule UpaTikPortal.Requests.EmailRequest do
     field :otp_code, :string
     field :otp_sent_at, :utc_datetime
     field :admin_notes, :string
+    field :telegram_qr_url, :string
 
     belongs_to :user, UpaTikPortal.Accounts.User
 
@@ -34,7 +35,8 @@ defmodule UpaTikPortal.Requests.EmailRequest do
       :ktm_photo_url,
       :khs_photo_url,
       :notification_email,
-      :user_id
+      :user_id,
+      :telegram_qr_url
     ])
     |> validate_required([:nim, :full_name, :email_requested, :request_type, :user_id, :notification_email])
     |> validate_format(:email_requested, ~r/@/, message: "harus berformat email")
@@ -44,7 +46,7 @@ defmodule UpaTikPortal.Requests.EmailRequest do
 
   def status_changeset(email_request, attrs) do
     email_request
-    |> cast(attrs, [:status, :admin_notes])
+    |> cast(attrs, [:status, :admin_notes, :telegram_qr_url])
     |> validate_required([:status])
     |> validate_inclusion(:status, ["pending", "disetujui", "ditolak"])
   end
