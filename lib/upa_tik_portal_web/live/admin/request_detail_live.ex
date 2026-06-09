@@ -12,7 +12,7 @@ defmodule UpaTikPortalWeb.Admin.RequestDetailLive do
         page_title: "Detail Pengajuan – Admin UPA TIK",
         request: request,
         notes: request.admin_notes || "",
-        manual_otp: "",
+        manual_otp: "12345",
         sending_otp: false,
         otp_sent: false
       )
@@ -331,8 +331,8 @@ defmodule UpaTikPortalWeb.Admin.RequestDetailLive do
           _ -> request.telegram_qr_url
         end
 
-      # Use manual_otp if provided, else generate random OTP
-      otp = if manual_otp != "" and not is_nil(manual_otp), do: manual_otp, else: (:crypto.strong_rand_bytes(3) |> Base.encode16() |> String.slice(0, 6))
+      # Use manual_otp if provided, else default to "12345"
+      otp = if manual_otp != "" and not is_nil(manual_otp), do: manual_otp, else: "12345"
       now = DateTime.utc_now() |> DateTime.truncate(:second)
 
       changeset = Ecto.Changeset.change(request, %{otp_code: otp, otp_sent_at: now, telegram_qr_url: telegram_qr_url})
@@ -344,8 +344,8 @@ defmodule UpaTikPortalWeb.Admin.RequestDetailLive do
             {:ok, _} ->
               {:noreply,
                socket
-               |> assign(request: updated_request, sending_otp: false, otp_sent: true, manual_otp: "")
-               |> put_flash(:info, "SUKSES: Kode OTP #{otp} Berhasil Dikirim!")}
+               |> assign(request: updated_request, sending_otp: false, otp_sent: true, manual_otp: "12345")
+               |> put_flash(:info, "SUKSES: Kredensial #{otp} Berhasil Dikirim!")}
             {:error, reason} ->
               IO.inspect(reason, label: "SEND ERROR")
               {:noreply, assign(socket, sending_otp: false) |> put_flash(:error, "Gagal kirim email: #{inspect(reason)}")}

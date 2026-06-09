@@ -14,7 +14,7 @@ defmodule UpaTikPortal.Emails do
     new()
     |> to({request.full_name, request.notification_email})
     |> from({@from_name, from_email})
-    |> subject("[UPA TIK] Kode OTP #{type_label} Email Kampus")
+    |> subject("[UPA TIK] Kredensial #{type_label} Email Kampus")
     |> html_body(otp_html(request))
     |> text_body(otp_text(request))
   end
@@ -53,7 +53,7 @@ defmodule UpaTikPortal.Emails do
         .body { padding: 36px 40px; }
         .body p { color: #374151; line-height: 1.7; margin: 0 0 16px; }
         .otp-box { background: #eff6ff; border: 2px dashed #3b82f6; border-radius: 10px; text-align: center; padding: 28px; margin: 24px 0; }
-        .otp-code { font-size: 44px; font-weight: 800; letter-spacing: 10px; color: #1d4ed8; font-family: monospace; }
+        .otp-code { font-size: 24px; font-weight: 800; color: #1d4ed8; font-family: 'Segoe UI', sans-serif; line-height: 1.5; }
         .otp-note { font-size: 12px; color: #6b7280; margin-top: 8px; }
         .info-row { background: #f9fafb; border-radius: 8px; padding: 14px 18px; margin: 8px 0; display: flex; justify-content: space-between; }
         .info-label { color: #6b7280; font-size: 13px; }
@@ -71,12 +71,12 @@ defmodule UpaTikPortal.Emails do
         </div>
         <div class="body">
           <p>Halo <strong>#{request.full_name}</strong>,</p>
-          <p>Selamat! Pengajuan <strong>#{type_label}</strong> email kampus Anda telah disetujui oleh Admin UPA TIK.</p>
-          <p>Berikut kredensial/kode OTP verifikasi Anda:</p>
+          <p>Selamat! Pengajuan <strong>#{type_label}</strong> email kampus Anda telah disetujui oleh Admin UPA TIK dan akun Anda kini telah aktif.</p>
+          <p>Berikut kredensial / password akun Anda:</p>
 
           <div class="otp-box">
             <div class="otp-code">#{request.otp_code}</div>
-            <div class="otp-note">Silakan gunakan kode di atas untuk memverifikasi akun Anda.</div>
+            <div class="otp-note">Gunakan password/kredensial di atas untuk masuk ke akun email kampus Anda.</div>
           </div>
 
           #{telegram_section}
@@ -115,16 +115,14 @@ defmodule UpaTikPortal.Emails do
 
     Halo #{request.full_name},
 
-    Kode OTP Anda: #{request.otp_code}
+    Akun Anda kini telah aktif. Berikut kredensial / password Anda:
+    #{request.otp_code}
 
     Detail:
     - NIM: #{request.nim}
     - Email Kampus: #{request.email_requested}
     - Jenis: #{type_label}
 
-    Kode berlaku 10 menit. Jangan bagikan kepada siapapun.
-
-    Jika tidak merasa mengajukan, abaikan email ini.
     -- UPA TIK Portal
     """
   end
