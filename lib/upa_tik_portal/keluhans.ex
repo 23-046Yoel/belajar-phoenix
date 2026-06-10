@@ -38,7 +38,7 @@ defmodule UpaTikPortal.Keluhans do
   def get_keluhan!(id), do: Repo.get!(Keluhan, id) |> Repo.preload(:user)
 
   @doc "Admin updates the status of a keluhan."
-  def update_keluhan_status(keluhan, attrs) do    
+  def update_keluhan_status(keluhan, attrs) do
     keluhan
     |> Keluhan.status_changeset(attrs)
     |> Repo.update()
@@ -80,6 +80,7 @@ defmodule UpaTikPortal.Keluhans do
         # Preload user so the UI can display sender info
         msg = Repo.preload(msg, :user)
         broadcast({:ok, msg}, :new_message)
+
       error ->
         error
     end

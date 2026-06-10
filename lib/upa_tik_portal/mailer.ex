@@ -22,6 +22,7 @@ defmodule UpaTikPortal.Mailer do
           :public_key.pem_decode(binary)
           |> Enum.filter(fn {type, _, _} -> type == :Certificate end)
           |> Enum.map(fn {_, der, _} -> der end)
+
         _ ->
           IO.puts(">>> [Mailer] WARNING: Gagal membaca file sertifikat Laragon!")
           []
@@ -56,7 +57,9 @@ defmodule UpaTikPortal.Mailer do
     result = Swoosh.Adapters.SMTP.deliver(email, config)
 
     case result do
-      {:ok, _} -> IO.puts(">>> [Mailer] BERHASIL!")
+      {:ok, _} ->
+        IO.puts(">>> [Mailer] BERHASIL!")
+
       {:error, reason} ->
         IO.puts(">>> [Mailer] GAGAL!")
         IO.inspect(reason, label: ">>> [Mailer] ERROR DETAIL")

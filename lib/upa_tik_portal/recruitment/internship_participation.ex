@@ -16,14 +16,41 @@ defmodule UpaTikPortal.Recruitment.InternshipParticipation do
     field :end_date, :date
 
     belongs_to :users, UpaTikPortal.Accounts.User, foreign_key: :user_id, type: :binary_id
-    belongs_to :internship_opening, UpaTikPortal.Recruitment.InternshipOpening, foreign_key: :opening_id, type: :binary_id
+
+    belongs_to :internship_opening, UpaTikPortal.Recruitment.InternshipOpening,
+      foreign_key: :opening_id,
+      type: :binary_id
 
     timestamps(type: :utc_datetime)
   end
+
   def changeset(internship_participation, attrs) do
     internship_participation
-    |> cast(attrs, [:cv_url, :portfolio_url, :surat_pengantar_url, :transkrip_nilai_url, :university, :major, :status, :start_date, :end_date, :user_id, :opening_id])
-    |> validate_required([:cv_url, :portfolio_url, :surat_pengantar_url, :transkrip_nilai_url, :university, :major, :start_date, :end_date, :user_id, :opening_id])
+    |> cast(attrs, [
+      :cv_url,
+      :portfolio_url,
+      :surat_pengantar_url,
+      :transkrip_nilai_url,
+      :university,
+      :major,
+      :status,
+      :start_date,
+      :end_date,
+      :user_id,
+      :opening_id
+    ])
+    |> validate_required([
+      :cv_url,
+      :portfolio_url,
+      :surat_pengantar_url,
+      :transkrip_nilai_url,
+      :university,
+      :major,
+      :start_date,
+      :end_date,
+      :user_id,
+      :opening_id
+    ])
     |> validate_start_date()
     |> validate_end_date()
   end

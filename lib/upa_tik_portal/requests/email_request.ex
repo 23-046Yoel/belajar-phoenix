@@ -38,7 +38,14 @@ defmodule UpaTikPortal.Requests.EmailRequest do
       :user_id,
       :telegram_qr_url
     ])
-    |> validate_required([:nim, :full_name, :email_requested, :request_type, :user_id, :notification_email])
+    |> validate_required([
+      :nim,
+      :full_name,
+      :email_requested,
+      :request_type,
+      :user_id,
+      :notification_email
+    ])
     |> validate_format(:email_requested, ~r/@/, message: "harus berformat email")
     |> validate_format(:notification_email, ~r/@/, message: "harus berformat email")
     |> validate_inclusion(:request_type, ["aktivasi", "reset"])

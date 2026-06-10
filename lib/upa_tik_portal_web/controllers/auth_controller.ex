@@ -12,7 +12,6 @@ defmodule UpaTikPortalWeb.AuthController do
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     case Accounts.get_or_create_user_from_google(auth) do
       {:ok, user} ->
-
         conn
         |> put_session(:user_id, user.id)
         |> put_flash(:info, "Selamat datang, #{user.name}!")

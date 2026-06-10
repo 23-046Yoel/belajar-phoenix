@@ -1,7 +1,7 @@
 defmodule UpaTikPortal.MailerDebug do
   def deliver_test(email) do
     IO.puts(">>> [MailerDebug] MEMULAI TEST KONEKSI BARU...")
-    
+
     # Ambil data environment
     user = System.get_env("SMTP_USER")
     pass = System.get_env("SMTP_PASSWORD")
@@ -9,13 +9,15 @@ defmodule UpaTikPortal.MailerDebug do
     port = String.to_integer(System.get_env("SMTP_PORT") || "465")
 
     # Load dan Decode sertifikat Laragon secara manual
-    certs = 
+    certs =
       case File.read("C:/laragon/etc/ssl/cacert.pem") do
         {:ok, binary} ->
           :public_key.pem_decode(binary)
           |> Enum.filter(fn {type, _, _} -> type == :Certificate end)
           |> Enum.map(fn {_, der, _} -> der end)
-        _ -> []
+
+        _ ->
+          []
       end
 
     IO.puts(">>> [MailerDebug] Sertifikat dimuat: #{length(certs)} item.")

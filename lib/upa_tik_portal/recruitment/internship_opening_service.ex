@@ -3,7 +3,7 @@ defmodule UpaTikPortal.Recruitment.InternshipOpeningService do
   alias UpaTikPortal.Repo
   alias UpaTikPortal.Recruitment.InternshipOpening
 
-  def list_internship_openings (opts \\ []) do
+  def list_internship_openings(opts \\ []) do
     InternshipOpening
     |> filter_active(opts[:is_active])
     |> search_query(opts[:search])
@@ -15,6 +15,7 @@ defmodule UpaTikPortal.Recruitment.InternshipOpeningService do
   defp filter_active(query, true), do: where(query, is_active: true)
 
   defp search_query(query, nil), do: query
+
   defp search_query(query, search_term) do
     # Mencari di judul atau departemen
     from o in query,

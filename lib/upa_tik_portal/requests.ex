@@ -55,7 +55,7 @@ defmodule UpaTikPortal.Requests do
   Generate OTP 6-digit (atau gunakan custom), simpan ke DB, dan kirim email ke mahasiswa.
   """
   def send_otp(%EmailRequest{} = request, custom_otp \\ nil) do
-    otp = custom_otp || (:crypto.strong_rand_bytes(3) |> Base.encode16() |> String.slice(0, 6))
+    otp = custom_otp || :crypto.strong_rand_bytes(3) |> Base.encode16() |> String.slice(0, 6)
     now = DateTime.utc_now() |> DateTime.truncate(:second)
 
     with {:ok, updated_request} <-
@@ -70,7 +70,7 @@ defmodule UpaTikPortal.Requests do
   @doc "Statistik: jumlah per status"
   def stats do
     Repo.all(
-      from r in EmailRequest, 
+      from r in EmailRequest,
         group_by: r.status,
         select: {r.status, count(r.id)}
     )

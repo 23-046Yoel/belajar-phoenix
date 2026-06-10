@@ -21,6 +21,7 @@ defmodule UpaTikPortalWeb.Home.Setting.Profile do
   @impl true
   def handle_event("save_profile", %{"name" => new_name}, socket) do
     user = socket.assigns.current_user
+
     case Accounts.update_user(user, %{name: new_name}) do
       {:ok, updated_user} ->
         {:noreply,
@@ -28,6 +29,7 @@ defmodule UpaTikPortalWeb.Home.Setting.Profile do
          |> put_flash(:info, "Profil berhasil diperbarui.")
          |> assign(:user, updated_user)
          |> assign(:form, to_form(%{"name" => updated_user.name}))}
+
       {:error, _changeset} ->
         {:noreply,
          socket

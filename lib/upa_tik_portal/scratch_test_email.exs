@@ -14,7 +14,8 @@ IO.puts("Menggunakan Pass: #{String.slice(smtp_pass, 0, 4)}****")
 
 email =
   Email.new()
-  |> Email.to("yoelflemming8@gmail.com") # Kita tes kirim ke email kamu sendiri
+  # Kita tes kirim ke email kamu sendiri
+  |> Email.to("yoelflemming8@gmail.com")
   |> Email.from({"TEST AGENT", smtp_user})
   |> Email.subject("TEST EMAIL DARI AGENT")
   |> Email.text_body("Halo, ini adalah email test untuk mengecek koneksi SMTP Gmail.")

@@ -19,6 +19,7 @@ import Dotenvy
 # script that automatically sets the env var above.
 
 env_dir_prefix = System.get_env("RELEASE_ROOT") || Path.expand("./envs")
+
 source!([
   Path.absname(".env", env_dir_prefix),
   Path.absname(".#{config_env()}.env", env_dir_prefix),
@@ -26,14 +27,16 @@ source!([
   System.get_env()
 ])
 
-config :upa_tik_portal, UpaTikPortal.Repo,
-  username: System.get_env("DB_USERNAME", "postgres"),
-  password: System.get_env("DB_PASSWORD", "admin123"),
-  hostname: System.get_env("DB_HOSTNAME", "localhost"),
-  database: System.get_env("DB_DATABASE", "upa_tik_portal_dev"),
-  stacktrace: true,
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+if config_env() != :test do
+  config :upa_tik_portal, UpaTikPortal.Repo,
+    username: System.get_env("DB_USERNAME", "postgres"),
+    password: System.get_env("DB_PASSWORD", "admin123"),
+    hostname: System.get_env("DB_HOSTNAME", "localhost"),
+    database: System.get_env("DB_DATABASE", "upa_tik_portal_dev"),
+    stacktrace: true,
+    show_sensitive_data_on_connection_error: true,
+    pool_size: 10
+end
 
 if System.get_env("PHX_SERVER") do
   config :upa_tik_portal, UpaTikPortalWeb.Endpoint, server: true
@@ -48,13 +51,16 @@ config :upa_tik_portal, UpaTikPortalWeb.Endpoint,
 # Load environment variables from .env files for non-prod environments
 if config_env() in [:dev, :test] do
   import Dotenvy
+
   case source([".env", ".env.#{config_env()}"]) do
     {:ok, env_vars} ->
       # Pastikan variabel dari .env masuk ke System environment secara aman
       for {k, v} <- env_vars, is_binary(v) or is_list(v) or is_number(v) or is_boolean(v) do
         System.put_env(to_string(k), to_string(v))
       end
-    _ -> :ok
+
+    _ ->
+      :ok
   end
 end
 

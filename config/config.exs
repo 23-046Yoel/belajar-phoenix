@@ -54,7 +54,8 @@ config :phoenix, :json_library, Jason
 config :ueberauth, Ueberauth,
   base_path: "/auth",
   providers: [
-    google: {Ueberauth.Strategy.Google, [default_scope: "email profile", prompt: "select_account"]}
+    google:
+      {Ueberauth.Strategy.Google, [default_scope: "email profile", prompt: "select_account"]}
   ]
 
 # Google OAuth configuration will be handled in runtime.exs

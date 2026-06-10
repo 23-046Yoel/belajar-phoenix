@@ -8,6 +8,7 @@ defmodule UpaTikPortal.Emails do
 
   def otp_email(request) do
     from_email = System.get_env("SMTP_USER") || "stokkgun7@gmail.com"
+
     type_label =
       if request.request_type == "aktivasi", do: "Aktivasi Akun", else: "Reset Password"
 
@@ -26,7 +27,11 @@ defmodule UpaTikPortal.Emails do
     telegram_section =
       if request.telegram_qr_url do
         host = System.get_env("APP_HOST") || "http://127.0.0.1:4000"
-        url = if String.starts_with?(request.telegram_qr_url, "/uploads/"), do: "#{host}#{request.telegram_qr_url}", else: request.telegram_qr_url
+
+        url =
+          if String.starts_with?(request.telegram_qr_url, "/uploads/"),
+            do: "#{host}#{request.telegram_qr_url}",
+            else: request.telegram_qr_url
 
         """
         <div class="telegram-section" style="background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: 12px; padding: 24px; text-align: center; margin: 24px 0;">

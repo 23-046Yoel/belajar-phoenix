@@ -3,12 +3,11 @@ defmodule UpaTikPortalWeb.StorageController do
 
   alias UpaTikPortal.Storage
 
-  
   def view_image(conn, %{"key" => filename}) do
     case Storage.download(filename) do
       {:ok, %{body: content}} ->
         # Deteksi content type sederhana berdasarkan ekstensi
-        content_type = 
+        content_type =
           case Path.extname(filename) |> String.downcase() do
             ".png" -> "image/png"
             ".webp" -> "image/webp"

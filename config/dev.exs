@@ -102,6 +102,7 @@ config :ex_aws, :s3,
 # Memuat .env secara manual tanpa library tambahan agar tidak error saat kompilasi
 if File.exists?(".env") do
   IO.puts(">>> [System] Memuat konfigurasi dari .env...")
+
   File.read!(".env")
   |> String.split("\n", trim: true)
   |> Enum.each(fn line ->
@@ -110,9 +111,12 @@ if File.exists?(".env") do
         k = String.trim(key)
         v = String.trim(value)
         System.put_env(k, v)
-      _ -> :ok
+
+      _ ->
+        :ok
     end
   end)
+
   IO.puts(">>> [System] .env berhasil dimuat.")
 else
   IO.puts(">>> [System] WARNING: File .env tidak ditemukan!")

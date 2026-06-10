@@ -16,7 +16,3 @@ defmodule UpaTikPortal.Repo.Migrations.CreateUsers do
     create unique_index(:users, [:google_uid])
   end
 end
-
-
-
-
