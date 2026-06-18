@@ -130,6 +130,11 @@ if config_env() == :prod do
     url: database_url,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
     prepare: :unnamed,
+    # Queue settings to handle latency spikes gracefully
+    queue_target: 5000,
+    queue_interval: 1000,
+    timeout: 30_000,
+    connect_timeout: 30_000,
     # For machines with several cores, consider starting multiple pools of `pool_size`
     # pool_count: 4,
     socket_options: maybe_ipv6
