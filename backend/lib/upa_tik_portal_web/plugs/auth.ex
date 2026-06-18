@@ -9,11 +9,25 @@ defmodule UpaTikPortalWeb.Plugs.Auth do
   @doc "Muat user dari session ke assigns"
   def load_current_user(conn, _opts) do
     user_id = get_session(conn, :user_id)
+    user_name = get_session(conn, :user_name)
+    user_email = get_session(conn, :user_email)
+    user_role = get_session(conn, :user_role)
 
     if user_id do
-      case Accounts.get_user(user_id) do
-        nil -> assign(conn, :current_user, nil)
-        user -> assign(conn, :current_user, user)
+      if user_name && user_email && user_role do
+        user = %UpaTikPortal.Accounts.User{
+          id: user_id,
+          name: user_name,
+          email: user_email,
+          role: user_role
+        }
+        assign(conn, :current_user, user)
+      else
+        # Fallback to DB query if session details are incomplete
+        case Accounts.get_user(user_id) do
+          nil -> assign(conn, :current_user, nil)
+          user -> assign(conn, :current_user, user)
+        end
       end
     else
       assign(conn, :current_user, nil)

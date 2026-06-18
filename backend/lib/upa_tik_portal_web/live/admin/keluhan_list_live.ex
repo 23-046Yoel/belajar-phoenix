@@ -4,7 +4,7 @@ defmodule UpaTikPortalWeb.Admin.KeluhanListLive do
   alias UpaTikPortal.Keluhans
 
   def mount(_params, session, socket) do
-    user = UpaTikPortal.Accounts.get_user!(session["user_id"])
+    user = UpaTikPortal.Accounts.get_user_from_session(session)
 
     socket =
       assign(socket,

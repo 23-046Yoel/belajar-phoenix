@@ -47,6 +47,23 @@ defmodule UpaTikPortal.Accounts do
 
   def get_user(id), do: Repo.get(User, id)
 
+  def get_user_from_session(session) do
+    case session["user_id"] do
+      nil -> nil
+      id ->
+        if session["user_name"] && session["user_email"] && session["user_role"] do
+          %User{
+            id: id,
+            name: session["user_name"],
+            email: session["user_email"],
+            role: session["user_role"]
+          }
+        else
+          get_user(id)
+        end
+    end
+  end
+
   def list_users, do: Repo.all(User)
 
   def update_user_role(%User{} = user, role) do

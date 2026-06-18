@@ -6,8 +6,7 @@ defmodule UpaTikPortalWeb.RequestLive do
   @max_file_size 5_000_000
 
   def mount(_params, session, socket) do
-    user_id = session["user_id"]
-    user = UpaTikPortal.Accounts.get_user!(user_id)
+    user = UpaTikPortal.Accounts.get_user_from_session(session)
 
     socket =
       socket

@@ -5,7 +5,7 @@ defmodule UpaTikPortalWeb.Admin.RequestDetailLive do
 
   def mount(%{"id" => id}, session, socket) do
     request = Requests.get_request!(id)
-    admin = UpaTikPortal.Accounts.get_user!(session["user_id"])
+    admin = UpaTikPortal.Accounts.get_user_from_session(session)
 
     default_msg =
       if request.request_type == "aktivasi" do

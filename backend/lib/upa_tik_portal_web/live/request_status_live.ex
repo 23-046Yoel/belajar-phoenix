@@ -5,8 +5,8 @@ defmodule UpaTikPortalWeb.RequestStatusLive do
   alias UpaTikPortal.Keluhans
 
   def mount(_params, session, socket) do
-    user_id = session["user_id"]
-    user = UpaTikPortal.Accounts.get_user!(user_id)
+    user = UpaTikPortal.Accounts.get_user_from_session(session)
+    user_id = user.id
     requests = Requests.list_requests_by_user(user_id)
     keluhans = Keluhans.list_keluhans_by_user(user_id)
 
