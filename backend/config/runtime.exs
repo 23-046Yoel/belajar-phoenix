@@ -37,7 +37,8 @@ if config_env() != :test do
       ssl_opts: [verify: :verify_none],
       stacktrace: true,
       show_sensitive_data_on_connection_error: true,
-      pool_size: 10
+      pool_size: 10,
+      prepare: :unnamed
   else
     config :upa_tik_portal, UpaTikPortal.Repo,
       username: System.get_env("DB_USERNAME", "postgres"),
@@ -128,6 +129,7 @@ if config_env() == :prod do
     ssl_opts: [verify: :verify_none],
     url: database_url,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
+    prepare: :unnamed,
     # For machines with several cores, consider starting multiple pools of `pool_size`
     # pool_count: 4,
     socket_options: maybe_ipv6
