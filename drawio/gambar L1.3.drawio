@@ -1,0 +1,70 @@
+<mxfile host="65bd71144e">
+    <diagram id="diagram_docker_compose" name="Diagram Arsitektur Kontainerisasi Sistem dengan Docker Compose">
+        <mxGraphModel dx="1001" dy="824" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="900" background="#FFFFFF" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b style=&quot;font-size: 16px; color: #000000;&quot;&gt;Gambar L1.3: Diagram Arsitektur Kontainerisasi Sistem dengan Docker Compose&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 12px; color: #000000;&quot;&gt;Diagram Arsitektur Jaringan dan Kontainerisasi Sistem pada Server Host&lt;/span&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="40" width="700" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="host_boundary" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Host OS / Server VPS (Linux Ubuntu)&lt;/b&gt;&lt;/font&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;align=center;verticalAlign=top;fontStyle=1;fontColor=#000000;fontSize=12;startSize=25;arcSize=0;shadow=0;dashed=1;fontFamily=Times New Roman;" parent="1" vertex="1">
+                    <mxGeometry x="50" y="120" width="1100" height="570" as="geometry"/>
+                </mxCell>
+                <mxCell id="docker_boundary" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Docker Engine (Docker Compose environment)&lt;/b&gt;&lt;/font&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;align=center;verticalAlign=top;fontStyle=1;fontColor=#000000;fontSize=12;startSize=25;arcSize=0;shadow=0;fontFamily=Times New Roman;" parent="host_boundary" vertex="1">
+                    <mxGeometry x="30" y="50" width="1040" height="340" as="geometry"/>
+                </mxCell>
+                <mxCell id="network_boundary" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Docker Custom Bridge Network (upa-tik-network)&lt;/b&gt;&lt;/font&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;align=center;verticalAlign=top;fontStyle=1;fontColor=#000000;fontSize=11;startSize=25;arcSize=0;shadow=0;dashed=1;fontFamily=Times New Roman;" parent="docker_boundary" vertex="1">
+                    <mxGeometry x="30" y="50" width="980" height="260" as="geometry"/>
+                </mxCell>
+                <mxCell id="container_web" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b style=&quot;font-size: 13px;&quot;&gt;Container: web-app&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Phoenix App (Elixir Binaries)&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;Internal Port: 4000/tcp&lt;br/&gt;IP Address: 172.20.0.4&lt;/span&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=center;shadow=0;fontFamily=Times New Roman;" parent="network_boundary" vertex="1">
+                    <mxGeometry x="60" y="80" width="200" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="container_db" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b style=&quot;font-size: 13px;&quot;&gt;Container: database&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;PostgreSQL DB Server&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;Internal Port: 5432/tcp&lt;br/&gt;IP Address: 172.20.0.2&lt;/span&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=center;shadow=0;fontFamily=Times New Roman;" parent="network_boundary" vertex="1">
+                    <mxGeometry x="390" y="80" width="200" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="container_storage" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b style=&quot;font-size: 13px;&quot;&gt;Container: storage&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Minio Object Storage&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;Internal Port: 9000, 9001&lt;br/&gt;IP Address: 172.20.0.3&lt;/span&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=center;shadow=0;fontFamily=Times New Roman;" parent="network_boundary" vertex="1">
+                    <mxGeometry x="720" y="80" width="200" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="port_web" value="&lt;font face=&quot;Times New Roman&quot;&gt;Host Port&lt;br/&gt;&lt;b&gt;4000:4000&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontSize=9;fontColor=#000000;" parent="host_boundary" vertex="1">
+                    <mxGeometry x="150" y="25" width="80" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="port_db" value="&lt;font face=&quot;Times New Roman&quot;&gt;Host Port&lt;br/&gt;&lt;b&gt;5432:5432&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontSize=9;fontColor=#000000;" parent="host_boundary" vertex="1">
+                    <mxGeometry x="480" y="25" width="80" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="port_storage" value="&lt;font face=&quot;Times New Roman&quot;&gt;Host Ports&lt;br/&gt;&lt;b&gt;9000:9000&lt;br/&gt;9001:9001&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;fontSize=9;fontColor=#000000;" parent="host_boundary" vertex="1">
+                    <mxGeometry x="810" y="20" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="vol_db" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Named Volume: pg_data&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 9px;&quot;&gt;Host Disk: /var/lib/docker/volumes/pg_data/_data&lt;/span&gt;&lt;/font&gt;" style="shape=folder;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;fontFamily=Times New Roman;align=center;verticalAlign=middle;" parent="host_boundary" vertex="1">
+                    <mxGeometry x="400" y="440" width="240" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="vol_storage" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Named Volume: minio_data&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 9px;&quot;&gt;Host Disk: /var/lib/docker/volumes/minio_data/_data&lt;/span&gt;&lt;/font&gt;" style="shape=folder;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=10;fontFamily=Times New Roman;align=center;verticalAlign=middle;" parent="host_boundary" vertex="1">
+                    <mxGeometry x="730" y="440" width="240" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge_ext_web" value="HTTP / WS" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontSize=9;fontFamily=Times New Roman;" parent="host_boundary" source="port_web" target="container_web" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge_ext_db" value="SQL Conn" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontSize=9;fontFamily=Times New Roman;" parent="host_boundary" source="port_db" target="container_db" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge_ext_storage" value="S3 Console" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontSize=9;fontFamily=Times New Roman;" parent="host_boundary" source="port_storage" target="container_storage" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge_web_db" value="Database Queries (ECTO)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontSize=10;fontStyle=1;labelBackgroundColor=#FFFFFF;fontFamily=Times New Roman;" parent="host_boundary" source="container_web" target="container_db" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge_web_storage" value="S3 HTTP Upload (ExAws)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontSize=10;fontStyle=1;labelBackgroundColor=#FFFFFF;fontFamily=Times New Roman;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="host_boundary" source="container_web" target="container_storage" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge_db_vol" value="Mount: /var/lib/postgresql/data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontSize=9;fontStyle=2;labelBackgroundColor=#FFFFFF;dashed=1;fontFamily=Times New Roman;" parent="host_boundary" source="container_db" target="vol_db" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="edge_storage_vol" value="Mount: /data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontSize=9;fontStyle=2;labelBackgroundColor=#FFFFFF;dashed=1;fontFamily=Times New Roman;" parent="host_boundary" source="container_storage" target="vol_storage" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_docker" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b style=&quot;font-size: 11px;&quot;&gt;Keterangan Jaringan Kontainer Docker Compose:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;1. &lt;b&gt;Internal Network&lt;/b&gt;: Ketiga kontainer berada dalam jaringan virtual internal yang sama (&lt;i&gt;upa-tik-network&lt;/i&gt;) sehingga kontainer &lt;i&gt;web-app&lt;/i&gt; dapat langsung berkomunikasi secara aman dengan &lt;i&gt;database&lt;/i&gt; (port 5432) dan &lt;i&gt;storage&lt;/i&gt; (port 9000) menggunakan nama host kontainernya.&lt;br/&gt;2. &lt;b&gt;Port Mapping&lt;/b&gt;: Port luar yang di-expose ke publik memungkinkan pengguna mengakses aplikasi Phoenix di port 4000, serta administrator mengakses panel manajemen Minio di port 9001.&lt;br/&gt;3. &lt;b&gt;Persistent Data&lt;/b&gt;: Data PostgreSQL dan data unggahan berkas Minio dialirkan ke volume fisik (&lt;i&gt;pg_data&lt;/i&gt; dan &lt;i&gt;minio_data&lt;/i&gt;) pada media penyimpanan server agar data tetap aman saat kontainer dimatikan/dihapus.&lt;/font&gt;" style="text;html=1;strokeColor=#000000;fillColor=#FFFFFF;spacing=12;spacingTop=6;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#000000;align=left;verticalAlign=top;shadow=0;strokeWidth=1.5;fontFamily=Times New Roman;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="700" width="360" height="180" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

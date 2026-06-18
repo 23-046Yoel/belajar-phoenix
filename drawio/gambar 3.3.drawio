@@ -1,0 +1,163 @@
+<mxfile host="65bd71144e">
+    <diagram id="diagram_minio_upload" name="Integrasi Unggah File ke Object Storage Minio">
+        <mxGraphModel dx="442" dy="364" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="900" background="#FFFFFF" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b style=&quot;font-size: 16px; color: #000000;&quot;&gt;Gambar 3.3: Integrasi Unggah File ke Object Storage Minio&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 12px; color: #000000;&quot;&gt;Diagram Sekuensial (Sequence Diagram) Aliran Pengunggahan Berkas Bukti Keluhan&lt;/span&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="40" width="700" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="lifeline_client" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Client&lt;/b&gt;&lt;br/&gt;(Browser/App)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Times New Roman;fontSize=11;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="140" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="lifeline_web" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Web Layer&lt;/b&gt;&lt;br/&gt;(LiveView/Controller)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Times New Roman;fontSize=11;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="350" y="140" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="lifeline_storage" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Storage Service&lt;/b&gt;&lt;br/&gt;UpaTikPortal.Storage&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Times New Roman;fontSize=11;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="140" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="lifeline_minio" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Minio Storage&lt;/b&gt;&lt;br/&gt;(S3 Compatible API)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Times New Roman;fontSize=11;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="850" y="140" width="140" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="lifeline_db" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;PostgreSQL DB&lt;/b&gt;&lt;br/&gt;(Ecto Repository)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontFamily=Times New Roman;fontSize=11;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="1050" y="140" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="line_client" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;" parent="1" source="lifeline_client" target="client_act" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="159.5" y="190" as="sourcePoint"/>
+                        <mxPoint x="159.5" y="770" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="line_web" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;" parent="1" source="lifeline_web" target="web_act" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="429.5" y="190" as="sourcePoint"/>
+                        <mxPoint x="429.5" y="770" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="line_storage" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;" parent="1" source="lifeline_storage" target="storage_act" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="679.5" y="190" as="sourcePoint"/>
+                        <mxPoint x="679.5" y="770" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="line_minio" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;" parent="1" source="lifeline_minio" target="minio_act" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="919.5" y="190" as="sourcePoint"/>
+                        <mxPoint x="919.5" y="770" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="line_db" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;" parent="1" source="lifeline_db" target="db_act" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1109.5" y="190" as="sourcePoint"/>
+                        <mxPoint x="1109.5" y="770" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="client_act" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;" parent="1" vertex="1">
+                    <mxGeometry x="155" y="220" width="10" height="510" as="geometry"/>
+                </mxCell>
+                <mxCell id="web_act" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;" parent="1" vertex="1">
+                    <mxGeometry x="425" y="220" width="10" height="480" as="geometry"/>
+                </mxCell>
+                <mxCell id="storage_act" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;" parent="1" vertex="1">
+                    <mxGeometry x="675" y="340" width="10" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="minio_act" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;" parent="1" vertex="1">
+                    <mxGeometry x="915" y="400" width="10" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="db_act" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;" parent="1" vertex="1">
+                    <mxGeometry x="1105" y="570" width="10" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="line_client_ext" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;" parent="1" source="client_act" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="159.5" y="730" as="sourcePoint"/>
+                        <mxPoint x="159.5" y="780" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="line_web_ext" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;" parent="1" source="web_act" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="429.5" y="700" as="sourcePoint"/>
+                        <mxPoint x="429.5" y="780" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="line_storage_ext" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;" parent="1" source="storage_act" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="679.5" y="520" as="sourcePoint"/>
+                        <mxPoint x="679.5" y="780" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="line_minio_ext" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;" parent="1" source="minio_act" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="919.5" y="480" as="sourcePoint"/>
+                        <mxPoint x="919.5" y="780" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="line_db_ext" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;" parent="1" source="db_act" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1109.5" y="650" as="sourcePoint"/>
+                        <mxPoint x="1109.5" y="780" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="msg1" value="1. Kirim Form Keluhan (Data + Berkas Foto)" style="endArrow=block;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.02;exitDx=0;exitDy=0;entryX=0;entryY=0.02;entryDx=0;entryDy=0;" parent="1" source="client_act" target="web_act" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="200" y="230" as="sourcePoint"/>
+                        <mxPoint x="400" y="230" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="msg2" value="2. Rename File &lt;br/&gt;ke UUID Unik" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;align=left;spacingLeft=5;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=9;fontColor=#000000;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.08;exitDx=0;exitDy=0;entryX=1;entryY=0.18;entryDx=0;entryDy=0;" parent="1" source="web_act" target="web_act" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="440" y="260" as="sourcePoint"/>
+                        <mxPoint x="490" y="310" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="msg3" value="3. UpaTikPortal.Storage.upload(src, uuid_name)" style="endArrow=block;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="1" source="web_act" target="storage_act" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="450" y="340" as="sourcePoint"/>
+                        <mxPoint x="650" y="340" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="msg4" value="4. Unggah File (ExAws.S3 HTTP API)" style="endArrow=block;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.33;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="1" source="storage_act" target="minio_act" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="700" y="400" as="sourcePoint"/>
+                        <mxPoint x="900" y="400" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="msg5" value="5. Respon Sukses (:ok, %{body: content})" style="endArrow=open;dashed=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.66;entryDx=0;entryDy=0;" parent="1" source="minio_act" target="storage_act" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="900" y="460" as="sourcePoint"/>
+                        <mxPoint x="700" y="460" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="msg6" value="6. Return {:ok, uuid_key}" style="endArrow=open;dashed=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.9;exitDx=0;exitDy=0;entryX=1;entryY=0.58;entryDx=0;entryDy=0;" parent="1" source="storage_act" target="web_act" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="650" y="500" as="sourcePoint"/>
+                        <mxPoint x="450" y="500" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="msg7" value="7. Simpan Keluhan (Teks &amp;amp; uuid_key) ke Database" style="endArrow=block;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.73;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="1" source="web_act" target="db_act" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="450" y="570" as="sourcePoint"/>
+                        <mxPoint x="1050" y="570" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="msg8" value="8. Respon Sukses Simpan (:ok, keluhan)" style="endArrow=open;dashed=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.85;entryDx=0;entryDy=0;" parent="1" source="db_act" target="web_act" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1050" y="630" as="sourcePoint"/>
+                        <mxPoint x="450" y="630" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="msg9" value="9. Respon Sukses (Notifikasi &amp;amp; Halaman Ter-update)" style="endArrow=open;dashed=1;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.96;exitDx=0;exitDy=0;entryX=1;entryY=0.96;entryDx=0;entryDy=0;" parent="1" source="web_act" target="client_act" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="400" y="680" as="sourcePoint"/>
+                        <mxPoint x="200" y="680" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="note_flow" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;Catatan Integrasi Unggah File Minio:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;1. &lt;b&gt;Submit Form&lt;/b&gt;: Pengguna mengirimkan keluhan lengkap dengan file lampiran fisik dari Client Browser.&lt;br/&gt;2. &lt;b&gt;Renaming UUID&lt;/b&gt;: Untuk mencegah penimpaan nama file yang sama di dalam bucket Minio, Controller/LiveView mengubah nama file asli menjadi UUID unik.&lt;br/&gt;3. &lt;b&gt;Minio Upload&lt;/b&gt;: Aplikasi Phoenix memanggil Storage Service (&lt;i&gt;UpaTikPortal.Storage.upload/2&lt;/i&gt;) untuk mentransfer berkas fisik secara asinkron ke server Minio via library ExAws (protokol HTTP S3 API).&lt;br/&gt;4. &lt;b&gt;DB Persistence&lt;/b&gt;: Setelah file aman terunggah di Minio, referensi lokasi file (Object Key/UUID) dan data teks keluhan disimpan ke PostgreSQL Database melalui Ecto.&lt;/font&gt;" style="text;html=1;strokeColor=#000000;fillColor=#FFFFFF;spacing=12;spacingTop=8;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#000000;align=left;verticalAlign=top;shadow=0;strokeWidth=1.5;fontFamily=Times New Roman;" parent="1" vertex="1">
+                    <mxGeometry x="145" y="780" width="540" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="watermark" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;span style=&quot;font-size: 10px; color: #000000;&quot;&gt;Program Studi Teknik Informatika - Portal Layanan UPA TIK&lt;/span&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;" parent="1" vertex="1">
+                    <mxGeometry x="850" y="800" width="300" height="30" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

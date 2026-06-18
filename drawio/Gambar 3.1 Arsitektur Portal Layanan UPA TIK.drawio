@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="Electron" modified="2026-06-15T20:30:00.000Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.6.0 Safari/537.36" version="21.6.8" type="device">
+  <diagram id="diagram_upa_tik" name="Arsitektur Portal Layanan UPA TIK">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- HEADER / TITLE (Times New Roman, Black, Skripsi Style) -->
+        <mxCell id="title" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b style=&quot;font-size: 16px; color: #000000;&quot;&gt;Gambar 3.1: Arsitektur Portal Layanan UPA TIK&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 12px; color: #000000;&quot;&gt;Aliran Request REST API, Model Data Ecto, dan Integrasi Penyimpanan Minio&lt;/span&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="250" y="40" width="700" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- CLIENT ZONE BOUNDARY (Academic Dashed Frame) -->
+        <mxCell id="client_boundary" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;[ Subsystem: Client Side ]&lt;/b&gt;&lt;/font&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;align=center;verticalAlign=top;fontStyle=1;fontColor=#000000;fontSize=12;startSize=25;arcSize=0;shadow=0;dashed=1;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="50" y="140" width="180" height="470" as="geometry" />
+        </mxCell>
+
+        <!-- PHOENIX APP BOUNDARY (Academic Solid Frame) -->
+        <mxCell id="phoenix_boundary" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;[ Subsystem: Phoenix Web Application (Elixir) ]&lt;/b&gt;&lt;/font&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;align=center;verticalAlign=top;fontStyle=1;fontColor=#000000;fontSize=12;startSize=25;arcSize=0;shadow=0;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="270" y="140" width="540" height="470" as="geometry" />
+        </mxCell>
+
+        <!-- STORAGE & DATABASE BOUNDARY (Academic Dashed Frame) -->
+        <mxCell id="infrastructure_boundary" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;[ Subsystem: Database &amp;amp; Storage Layer ]&lt;/b&gt;&lt;/font&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;align=center;verticalAlign=top;fontStyle=1;fontColor=#000000;fontSize=12;startSize=25;arcSize=0;shadow=0;dashed=1;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="850" y="140" width="300" height="470" as="geometry" />
+        </mxCell>
+
+        <!-- CLIENT NODE -->
+        <mxCell id="client" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b style=&quot;font-size: 13px;&quot;&gt;Client Browser/App&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Web Browser / Mobile App&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;(HTTP / WebSockets)&lt;/span&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=center;shadow=0;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="70" y="310" width="140" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- PHOENIX ROUTER (Official UML Component Shape) -->
+        <mxCell id="router" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b style=&quot;font-size: 13px;&quot;&gt;«component»&lt;br/&gt;Phoenix Router&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;UpaTikPortalWeb.Router&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 9px;&quot;&gt;(router.ex)&lt;/span&gt;&lt;/font&gt;" style="shape=module;align=left;spacingLeft=20;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;shadow=0;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="300" y="310" width="130" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- CONTROLLERS & LIVEVIEWS (Official UML Component Shape) -->
+        <mxCell id="controllers" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b style=&quot;font-size: 13px;&quot;&gt;«component»&lt;br/&gt;Controllers &amp;amp; LiveViews&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;StorageController&lt;br/&gt;RequestLive, KeluhanLive&lt;/span&gt;&lt;/font&gt;" style="shape=module;align=left;spacingLeft=20;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;shadow=0;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="470" y="310" width="150" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- ECTO SCHEMA & CONTEXTS (Official UML Component Shape) -->
+        <mxCell id="ecto_context" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b style=&quot;font-size: 13px;&quot;&gt;«component»&lt;br/&gt;Ecto Context &amp;amp; Schema&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;Accounts, Keluhans, Requests&lt;/span&gt;&lt;/font&gt;" style="shape=module;align=left;spacingLeft=20;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;shadow=0;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="650" y="200" width="140" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- STORAGE SERVICE (Official UML Component Shape) -->
+        <mxCell id="storage_client" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b style=&quot;font-size: 13px;&quot;&gt;«component»&lt;br/&gt;Storage Service&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;UpaTikPortal.Storage&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 9px;&quot;&gt;(ExAws.S3 Wrapper)&lt;/span&gt;&lt;/font&gt;" style="shape=module;align=left;spacingLeft=20;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;shadow=0;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="650" y="430" width="140" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- POSTGRESQL (Academic Database Cylinder) -->
+        <mxCell id="postgresql" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;PostgreSQL DB&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;UpaTikPortal.Repo&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 9px;&quot;&gt;Tables: users, requests, keluhans, audit_logs&lt;/span&gt;&lt;/font&gt;" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=15;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=center;shadow=0;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="930" y="190" width="140" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- MINIO (Academic Node Cube) -->
+        <mxCell id="minio" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Minio Storage&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;Object Storage (S3)&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 9px;&quot;&gt;Bucket: upa-tik-uploads&lt;/span&gt;&lt;/font&gt;" style="shape=cube;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=center;shadow=0;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="930" y="420" width="140" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- EDGES / CONNECTIONS -->
+        <mxCell id="edge_client_router" value="1. HTTP / WebSockets" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontSize=10;fontStyle=1;labelBackgroundColor=#FFFFFF;fontFamily=Times New Roman;" edge="1" parent="1" source="client" target="router">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_router_controller" value="2. Match &amp;amp; Dispatch" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontSize=10;fontStyle=1;labelBackgroundColor=#FFFFFF;fontFamily=Times New Roman;" edge="1" parent="1" source="router" target="controllers">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_controller_ecto" value="3a. Invoke Business Logic" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontSize=10;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontFamily=Times New Roman;" edge="1" parent="1" source="controllers" target="ecto_context">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_controller_storage" value="3b. Upload/Download Request" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontSize=10;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontFamily=Times New Roman;" edge="1" parent="1" source="controllers" target="storage_client">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_ecto_db" value="4a. SQL Queries / CRUD" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontSize=10;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontFamily=Times New Roman;" edge="1" parent="1" source="ecto_context" target="postgresql">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_storage_minio" value="4b. ExAws S3 API (HTTP)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontSize=10;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontFamily=Times New Roman;" edge="1" parent="1" source="storage_client" target="minio">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_db_minio" value="5. Metadata (Object Key Ref)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontSize=10;fontStyle=2;labelBackgroundColor=#FFFFFF;dashed=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontFamily=Times New Roman;" edge="1" parent="1" source="postgresql" target="minio">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ACADEMIC NOTE BOX -->
+        <mxCell id="note_flow" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;Catatan Aliran Data Sistem:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;1. &lt;b&gt;Client (Pelanggan)&lt;/b&gt; mengirim request/mengunggah file bukti dari browser atau HP.&lt;br/&gt;2. &lt;b&gt;Phoenix Router (Penerima Tamu)&lt;/b&gt; mencocokkan URL dan mengarahkannya ke Controller atau LiveView yang sesuai.&lt;br/&gt;3. &lt;b&gt;Controller/LiveView (Pelayan &amp;amp; Koki)&lt;/b&gt; memisahkan tugas: File biner dikirim ke Storage Service, sedangkan data teks keluhan disiapkan.&lt;br/&gt;4. &lt;b&gt;Storage Service (Asisten Dapur - Minio)&lt;/b&gt; menyimpan file fisik di Minio Object Storage (Kulkas Besar) dan menerima nama kunci file unik.&lt;br/&gt;5. &lt;b&gt;Ecto Schema (Asisten Dapur - DB)&lt;/b&gt; mengecek validasi kebersihan data keluhan teks beserta nama kunci file unik tadi.&lt;br/&gt;6. Data teks dan referensi kunci file disimpan ke dalam PostgreSQL Database (Arsip Buku Catatan).&lt;/font&gt;" style="text;html=1;strokeColor=#000000;fillColor=#FFFFFF;spacing=12;spacingTop=8;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#000000;align=left;verticalAlign=top;shadow=0;strokeWidth=1.5;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="270" y="640" width="540" height="190" as="geometry" />
+        </mxCell>
+
+        <!-- FOOTER / PROGRAM STUDI -->
+        <mxCell id="watermark" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;span style=&quot;font-size: 10px; color: #000000;&quot;&gt;Program Studi Teknik Informatika - Portal Layanan UPA TIK&lt;/span&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="850" y="800" width="300" height="30" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

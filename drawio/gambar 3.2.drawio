@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="Electron" modified="2026-06-15T20:45:00.000Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.6.0 Safari/537.36" version="21.6.8" type="device">
+  <diagram id="diagram_jwt_auth" name="Aliran Autentikasi JWT dan Middleware Plug">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="900" math="0" shadow="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- HEADER / TITLE (Times New Roman, Black, Skripsi Style) -->
+        <mxCell id="title" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b style=&quot;font-size: 16px; color: #000000;&quot;&gt;Gambar 3.2: Aliran Autentikasi JWT dan Middleware Plug&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 12px; color: #000000;&quot;&gt;Diagram Aliran Aktivitas (Activity Diagram) Validasi Token pada Rute REST API&lt;/span&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="250" y="40" width="700" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- SWIMLANES / PARTITIONS (Academic Grayscale Frame) -->
+        <!-- CLIENT SWIMLANE -->
+        <mxCell id="lane_client" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;CLIENT SIDE (Aplikasi / Browser)&lt;/b&gt;&lt;/font&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;align=center;verticalAlign=top;fontStyle=1;fontColor=#000000;fontSize=12;startSize=25;arcSize=0;shadow=0;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="50" y="140" width="300" height="680" as="geometry" />
+        </mxCell>
+
+        <!-- MIDDLEWARE PLUG SWIMLANE -->
+        <mxCell id="lane_plug" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;PHOENIX PLUG MIDDLEWARE (JWTAuthPlug)&lt;/b&gt;&lt;/font&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;align=center;verticalAlign=top;fontStyle=1;fontColor=#000000;fontSize=12;startSize=25;arcSize=0;shadow=0;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="350" y="140" width="500" height="680" as="geometry" />
+        </mxCell>
+
+        <!-- DATABASE SWIMLANE -->
+        <mxCell id="lane_db" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;DATABASE &amp;amp; SERVICE LAYER (Ecto)&lt;/b&gt;&lt;/font&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;align=center;verticalAlign=top;fontStyle=1;fontColor=#000000;fontSize=12;startSize=25;arcSize=0;shadow=0;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="850" y="140" width="300" height="680" as="geometry" />
+        </mxCell>
+
+        <!-- INITIAL STATE (Start Node) -->
+        <mxCell id="start" value="" style="ellipse;fillColor=#000000;strokeColor=#000000;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="185" y="180" width="30" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- CLIENT ACTION: SEND REQUEST -->
+        <mxCell id="client_send" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Kirim HTTP Request&lt;/b&gt;&lt;br/&gt;Header dengan Token:&lt;br/&gt;Authorization: Bearer [jwt]&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=center;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="130" y="240" width="140" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- PLUG ACTION: EXTRACT HEADER -->
+        <mxCell id="plug_extract" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Ekstraksi Token&lt;/b&gt;&lt;br/&gt;Membaca nilai header&lt;br/&gt;Authorization&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=center;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="530" y="240" width="140" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- DECISION: TOKEN PRESENT? -->
+        <mxCell id="dec_token_exists" value="&lt;font face=&quot;Times New Roman&quot;&gt;Token&lt;br/&gt;Ada?&lt;/font&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="560" y="330" width="80" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- PLUG ACTION: HALT CONNECTION -->
+        <mxCell id="plug_halt" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Hentikan Koneksi&lt;/b&gt;&lt;br/&gt;conn |&gt; put_status(401)&lt;br/&gt;|&gt; halt()&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=center;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="380" y="340" width="130" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- CLIENT RESPONSE: 401 UNAUTHORIZED -->
+        <mxCell id="client_response_unauth" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Akses Ditolak&lt;/b&gt;&lt;br/&gt;HTTP 401 Unauthorized&lt;br/&gt;(Invalid/Expired Token)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=center;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="130" y="340" width="140" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- PLUG ACTION: VERIFY JWT -->
+        <mxCell id="plug_verify" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Verifikasi Token&lt;/b&gt;&lt;br/&gt;Validasi tanda tangan &amp;amp;&lt;br/&gt;cek waktu kedaluwarsa&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=center;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="530" y="450" width="140" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- DECISION: TOKEN VALID? -->
+        <mxCell id="dec_token_valid" value="&lt;font face=&quot;Times New Roman&quot;&gt;Token&lt;br/&gt;Valid?&lt;/font&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="560" y="540" width="80" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- DB ACTION: FETCH USER -->
+        <mxCell id="db_fetch_user" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Cari Pengguna&lt;/b&gt;&lt;br/&gt;Query ke Database&lt;br/&gt;Accounts.get_user(id)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=center;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="930" y="550" width="140" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- DECISION: USER EXISTS? -->
+        <mxCell id="dec_user_exists" value="&lt;font face=&quot;Times New Roman&quot;&gt;User&lt;br/&gt;Ada?&lt;/font&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="960" y="640" width="80" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- PLUG ACTION: ASSIGN CURRENT USER -->
+        <mxCell id="plug_assign" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Assign User ke Conn&lt;/b&gt;&lt;br/&gt;assign(conn,&lt;br/&gt;:current_user, user)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=center;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="530" y="650" width="140" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- CLIENT RESPONSE: 200 OK -->
+        <mxCell id="client_response_ok" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Akses Diterima&lt;/b&gt;&lt;br/&gt;HTTP 200 OK / Data JSON&lt;br/&gt;(Proses Controller Selesai)&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;fontSize=11;align=center;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="130" y="650" width="140" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- FINAL STATE (End Node) -->
+        <mxCell id="end" value="" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="185" y="750" width="30" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- CONNECTIONS / EDGES (Times New Roman, Monochrome) -->
+        <mxCell id="edge_start_send" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;" edge="1" parent="1" source="start" target="client_send">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_send_extract" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;" edge="1" parent="1" source="client_send" target="plug_extract">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_extract_dec" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;" edge="1" parent="1" source="plug_extract" target="dec_token_exists">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_dec_token_no" value="[Tidak]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontSize=10;fontStyle=1;labelBackgroundColor=#FFFFFF;fontFamily=Times New Roman;" edge="1" parent="1" source="dec_token_exists" target="plug_halt">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_dec_token_yes" value="[Ya]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontSize=10;fontStyle=1;labelBackgroundColor=#FFFFFF;fontFamily=Times New Roman;" edge="1" parent="1" source="dec_token_exists" target="plug_verify">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_verify_dec" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;" edge="1" parent="1" source="plug_verify" target="dec_token_valid">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_dec_valid_no" value="[Tidak]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontSize=10;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontFamily=Times New Roman;" edge="1" parent="1" source="dec_token_valid" target="plug_halt">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_dec_valid_yes" value="[Ya]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontSize=10;fontStyle=1;labelBackgroundColor=#FFFFFF;fontFamily=Times New Roman;" edge="1" parent="1" source="dec_token_valid" target="db_fetch_user">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_fetch_dec" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;" edge="1" parent="1" source="db_fetch_user" target="dec_user_exists">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_dec_user_no" value="[Tidak]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontSize=10;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontFamily=Times New Roman;" edge="1" parent="1" source="dec_user_exists" target="plug_halt">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_dec_user_yes" value="[Ya]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;fontColor=#000000;fontSize=10;fontStyle=1;labelBackgroundColor=#FFFFFF;fontFamily=Times New Roman;" edge="1" parent="1" source="dec_user_exists" target="plug_assign">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_assign_ok" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;" edge="1" parent="1" source="plug_assign" target="client_response_ok">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_halt_response" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;" edge="1" parent="1" source="plug_halt" target="client_response_unauth">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_unauth_end" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="client_response_unauth" target="end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_ok_end" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#000000;" edge="1" parent="1" source="client_response_ok" target="end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

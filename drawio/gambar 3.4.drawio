@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="Electron" modified="2026-06-17T22:35:00.000Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.6.0 Safari/537.36" version="21.6.8" type="device">
+  <diagram id="diagram_use_case_detail" name="Diagram Use Case Detail Portal Layanan UPA TIK">
+    <mxGraphModel dx="1400" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1400" math="0" shadow="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- HEADER / TITLE (Times New Roman, Black, Skripsi Style) -->
+        <mxCell id="title" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b style=&quot;font-size: 16px; color: #000000;&quot;&gt;Gambar 3.4: Diagram Use Case Portal Layanan UPA TIK (Detail)&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 12px; color: #000000;&quot;&gt;Diagram Detail Fungsionalitas Layanan untuk Mahasiswa dan Administrator sesuai Fitur Aplikasi&lt;/span&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="250" y="40" width="700" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- SYSTEM BOUNDARY -->
+        <mxCell id="system_boundary" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Sistem Portal Layanan UPA TIK&lt;/b&gt;&lt;/font&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;align=center;verticalAlign=top;fontStyle=1;fontColor=#000000;fontSize=12;startSize=25;arcSize=0;shadow=0;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="280" y="140" width="700" height="980" as="geometry" />
+        </mxCell>
+
+        <!-- ACTOR: MAHASISWA -->
+        <mxCell id="actor_mahasiswa" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Mahasiswa&lt;/b&gt;&lt;/font&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="120" y="480" width="40" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- ACTOR: ADMIN -->
+        <mxCell id="actor_admin" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b&gt;Administrator&lt;/b&gt;&lt;/font&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="480" width="40" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- USE CASE: LOGIN -->
+        <mxCell id="uc_login" value="&lt;font face=&quot;Times New Roman&quot;&gt;Login Portal (Google OAuth SSO)&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontColor=#000000;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="520" y="190" width="240" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- MAHASISWA USE CASES -->
+        <mxCell id="uc_ajukan_email" value="&lt;font face=&quot;Times New Roman&quot;&gt;Mengajukan Layanan Email&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontColor=#000000;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="320" y="270" width="230" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="uc_pilih_jenis" value="&lt;font face=&quot;Times New Roman&quot;&gt;Memilih Layanan&lt;br/&gt;(Aktivasi Baru / Reset Sandi)&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontColor=#000000;fontSize=10;align=center;" vertex="1" parent="1">
+          <mxGeometry x="320" y="360" width="230" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="uc_keluhan" value="&lt;font face=&quot;Times New Roman&quot;&gt;Melaporkan Keluhan Layanan TIK&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontColor=#000000;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="320" y="450" width="230" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="uc_unggah_bukti" value="&lt;font face=&quot;Times New Roman&quot;&gt;Mengunggah Berkas / Foto KTM&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontColor=#000000;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="320" y="540" width="230" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="uc_pantau_status" value="&lt;font face=&quot;Times New Roman&quot;&gt;Memantau Riwayat &amp;amp;&lt;br/&gt;Status Pengajuan / Keluhan&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontColor=#000000;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="320" y="630" width="230" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="uc_kelola_profil" value="&lt;font face=&quot;Times New Roman&quot;&gt;Mengelola Profil &amp;amp; Data Pribadi&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontColor=#000000;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="320" y="720" width="230" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ADMINISTRATOR USE CASES -->
+        <mxCell id="uc_proses_pengajuan" value="&lt;font face=&quot;Times New Roman&quot;&gt;Memproses Pengajuan Email &amp;amp; Reset&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontColor=#000000;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="710" y="270" width="240" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="uc_verifikasi_syarat" value="&lt;font face=&quot;Times New Roman&quot;&gt;Verifikasi Keabsahan KTM / KHS&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontColor=#000000;fontSize=10;align=center;" vertex="1" parent="1">
+          <mxGeometry x="710" y="360" width="240" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="uc_aksi_pengajuan" value="&lt;font face=&quot;Times New Roman&quot;&gt;Menyetujui (OTP/Link) /&lt;br/&gt;Menolak Pengajuan&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontColor=#000000;fontSize=10;align=center;" vertex="1" parent="1">
+          <mxGeometry x="710" y="450" width="240" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="uc_proses_keluhan" value="&lt;font face=&quot;Times New Roman&quot;&gt;Memproses &amp;amp; Update Status Keluhan&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontColor=#000000;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="710" y="540" width="240" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="uc_kelola_users" value="&lt;font face=&quot;Times New Roman&quot;&gt;Mengelola Pengguna &amp;amp; Peran Akun&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontColor=#000000;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="710" y="630" width="240" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="uc_pantau_dashboard" value="&lt;font face=&quot;Times New Roman&quot;&gt;Memantau Dashboard &amp;amp; Statistik&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontColor=#000000;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="710" y="720" width="240" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="uc_unduh_laporan" value="&lt;font face=&quot;Times New Roman&quot;&gt;Mengunduh Laporan (Ekspor Excel)&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontColor=#000000;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="710" y="810" width="240" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="uc_audit_logs" value="&lt;font face=&quot;Times New Roman&quot;&gt;Memantau Log Audit Aktivitas Sistem&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontFamily=Times New Roman;fontColor=#000000;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="710" y="900" width="240" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- ASSOCIATION EDGES: MAHASISWA -->
+        <mxCell id="edge_mhs_login" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;exitX=1;exitY=0.33;exitDx=0;exitDy=0;exitPerimeter=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="actor_mahasiswa" target="uc_login">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_mhs_ajukan" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;exitX=1;exitY=0.33;exitDx=0;exitDy=0;exitPerimeter=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="actor_mahasiswa" target="uc_ajukan_email">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_mhs_keluhan" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;exitX=1;exitY=0.33;exitDx=0;exitDy=0;exitPerimeter=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="actor_mahasiswa" target="uc_keluhan">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_mhs_pantau" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;exitX=1;exitY=0.33;exitDx=0;exitDy=0;exitPerimeter=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="actor_mahasiswa" target="uc_pantau_status">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_mhs_profil" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;exitX=1;exitY=0.33;exitDx=0;exitDy=0;exitPerimeter=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="actor_mahasiswa" target="uc_kelola_profil">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ASSOCIATION EDGES: ADMIN -->
+        <mxCell id="edge_admin_login" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;exitX=0;exitY=0.33;exitDx=0;exitDy=0;exitPerimeter=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="actor_admin" target="uc_login">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_admin_pengajuan" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;exitX=0;exitY=0.33;exitDx=0;exitDy=0;exitPerimeter=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="actor_admin" target="uc_proses_pengajuan">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_admin_keluhan" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;exitX=0;exitY=0.33;exitDx=0;exitDy=0;exitPerimeter=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="actor_admin" target="uc_proses_keluhan">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_admin_users" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;exitX=0;exitY=0.33;exitDx=0;exitDy=0;exitPerimeter=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="actor_admin" target="uc_kelola_users">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_admin_dashboard" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;exitX=0;exitY=0.33;exitDx=0;exitDy=0;exitPerimeter=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="actor_admin" target="uc_pantau_dashboard">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_admin_laporan" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;exitX=0;exitY=0.33;exitDx=0;exitDy=0;exitPerimeter=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="actor_admin" target="uc_unduh_laporan">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="edge_admin_audit" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;exitX=0;exitY=0.33;exitDx=0;exitDy=0;exitPerimeter=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="actor_admin" target="uc_audit_logs">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- INCLUDE / EXTEND EDGES -->
+        <!-- uc_ajukan_email includes uc_pilih_jenis -->
+        <mxCell id="edge_inc_jenis" value="«include»" style="endArrow=open;endSize=8;dashed=1;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uc_ajukan_email" target="uc_pilih_jenis">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- uc_ajukan_email includes uc_unggah_bukti -->
+        <mxCell id="edge_inc_bukti_email" value="«include»" style="endArrow=open;endSize=8;dashed=1;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uc_pilih_jenis" target="uc_unggah_bukti">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- uc_keluhan includes uc_unggah_bukti -->
+        <mxCell id="edge_inc_bukti_keluhan" value="«include»" style="endArrow=open;endSize=8;dashed=1;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uc_keluhan" target="uc_unggah_bukti">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- uc_proses_pengajuan includes uc_verifikasi_syarat -->
+        <mxCell id="edge_inc_verif" value="«include»" style="endArrow=open;endSize=8;dashed=1;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uc_proses_pengajuan" target="uc_verifikasi_syarat">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- uc_verifikasi_syarat includes uc_aksi_pengajuan -->
+        <mxCell id="edge_inc_aksi" value="«include»" style="endArrow=open;endSize=8;dashed=1;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uc_verifikasi_syarat" target="uc_aksi_pengajuan">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ACADEMIC NOTE BOX -->
+        <mxCell id="note_box" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;b style=&quot;font-size: 12px;&quot;&gt;Keterangan Diagram Use Case Detail:&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;1. &lt;b&gt;Login Portal&lt;/b&gt;: Kedua aktor (Mahasiswa &amp;amp; Administrator) wajib masuk menggunakan Google OAuth (SSO) sebagai langkah keamanan utama.&lt;br/&gt;2. &lt;b&gt;Fungsionalitas Mahasiswa&lt;/b&gt;:&lt;br/&gt;   - &lt;i&gt;Mengajukan Layanan Email&lt;/i&gt; mewajibkan (&lt;i&gt;include&lt;/i&gt;) &lt;i&gt;Memilih Jenis Layanan&lt;/i&gt; (apakah Aktivasi Baru atau Reset Sandi) serta &lt;i&gt;Mengunggah Berkas KTM&lt;/i&gt; sebagai syarat verifikasi NIM.&lt;br/&gt;   - &lt;i&gt;Melaporkan Keluhan TIK&lt;/i&gt; juga mewajibkan pengunggahan berkas/foto bukti lampiran agar laporan diproses.&lt;br/&gt;3. &lt;b&gt;Fungsionalitas Administrator&lt;/b&gt;:&lt;br/&gt;   - &lt;i&gt;Memproses Pengajuan&lt;/i&gt; mewajibkan verifikasi keabsahan kartu (KTM/KHS) sebelum melakukan aksi persetujuan (generate OTP &amp;amp; email notifikasi) atau penolakan.&lt;br/&gt;   - Admin juga dapat memantau log audit untuk meminimalkan penyalahgunaan wewenang dan melacak histori sistem.&lt;/font&gt;" style="text;html=1;strokeColor=#000000;fillColor=#FFFFFF;spacing=12;spacingTop=8;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#000000;align=left;verticalAlign=top;shadow=0;strokeWidth=1.5;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="280" y="1150" width="700" height="180" as="geometry" />
+        </mxCell>
+
+        <!-- FOOTER / PROGRAM STUDI -->
+        <mxCell id="watermark" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;span style=&quot;font-size: 10px; color: #000000;&quot;&gt;Program Studi Teknik Informatika - Portal Layanan UPA TIK&lt;/span&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="910" y="1180" width="300" height="30" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
