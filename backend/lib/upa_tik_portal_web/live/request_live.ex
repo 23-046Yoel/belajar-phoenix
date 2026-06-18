@@ -165,15 +165,24 @@ defmodule UpaTikPortalWeb.RequestLive do
           {:ok, _} ->
             s3_config = Application.get_env(:ex_aws, :s3, [])
             host = Keyword.get(s3_config, :host, System.get_env("MINIO_HOST", "127.0.0.1"))
+            port = Keyword.get(s3_config, :port)
 
-            port =
-              Keyword.get(
-                s3_config,
-                :port,
-                (System.get_env("MINIO_PORT") || "9000") |> String.to_integer()
-              )
+            endpoint = System.get_env("MINIO_ENDPOINT")
 
-            {:ok, "http://#{host}:#{port}/#{bucket}/#{filename}"}
+            url =
+              cond do
+                endpoint ->
+                  "#{String.trim_trailing(endpoint, "/")}/#{bucket}/#{filename}"
+
+                port in [nil, 80, 443] ->
+                  scheme = if port == 443 || String.contains?(host, "supabase") || String.contains?(host, "r2"), do: "https", else: "http"
+                  "#{scheme}://#{host}/#{bucket}/#{filename}"
+
+                true ->
+                  "http://#{host}:#{port}/#{bucket}/#{filename}"
+              end
+
+            {:ok, url}
 
           {:error, reason} ->
             IO.warn("[MinIO Upload GAGAL] Reason: #{inspect(reason)}")

@@ -93,10 +93,13 @@ config :ex_aws,
   secret_access_key: System.get_env("MINIO_SECRET_KEY"),
   region: "us-east-1"
 
+dev_minio_port = (System.get_env("MINIO_PORT") || "9000") |> String.to_integer()
+dev_minio_scheme = if dev_minio_port == 443, do: "https", else: "http"
+
 config :ex_aws, :s3,
-  scheme: "http://",
+  scheme: dev_minio_scheme,
   host: System.get_env("MINIO_HOST", "127.0.0.1"),
-  port: (System.get_env("MINIO_PORT") || "9000") |> String.to_integer()
+  port: (if dev_minio_port == 443, do: nil, else: dev_minio_port)
 
 # Config Mailer (Gmail SMTP)
 # Memuat .env secara manual tanpa library tambahan agar tidak error saat kompilasi
