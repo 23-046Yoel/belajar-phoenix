@@ -696,9 +696,19 @@ defmodule UpaTikPortalWeb.Admin.RequestDetailLive do
     if minio_configured? do
       try do
         bucket = Application.get_env(:waffle, :bucket, "upa-tik-uploads")
+        s3_config = Application.get_env(:ex_aws, :s3, [])
+        host = Keyword.get(s3_config, :host, System.get_env("MINIO_HOST", "127.0.0.1"))
+
+        s3_bucket =
+          if String.contains?(host, "supabase.co") and not String.contains?(bucket, "storage/v1/s3") do
+            "storage/v1/s3/#{bucket}"
+          else
+            bucket
+          end
+
         file_content = File.read!(tmp_path)
 
-        case ExAws.S3.put_object(bucket, filename, file_content, content_type: content_type)
+        case ExAws.S3.put_object(s3_bucket, filename, file_content, content_type: content_type)
              |> ExAws.request() do
           {:ok, _} ->
             s3_config = Application.get_env(:ex_aws, :s3, [])

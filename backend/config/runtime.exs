@@ -99,6 +99,12 @@ config :waffle,
   asset_host: System.get_env("MINIO_ENDPOINT", "http://localhost:9000")
 
 minio_host = System.get_env("MINIO_HOST", "127.0.0.1")
+clean_minio_host =
+  minio_host
+  |> String.replace(~r|^https?://|, "")
+  |> String.split("/")
+  |> List.first()
+
 minio_port = String.to_integer(System.get_env("MINIO_PORT", "9000"))
 minio_scheme = if minio_port == 443, do: "https", else: "http"
 minio_region = System.get_env("MINIO_REGION") || (if minio_port == 443, do: "ap-southeast-1", else: "us-east-1")
@@ -110,7 +116,7 @@ config :ex_aws,
 
 config :ex_aws, :s3,
   scheme: minio_scheme,
-  host: minio_host,
+  host: clean_minio_host,
   port: (if minio_port == 443, do: nil, else: minio_port),
   region: minio_region
 

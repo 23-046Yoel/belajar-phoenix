@@ -95,10 +95,16 @@ config :ex_aws,
 
 dev_minio_port = (System.get_env("MINIO_PORT") || "9000") |> String.to_integer()
 dev_minio_scheme = if dev_minio_port == 443, do: "https", else: "http"
+dev_minio_host = System.get_env("MINIO_HOST", "127.0.0.1")
+clean_dev_minio_host =
+  dev_minio_host
+  |> String.replace(~r|^https?://|, "")
+  |> String.split("/")
+  |> List.first()
 
 config :ex_aws, :s3,
   scheme: dev_minio_scheme,
-  host: System.get_env("MINIO_HOST", "127.0.0.1"),
+  host: clean_dev_minio_host,
   port: (if dev_minio_port == 443, do: nil, else: dev_minio_port)
 
 # Config Mailer (Gmail SMTP)
