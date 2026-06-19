@@ -25,8 +25,15 @@ defmodule UpaTikPortalWeb.Plugs.Auth do
       else
         # Fallback to DB query if session details are incomplete
         case Accounts.get_user(user_id) do
-          nil -> assign(conn, :current_user, nil)
-          user -> assign(conn, :current_user, user)
+          nil ->
+            assign(conn, :current_user, nil)
+
+          user ->
+            conn
+            |> put_session(:user_name, user.name)
+            |> put_session(:user_email, user.email)
+            |> put_session(:user_role, user.role)
+            |> assign(:current_user, user)
         end
       end
     else
