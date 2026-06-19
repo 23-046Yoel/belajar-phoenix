@@ -557,6 +557,9 @@ defmodule UpaTikPortalWeb.RequestLive do
                           <p class="text-xs text-slate-400 font-medium mt-1">
                             atau tarik dan lepas berkas di sini
                           </p>
+                          <p class="text-[10px] text-slate-400 font-bold mt-1">
+                            (Maksimal 2 MB)
+                          </p>
                         </label>
                       <% end %>
 
@@ -654,6 +657,9 @@ defmodule UpaTikPortalWeb.RequestLive do
 
                           <p class="text-xs text-slate-400 font-medium mt-1">
                             atau tarik dan lepas berkas di sini
+                          </p>
+                          <p class="text-[10px] text-slate-400 font-bold mt-1">
+                            (Maksimal 2 MB)
                           </p>
                         </label>
                       <% end %>
