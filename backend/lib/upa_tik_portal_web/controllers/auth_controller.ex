@@ -17,7 +17,6 @@ defmodule UpaTikPortalWeb.AuthController do
         |> put_session(:user_name, user.name)
         |> put_session(:user_email, user.email)
         |> put_session(:user_role, user.role)
-        |> put_session(:user_avatar, user.avatar_url)
         |> put_flash(:info, "Selamat datang, #{user.name}!")
         |> redirect(to: redirect_after_login(user))
 
