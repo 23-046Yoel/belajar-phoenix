@@ -5,13 +5,12 @@ defmodule UpaTikPortalWeb.UserAuth do
   alias UpaTikPortal.Accounts
 
   def on_mount(:mount_current_user, _params, session, socket) do
-    case session["user_id"] do
+    case Accounts.get_user_from_session(session) do
       nil ->
         # Jika tidak ada session, lempar ke login
         {:halt, redirect(socket, to: "/auth/google")}
 
-      user_id ->
-        user = Accounts.get_user(user_id)
+      user ->
         {:cont, assign(socket, :current_user, user)}
     end
   end
