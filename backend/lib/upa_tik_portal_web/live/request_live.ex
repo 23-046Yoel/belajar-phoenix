@@ -3,7 +3,7 @@ defmodule UpaTikPortalWeb.RequestLive do
 
   alias UpaTikPortal.Requests
 
-  @max_file_size 5_000_000
+  @max_file_size 2_000_000
 
   def mount(_params, session, socket) do
     user = UpaTikPortal.Accounts.get_user_from_session(session)
@@ -714,7 +714,7 @@ defmodule UpaTikPortalWeb.RequestLive do
     """
   end
 
-  defp upload_error_to_string(:too_large), do: "File terlalu besar (maks. 5MB)"
+  defp upload_error_to_string(:too_large), do: "File terlalu besar (maks. 2MB)"
   defp upload_error_to_string(:too_many_files), do: "Hanya boleh 1 file"
   defp upload_error_to_string(:not_accepted), do: "Format tidak didukung (JPG/PNG/WEBP)"
 end
